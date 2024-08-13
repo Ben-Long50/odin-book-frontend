@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import InputField from './InputField';
 import Button from './Button';
 import { AuthContext } from './AuthContext';
@@ -74,6 +74,7 @@ const SigninForm = () => {
             label="Password"
             name="password"
             type="password"
+            minLength={6}
             onChange={handleChange}
           />
         </div>
@@ -82,7 +83,7 @@ const SigninForm = () => {
         </Button>
         <AuthOptions />
       </form>
-      <p className="text-secondary">
+      <p className="text-tertiary">
         Dont have an account?
         <Link to="/signup">
           <span className="pl-2 hover:underline">Sign up</span>

@@ -7,7 +7,9 @@ import AuthOptions from './AuthOptions';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
     password: '',
     confirmPassword: '',
   });
@@ -61,12 +63,14 @@ const SignupForm = () => {
             label="First Name"
             name="firstName"
             type="text"
+            minLength={2}
             onChange={handleChange}
           />
           <InputField
             label="Last Name"
             name="lastName"
             type="text"
+            minLength={2}
             onChange={handleChange}
           />
           <InputField
@@ -79,12 +83,14 @@ const SignupForm = () => {
             label="Password"
             name="password"
             type="password"
+            minLength={6}
             onChange={handleChange}
           />
           <InputField
             label="Confirm Password"
             name="confirmPassword"
             type="password"
+            minLength={6}
             onChange={handleChange}
           />
         </div>
@@ -93,7 +99,7 @@ const SignupForm = () => {
         </Button>
         <AuthOptions />
       </form>
-      <p className="text-secondary">
+      <p className="text-tertiary">
         Already have an account?
         <Link to="/signin">
           <span className="pl-2 hover:underline">Sign in</span>
