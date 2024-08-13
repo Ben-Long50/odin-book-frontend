@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'selector',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     container: {
@@ -12,7 +13,20 @@ export default {
         '2xl': '6rem',
       },
     },
-    extend: {},
+    extend: {
+      spacing: {
+        180: '180%',
+      },
+      borderRadius: {
+        '4xl': '1.625rem',
+      },
+      transitionDuration: {
+        5000: '5000ms',
+      },
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
+    },
   },
   plugins: [],
 };
