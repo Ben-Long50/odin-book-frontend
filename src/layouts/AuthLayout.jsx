@@ -10,10 +10,15 @@ const AuthLayout = () => {
 
   return (
     <div
-      className={`${theme} bg-secondary-2 flex min-h-dvh items-center justify-center`}
+      className={`${theme} bg-secondary-2 -z-20 flex min-h-dvh flex-col items-center justify-center gap-12`}
     >
-      <div className="bg-secondary shadow-color flex max-w-lg grow flex-col items-center gap-8 rounded-xl px-12 py-8">
-        {/* <PawIcon className="size-60" /> */}
+      <div className="relative">
+        <PawIcon className="absolute left-1/3 top-1/2 size-48 -translate-x-1/2 -translate-y-1/2" />
+        <h1 className="text-primary relative text-8xl tracking-wider">
+          Pawprint
+        </h1>
+      </div>
+      <div className="bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-8 rounded-xl px-12 py-8">
         <div className="z-10 flex w-full flex-col items-center justify-center">
           <button
             className="text-secondary hover-primary absolute left-0 top-0 m-4 flex items-center gap-4 rounded p-2 text-xl transition duration-300"

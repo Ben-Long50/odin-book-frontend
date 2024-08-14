@@ -84,7 +84,7 @@ const SigninForm = () => {
         <AuthOptions />
       </form>
       <p className="text-tertiary">
-        Dont have an account?
+        Don't have an account?
         <Link to="/signup">
           <span className="pl-2 hover:underline">Sign up</span>
         </Link>
