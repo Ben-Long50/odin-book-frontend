@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import InputField from './InputField';
 import Button from './Button';
+import Logo from './Logo';
 import { AuthContext } from './AuthContext';
-import AuthOptions from './AuthOptions';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -27,8 +27,9 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors([]);
     try {
-      const response = await fetch(`${apiUrl}/users/signup`, {
+      const response = await fetch(`${apiUrl}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,8 +37,8 @@ const SignupForm = () => {
         body: JSON.stringify(formData),
       });
       const result = await response.json();
+      console.log(result);
       if (response.ok) {
-        console.log(result);
         navigate('/signin');
       } else {
         const errorArray = result.map((error) => {
@@ -51,71 +52,73 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-6">
-      <form
-        className="flex flex-col gap-12"
-        method="post"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-primary text-4xl font-medium">Sign Up</h1>
-        <div className="flex flex-col gap-8">
-          <InputField
-            label="First Name"
-            name="firstName"
-            type="text"
-            minLength={2}
-            onChange={handleChange}
-          />
-          <InputField
-            label="Last Name"
-            name="lastName"
-            type="text"
-            minLength={2}
-            onChange={handleChange}
-          />
-          <InputField
-            label="Email"
-            name="email"
-            type="email"
-            onChange={handleChange}
-          />
-          <InputField
-            label="Password"
-            name="password"
-            type="password"
-            minLength={6}
-            onChange={handleChange}
-          />
-          <InputField
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            minLength={6}
-            onChange={handleChange}
-          />
-        </div>
-        <Button type="submit" className="hover:shadow-hover p-2 text-xl">
-          Sign up
-        </Button>
-        <AuthOptions />
-      </form>
-      <p className="text-tertiary">
-        Already have an account?
-        <Link to="/signin">
-          <span className="pl-2 hover:underline">Sign in</span>
-        </Link>
-      </p>
-      {errors.length > 0 && (
-        <div className="flex flex-col gap-3 pt-4">
-          <span className="text-primary">Error signing up</span>
-          {errors.map((error, index) => (
-            <p key={index} className="text-error">
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
-    </div>
+    <>
+      <Logo />
+      <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
+        <form
+          className="flex w-full flex-col gap-10"
+          method="post"
+          onSubmit={handleSubmit}
+        >
+          <h1 className="text-primary text-4xl font-medium">Sign Up</h1>
+          <div className="flex flex-col gap-6">
+            <InputField
+              label="First Name"
+              name="firstName"
+              type="text"
+              minLength={2}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Last Name"
+              name="lastName"
+              type="text"
+              minLength={2}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Email"
+              name="email"
+              type="email"
+              onChange={handleChange}
+            />
+            <InputField
+              label="Password"
+              name="password"
+              type="password"
+              minLength={6}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              minLength={6}
+              onChange={handleChange}
+            />
+          </div>
+          <Button type="submit" className="hover:shadow-hover p-2 text-xl">
+            Sign up
+          </Button>
+        </form>
+        <p className="text-tertiary">
+          Already have an account?
+          <Link to="/signin">
+            <span className="pl-2 hover:underline">Sign in</span>
+          </Link>
+        </p>
+        {errors.length > 0 && (
+          <div className="flex flex-col gap-3 self-start">
+            <span className="text-primary">Error signing up</span>
+            {errors.map((error, index) => (
+              <p key={index} className="text-error">
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

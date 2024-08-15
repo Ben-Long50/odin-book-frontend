@@ -10,9 +10,13 @@ const AuthOptions = () => {
     window.location.href = `${apiUrl}/auth/facebook`;
   };
 
+  const googleSignin = async () => {
+    window.location.href = `${apiUrl}/auth/google`;
+  };
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="text-tertiary -mt-4 flex items-center">
+    <div className="flex w-full flex-col gap-10">
+      <div className="text-tertiary -my-2 flex items-center">
         <hr className="grow border-gray-400" />
         <p className="mx-4 text-gray-400">or</p>
         <hr className="grow border-gray-400" />
@@ -22,6 +26,7 @@ const AuthOptions = () => {
           className="text-secondary hover:shadow-hover bg-secondary-2 timing shadow-color flex w-full items-center justify-center rounded p-2 text-lg ring-emerald-300 hover:ring-2"
           onClick={(e) => {
             e.preventDefault();
+            googleSignin();
           }}
         >
           <Icon className="text-secondary mr-2" path={mdiGoogle} size={1.5} />

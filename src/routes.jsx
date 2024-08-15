@@ -9,6 +9,7 @@ import {
 import AuthLayout from './layouts/AuthLayout';
 import SignupForm from './components/SignupForm';
 import SigninForm from './components/SigninForm';
+import MainLayout from './layouts/MainLayout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
         <Route path="signup" element={<SignupForm />} />
         <Route index path="signin" element={<SigninForm />} />
       </Route>
+      <Route path="home" element={<MainLayout />}></Route>
     </Route>,
   ),
 );
