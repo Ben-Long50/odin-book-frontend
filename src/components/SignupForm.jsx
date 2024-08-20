@@ -53,7 +53,7 @@ const SignupForm = () => {
 
   return (
     <>
-      <Logo />
+      <Logo className="logo-load" iconSize="size-48" textSize="text-8xl" />
       <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
         <form
           className="flex w-full flex-col gap-10"

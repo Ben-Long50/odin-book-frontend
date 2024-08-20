@@ -10,6 +10,10 @@ import AuthLayout from './layouts/AuthLayout';
 import SignupForm from './components/SignupForm';
 import SigninForm from './components/SigninForm';
 import MainLayout from './layouts/MainLayout';
+import Feed from './components/Feed';
+import Search from './components/Search';
+import Create from './components/Create';
+import Profile from './components/Profile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,7 +23,12 @@ const router = createBrowserRouter(
         <Route path="signup" element={<SignupForm />} />
         <Route index path="signin" element={<SigninForm />} />
       </Route>
-      <Route path="home" element={<MainLayout />}></Route>
+      <Route element={<MainLayout />}>
+        <Route path="home" element={<Feed />}></Route>
+        <Route path="search" element={<Search />}></Route>
+        <Route path="create" element={<Create />}></Route>
+        <Route path="profile" element={<Profile />}></Route>
+      </Route>
     </Route>,
   ),
 );

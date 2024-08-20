@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import InputField from './InputField';
 import Button from './Button';
@@ -13,6 +13,7 @@ const SigninForm = () => {
   });
   const [errors, setErrors] = useState([]);
   const { signin, apiUrl } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -44,9 +45,9 @@ const SigninForm = () => {
         body: JSON.stringify(formData),
       });
       const result = await response.json();
-      console.log(response);
       if (response.ok) {
         console.log(result);
+        navigate('/home');
       } else {
         const errorArray = result.map((error) => {
           return error.msg;
@@ -60,7 +61,7 @@ const SigninForm = () => {
 
   return (
     <>
-      <Logo />
+      <Logo className="logo-load" iconSize="size-48" textSize="text-8xl" />
       <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
         <form
           className="flex w-full flex-col gap-10"

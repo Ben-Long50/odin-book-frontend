@@ -25,10 +25,13 @@
     @apply text-gray-900 dark:text-gray-50;
   }
   .text-secondary {
-    @apply text-gray-800 dark:text-gray-100;
+    @apply text-gray-700 dark:text-gray-200;
   }
   .text-tertiary {
-    @apply border-gray-700 text-gray-700 dark:border-gray-200 dark:text-gray-200;
+    @apply border-gray-500 text-gray-500 dark:border-gray-400 dark:text-gray-400;
+  }
+  .text-accent {
+    @apply text-emerald-300 hover:text-emerald-400;
   }
   .text-error {
     @apply text-red-600 dark:text-red-500;
@@ -42,14 +45,17 @@
   .accent-primary {
     @apply bg-emerald-300 text-gray-900 hover:bg-emerald-400 dark:border-none dark:shadow-black;
   }
-  .shadow-color {
-    @apply shadow-md shadow-gray-300 dark:shadow-black;
+  .shadow-normal {
+    @apply shadow shadow-gray-300 dark:shadow-md dark:shadow-gray-950;
+  }
+  .shadow-medium {
+    @apply shadow-md shadow-gray-300 dark:shadow-md dark:shadow-black;
   }
   .shadow-hover {
     @apply -translate-y-0.5 shadow-lg shadow-gray-300 dark:shadow-black;
   }
   .focus {
-    @apply outline-none ring-orange-300 focus:border-transparent focus:ring-2;
+    @apply outline-none ring-emerald-300 focus:border-transparent focus:ring-2;
   }
   .timing {
     @apply duration-200;
@@ -57,8 +63,11 @@
   .auth-layout-rows {
     grid-template-rows: 1fr 2fr;
   }
+  .layout-cols {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 1000px) minmax(0, 1fr);
+  }
   .layout-rows {
-    grid-template-rows: minmax(300px, 28rem) auto;
+    grid-template-rows: auto 1fr;
     grid-template-columns: 1fr;
   }
   dialog::backdrop {
