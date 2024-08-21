@@ -3,6 +3,8 @@ import ListMenuItem from './ListMenuItem';
 import Icon from '@mdi/react';
 import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import '../styles/custom-scrollbar.css';
 
 const Search = () => {
   const [activeItem, setActiveItem] = useState('all');
@@ -12,7 +14,7 @@ const Search = () => {
   };
 
   return (
-    <PerfectScrollbar className="min-h-dvh overflow-y-auto">
+    <PerfectScrollbar className="overflow-y-auto">
       <div className="text-primary layout-cols center grid p-4 md:p-6 lg:p-8">
         <search className="focus bg-secondary-2 shadow-normal col-start-2 col-end-3 flex w-full items-center justify-self-center rounded-full pl-3 pr-2">
           <input
@@ -34,7 +36,6 @@ const Search = () => {
             activeItem={activeItem}
             onClick={() => changeActiveItem('all')}
           />
-
           <ListMenuItem
             className="grow border-gray-700 text-xl"
             title="Posts"

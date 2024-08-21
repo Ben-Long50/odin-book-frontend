@@ -3,7 +3,7 @@ import Icon from '@mdi/react';
 const ListMenuItem = (props) => {
   return (
     <button
-      className={`${props.className} text-secondary flex cursor-pointer items-center justify-center ${props.activeItem === props.label && 'border-emerald-300 dark:border-emerald-300'} timing border-b-4 border-transparent fill-current px-2`}
+      className={`${props.className} text-secondary flex cursor-pointer items-center justify-center ${props.activeItem === props.label && 'border-emerald-300 dark:border-emerald-300'} timing border-b-4 fill-current px-2`}
       onClick={props.onClick}
     >
       {props.icon ? (

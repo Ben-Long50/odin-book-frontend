@@ -1,7 +1,10 @@
 import { mdiCommentOutline, mdiHeartOutline } from '@mdi/js';
 import Icon from '@mdi/react';
+import { useState } from 'react';
 
 const Post = (props) => {
+  const [commentVisibility, setCommentVisibility] = useState(false);
+
   return (
     <div className="shadow-normal bg-secondary-2 flex max-w-xl flex-col rounded-lg">
       <div className="p-4">
@@ -19,12 +22,13 @@ const Post = (props) => {
             </button>
             <p>{props.post.likes.length}</p>
           </div>
-          <div className="flex items-center gap-2">
-            <button>
-              <Icon path={mdiCommentOutline} size={1.25} />
-            </button>
+          <button
+            className="flex items-center gap-2"
+            onClick={() => setCommentVisibility(!commentVisibility)}
+          >
+            <Icon path={mdiCommentOutline} size={1.25} />
             <p>{props.post.comments.length}</p>
-          </div>
+          </button>
         </div>
         <p>{props.post.body}</p>
         <input
@@ -32,6 +36,10 @@ const Post = (props) => {
           type="text"
           placeholder="Add a comment"
         />
+        {commentVisibility &&
+          props.post.comments.map((comment, index) => (
+            <p key={index}>{comment}</p>
+          ))}
       </div>
     </div>
   );

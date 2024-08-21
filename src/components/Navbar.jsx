@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="flex self-center justify-self-center">
         <Link to="/home">
           <ListMenuItem
-            className="h-16 w-28"
+            className="h-16 w-28 border-transparent"
             activeItem={activeItem}
             icon={mdiHomeVariant}
             label="home"
@@ -28,7 +28,7 @@ const Navbar = () => {
         </Link>
         <Link to="/search">
           <ListMenuItem
-            className="h-16 w-28"
+            className="h-16 w-28 border-transparent"
             activeItem={activeItem}
             icon={mdiMagnify}
             label="search"
@@ -37,7 +37,7 @@ const Navbar = () => {
         </Link>
         <Link to="/create">
           <ListMenuItem
-            className="h-16 w-28"
+            className="h-16 w-28 border-transparent"
             activeItem={activeItem}
             icon={mdiImagePlus}
             label="create"
@@ -47,7 +47,7 @@ const Navbar = () => {
       </div>
       <Link className="justify-self-end" to="/profile">
         <ListMenuItem
-          className="h-16 w-28"
+          className="h-16 w-28 border-transparent"
           activeItem={activeItem}
           icon={mdiAccount}
           label="profile"
