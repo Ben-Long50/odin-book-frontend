@@ -8,7 +8,9 @@ const MainLayout = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`${theme} layout-rows bg-secondary grid h-dvh`}>
+    <div
+      className={`${theme} xl:main-layout-xl md:main-layout-md bg-secondary grid h-dvh`}
+    >
       <Navbar />
       <Outlet />
     </div>

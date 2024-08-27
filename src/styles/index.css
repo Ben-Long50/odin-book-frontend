@@ -13,7 +13,7 @@
     @apply hover:bg-emerald-300 hover:dark:text-gray-900;
   }
   .bg-secondary {
-    @apply bg-white dark:bg-gray-900;
+    @apply border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900;
   }
   .bg-secondary-2 {
     @apply bg-gray-100 dark:bg-gray-800;
@@ -66,9 +66,14 @@
   .layout-cols {
     grid-template-columns: minmax(0, 1fr) minmax(320px, 1000px) minmax(0, 1fr);
   }
-  .layout-rows {
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr;
+  .main-layout-xl {
+    grid-template-columns: minmax(300px, auto) 1fr;
+  }
+  .main-layout-md {
+    grid-template-columns: auto 1fr;
+  }
+  .navbar-layout-md {
+    grid-template-rows: auto 1fr auto;
   }
   dialog::backdrop {
     backdrop-filter: blur(5px) brightness(0.8); /* Adjust as needed */

@@ -1,8 +1,21 @@
-import { mdiAccount, mdiHomeVariant, mdiImagePlus, mdiMagnify } from '@mdi/js';
+import {
+  mdiAccount,
+  mdiCompass,
+  mdiCompassOutline,
+  mdiHeart,
+  mdiHeartOutline,
+  mdiHomeVariant,
+  mdiHomeVariantOutline,
+  mdiMagnify,
+  mdiMenu,
+  mdiPlusBox,
+  mdiPlusBoxOutline,
+} from '@mdi/js';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import ListMenuItem from './ListMenuItem';
 import { useState } from 'react';
+import PawIcon from '../assets/PawIcon';
 
 const Navbar = () => {
   const [activeItem, setActiveItem] = useState('home');
@@ -12,48 +25,65 @@ const Navbar = () => {
   };
 
   return (
-    <div className="text-primary bg-secondary-2 shadow-color shadow-normal sticky top-0 grid w-full grid-cols-3 items-center pl-3">
-      <div className="flex items-center">
-        <Logo iconSize="size-14" textSize="text-4xl" />
-      </div>
-      <div className="flex self-center justify-self-center">
-        <Link to="/home">
+    <div className="text-primary bg-secondary md:navbar-layout-md sticky top-0 grid h-dvh gap-14 border-r px-5 pb-6 pt-10 md:px-3">
+      <PawIcon className="hidden size-12 justify-self-center md:block xl:hidden" />
+      <Logo
+        className="hidden xl:block"
+        iconSize="size-14"
+        textSize="text-4xl"
+      />
+      <div className="flex w-full flex-col items-start justify-start gap-3">
+        <Link className="w-full" to="/home">
           <ListMenuItem
-            className="h-16 w-28 border-transparent"
             activeItem={activeItem}
-            icon={mdiHomeVariant}
-            label="home"
+            icon={
+              activeItem === 'home' ? mdiHomeVariant : mdiHomeVariantOutline
+            }
+            label="Home"
             onClick={() => changeActiveItem('home')}
+            search
           />
         </Link>
-        <Link to="/search">
+        <ListMenuItem
+          activeItem={activeItem}
+          icon={mdiMagnify}
+          label="Search"
+          onClick={() => changeActiveItem('search')}
+        />
+        <Link className="w-full" to="/explore">
           <ListMenuItem
-            className="h-16 w-28 border-transparent"
             activeItem={activeItem}
-            icon={mdiMagnify}
-            label="search"
-            onClick={() => changeActiveItem('search')}
+            icon={activeItem === 'explore' ? mdiCompass : mdiCompassOutline}
+            label="Explore"
+            onClick={() => changeActiveItem('explore')}
           />
         </Link>
-        <Link to="/create">
+        <ListMenuItem
+          activeItem={activeItem}
+          icon={activeItem === 'notifications' ? mdiHeart : mdiHeartOutline}
+          label="Notifications"
+          onClick={() => changeActiveItem('notifications')}
+        />
+        <Link className="w-full" to="/create">
           <ListMenuItem
-            className="h-16 w-28 border-transparent"
             activeItem={activeItem}
-            icon={mdiImagePlus}
-            label="create"
+            icon={activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline}
+            label="Create"
             onClick={() => changeActiveItem('create')}
           />
         </Link>
+        <Link className="w-full" to="/profile">
+          <ListMenuItem
+            activeItem={activeItem}
+            icon={mdiAccount}
+            label="Profile"
+            onClick={() => changeActiveItem('profile')}
+          />
+        </Link>
       </div>
-      <Link className="justify-self-end" to="/profile">
-        <ListMenuItem
-          className="h-16 w-28 border-transparent"
-          activeItem={activeItem}
-          icon={mdiAccount}
-          label="profile"
-          onClick={() => changeActiveItem('profile')}
-        />
-      </Link>
+      <div className="flex flex-col items-start justify-end">
+        <ListMenuItem activeItem={activeItem} icon={mdiMenu} label="More" />
+      </div>
     </div>
   );
 };
