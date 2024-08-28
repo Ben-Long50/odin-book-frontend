@@ -120,6 +120,25 @@
   }
 }
 
+.menu-load {
+  animation: menu-load 0.3s forwards;
+}
+
+.menu-deload {
+  animation: menu-load 0.3s reverse;
+}
+
+@keyframes menu-load {
+  0% {
+    opacity: 0;
+    transform: translateY(-25%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
 .spin {
   animation: spin 0.5s linear infinite;
 }
