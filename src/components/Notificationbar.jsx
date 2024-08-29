@@ -1,22 +1,13 @@
-import { mdiCloseCircle } from '@mdi/js';
-import Icon from '@mdi/react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
-const Searchbar = (props) => {
+const Notificationbar = (props) => {
   return (
-    <search
+    <PerfectScrollbar
       className={`${props.className} shadow-md-right bg-secondary flex h-dvh min-w-96 flex-col dark:shadow-gray-950`}
       style={props.style}
     >
       <div className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
-        <h1 className="text-primary text-3xl font-semibold">Search</h1>
-        <div className="bg-secondary-2 flex w-full items-center justify-between rounded-lg p-2">
-          <input
-            className="text-secondary grow border-none bg-transparent text-lg outline-none"
-            type="text"
-            placeholder="Search"
-          />
-          <Icon path={mdiCloseCircle} size={1} />
-        </div>
+        <h1 className="text-primary text-3xl font-semibold">Notifications</h1>
       </div>
       <div className="flex flex-col gap-4 p-6">
         <div className="flex items-center justify-between">
@@ -26,8 +17,8 @@ const Searchbar = (props) => {
           </p>
         </div>
       </div>
-    </search>
+    </PerfectScrollbar>
   );
 };
 
-export default Searchbar;
+export default Notificationbar;

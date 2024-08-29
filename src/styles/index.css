@@ -43,22 +43,22 @@
     @apply text-secondary block w-full cursor-pointer rounded pr-2 text-left text-base font-medium transition duration-300;
   }
   .accent-primary {
-    @apply bg-emerald-300 text-gray-900 hover:bg-emerald-400 dark:border-none dark:shadow-black;
+    @apply bg-emerald-300 text-gray-900 hover:bg-emerald-400 dark:border-none dark:shadow-gray-950;
   }
   .shadow-normal {
     @apply shadow shadow-gray-300 dark:shadow-md dark:shadow-gray-950;
   }
   .shadow-medium {
-    @apply shadow-md shadow-gray-300 dark:shadow-md dark:shadow-black;
+    @apply shadow-md shadow-gray-300 dark:shadow-md dark:shadow-gray-950;
   }
   .shadow-hover {
-    @apply -translate-y-0.5 shadow-lg shadow-gray-300 dark:shadow-black;
+    @apply -translate-y-0.5 shadow-lg shadow-gray-300 dark:shadow-gray-950;
   }
   .focus {
     @apply outline-none ring-emerald-300 focus:border-transparent focus:ring-2;
   }
   .timing {
-    @apply duration-200;
+    @apply duration-300 ease-in-out;
   }
   .auth-layout-rows {
     grid-template-rows: 1fr 2fr;
@@ -67,10 +67,13 @@
     grid-template-columns: minmax(0, 1fr) minmax(320px, 1000px) minmax(0, 1fr);
   }
   .main-layout-xl {
-    grid-template-columns: minmax(300px, auto) 1fr;
+    grid-template-columns: minmax(350px, 15vw) 1fr;
   }
   .main-layout-md {
     grid-template-columns: auto 1fr;
+  }
+  .main-layout {
+    grid-template-rows: auto 1fr auto;
   }
   .navbar-layout-md {
     grid-template-rows: auto 1fr auto;
@@ -131,11 +134,11 @@
 @keyframes menu-load {
   0% {
     opacity: 0;
-    transform: translateY(-25%);
+    transform: translateX(-25%);
   }
   100% {
     opacity: 1;
-    transform: translateY(-50%);
+    transform: translateX(0%);
   }
 }
 

@@ -26,6 +26,13 @@ export default {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
       },
+      boxShadow: {
+        'md-right':
+          '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0px 4px -2px rgb(0, 0, 0, 0.1)',
+      },
+      inset: {
+        115: '115%',
+      },
     },
   },
   plugins: [],

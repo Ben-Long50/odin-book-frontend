@@ -2,13 +2,11 @@ import PawIcon from '../assets/PawIcon';
 
 const Logo = (props) => {
   return (
-    <div className={`${props.className} relative`}>
-      <PawIcon
-        className={`${props.iconSize} absolute left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2`}
-      />
-      <h1 className={`${props.textSize} text-primary relative tracking-widest`}>
+    <div className={`${props.className} flex items-center justify-start gap-4`}>
+      <h1 className={`${props.textSize} text-primary tracking-widest`}>
         Pawprint
       </h1>
+      <PawIcon className={`${props.iconSize}`} />
     </div>
   );
 };
