@@ -1,15 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import NavHeader from '../components/NavHeader';
+import NavFooter from '../components/NavFooter';
 import { ThemeContext } from '../components/ThemeContext';
 
 const MainLayout = () => {
   const [loading, setLoading] = useState(true);
+  const [activeItem, setActiveItem] = useState('home');
   const [layoutSize, setLayoutSize] = useState(() => {
     if (window.innerWidth >= 1280) {
       return 'large';
-    } else if (window.innerWidth < 768) {
+    } else if (window.innerWidth > 500 && window.innerWidth < 768) {
       return 'small';
+    } else if (window.innerWidth <= 500) {
+      return 'xsmall';
     } else {
       return 'medium';
     }
@@ -20,8 +25,10 @@ const MainLayout = () => {
     const handleResize = () => {
       if (window.innerWidth >= 1280) {
         setLayoutSize('large');
-      } else if (window.innerWidth < 768) {
+      } else if (window.innerWidth > 500 && window.innerWidth < 768) {
         setLayoutSize('small');
+      } else if (window.innerWidth <= 500) {
+        setLayoutSize('xsmall');
       } else {
         setLayoutSize('medium');
       }
@@ -36,10 +43,30 @@ const MainLayout = () => {
 
   return (
     <div
-      className={`${theme} xl:main-layout-xl md:main-layout-md bg-secondary grid h-dvh`}
+      className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid h-dvh`}
     >
-      <Navbar layoutSize={layoutSize} setLayoutSize={setLayoutSize} />
-      <Outlet />
+      {layoutSize === 'small' || layoutSize === 'xsmall' ? (
+        <>
+          <NavHeader layoutSize={layoutSize} setLayoutSize={setLayoutSize} />
+          <Outlet />
+          <NavFooter
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
+            layoutSize={layoutSize}
+            setLayoutSize={setLayoutSize}
+          />
+        </>
+      ) : (
+        <>
+          <Navbar
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
+            layoutSize={layoutSize}
+            setLayoutSize={setLayoutSize}
+          />
+          <Outlet />
+        </>
+      )}
     </div>
   );
 };

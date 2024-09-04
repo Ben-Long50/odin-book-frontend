@@ -22,7 +22,6 @@ import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 
 const Navbar = (props) => {
-  const [activeItem, setActiveItem] = useState('home');
   const [navbarSize, setNavbarSize] = useState(() => {
     if (props.layoutSize === 'large') {
       return 'large';
@@ -60,10 +59,10 @@ const Navbar = (props) => {
     if (props.layoutSize === 'large') {
       setNavbarSize('large');
     }
-    if (activeItem !== 'search' && activeItem !== 'notifications') {
-      setPrevActiveItem(activeItem);
+    if (props.activeItem !== 'search' && props.activeItem !== 'notifications') {
+      setPrevActiveItem(props.activeItem);
     }
-    setActiveItem(item);
+    props.setActiveItem(item);
   };
 
   const toggleMenuVisibility = () => {
@@ -78,7 +77,7 @@ const Navbar = (props) => {
       if (props.layoutSize === 'large') {
         setNavbarSize('large');
       }
-      setActiveItem(prevActiveItem);
+      props.setActiveItem(prevActiveItem);
     } else {
       setNavbarSize('medium');
     }
@@ -96,7 +95,7 @@ const Navbar = (props) => {
       if (props.layoutSize === 'large') {
         setNavbarSize('large');
       }
-      setActiveItem(prevActiveItem);
+      props.setActiveItem(prevActiveItem);
     } else {
       setNavbarSize('medium');
     }
@@ -130,9 +129,11 @@ const Navbar = (props) => {
         <div className="flex w-full flex-col items-start justify-start gap-4">
           <Link className="w-full" to="/home">
             <ListMenuItem
-              activeItem={activeItem}
+              activeItem={props.activeItem}
               icon={
-                activeItem === 'home' ? mdiHomeVariant : mdiHomeVariantOutline
+                props.activeItem === 'home'
+                  ? mdiHomeVariant
+                  : mdiHomeVariantOutline
               }
               label="Home"
               onClick={() => changeActiveItem('home')}
@@ -140,7 +141,7 @@ const Navbar = (props) => {
             />
           </Link>
           <ListMenuItem
-            activeItem={activeItem}
+            activeItem={props.activeItem}
             icon={mdiMagnify}
             label="Search"
             onClick={() => {
@@ -151,16 +152,20 @@ const Navbar = (props) => {
           />
           <Link className="w-full" to="/explore">
             <ListMenuItem
-              activeItem={activeItem}
-              icon={activeItem === 'explore' ? mdiCompass : mdiCompassOutline}
+              activeItem={props.activeItem}
+              icon={
+                props.activeItem === 'explore' ? mdiCompass : mdiCompassOutline
+              }
               label="Explore"
               onClick={() => changeActiveItem('explore')}
               navbarSize={navbarSize}
             />
           </Link>
           <ListMenuItem
-            activeItem={activeItem}
-            icon={activeItem === 'notifications' ? mdiHeart : mdiHeartOutline}
+            activeItem={props.activeItem}
+            icon={
+              props.activeItem === 'notifications' ? mdiHeart : mdiHeartOutline
+            }
             label="Notifications"
             onClick={() => {
               changeActiveItem('notifications');
@@ -170,8 +175,10 @@ const Navbar = (props) => {
           />
           <Link className="w-full" to="/create">
             <ListMenuItem
-              activeItem={activeItem}
-              icon={activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline}
+              activeItem={props.activeItem}
+              icon={
+                props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline
+              }
               label="Create"
               onClick={() => changeActiveItem('create')}
               navbarSize={navbarSize}
@@ -179,7 +186,7 @@ const Navbar = (props) => {
           </Link>
           <Link className="w-full" to="/profile">
             <ListMenuItem
-              activeItem={activeItem}
+              activeItem={props.activeItem}
               icon={mdiAccount}
               label="Profile"
               onClick={() => changeActiveItem('profile')}
@@ -189,7 +196,7 @@ const Navbar = (props) => {
         </div>
         <div className="relative flex flex-col items-start justify-end">
           <ListMenuItem
-            activeItem={activeItem}
+            activeItem={props.activeItem}
             icon={mdiMenu}
             label="More"
             onClick={toggleMenuVisibility}

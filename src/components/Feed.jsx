@@ -26,8 +26,8 @@ const Feed = () => {
 
   return (
     <PerfectScrollbar className="h-full overflow-y-auto">
-      <div className="text-primary layout-cols center grid p-4 md:p-6 lg:p-8">
-        <div className="col-start-2 col-end-3 flex flex-col gap-4 justify-self-center">
+      <div className="text-primary layout-cols center grid md:p-6 lg:p-8">
+        <div className="col-start-2 col-end-3 flex flex-col justify-self-center">
           {posts.map((post, index) => (
             <Post key={index} post={post} />
           ))}

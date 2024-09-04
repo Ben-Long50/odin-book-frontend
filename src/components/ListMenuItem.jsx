@@ -7,15 +7,17 @@ const ListMenuItem = (props) => {
       onClick={props.onClick}
     >
       <Icon className="timing" path={props.icon} size={1.5} />
-      <h2
-        className={`flex items-center justify-start text-lg transition-all duration-300 ${
-          props.navbarSize === 'medium'
-            ? 'w-0 -translate-x-16 text-transparent'
-            : 'w-[150px] translate-x-6'
-        }`}
-      >
-        {props.label}
-      </h2>
+      {props.navbarSize && (
+        <h2
+          className={`flex items-center justify-start text-lg transition-all duration-300 ${
+            props.navbarSize === 'medium'
+              ? 'w-0 -translate-x-16 text-transparent'
+              : 'w-[150px] translate-x-6'
+          }`}
+        >
+          {props.label}
+        </h2>
+      )}
     </button>
   );
 };
