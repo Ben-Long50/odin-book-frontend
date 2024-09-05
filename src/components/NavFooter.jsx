@@ -38,14 +38,17 @@ const NavFooter = (props) => {
           onClick={() => changeActiveItem('explore')}
         />
       </Link>
-      <Link className="w-auto" to="/create">
+      <div className="w-auto">
         <ListMenuItem
           activeItem={props.activeItem}
           icon={props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline}
           label="Create"
-          onClick={() => changeActiveItem('create')}
+          onClick={() => {
+            changeActiveItem('create');
+            props.setCreateOpen(true);
+          }}
         />
-      </Link>
+      </div>
       <Link className="w-auto" to="/profile">
         <ListMenuItem
           activeItem={props.activeItem}

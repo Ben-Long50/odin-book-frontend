@@ -46,7 +46,7 @@
     @apply bg-emerald-300 text-gray-900 hover:bg-emerald-400 dark:border-none dark:shadow-gray-950;
   }
   .shadow-normal {
-    @apply shadow shadow-gray-300 dark:shadow-md dark:shadow-gray-950;
+    @apply shadow shadow-gray-300 dark:shadow dark:shadow-gray-950;
   }
   .shadow-medium {
     @apply shadow-md shadow-gray-300 dark:shadow-md dark:shadow-gray-950;
@@ -124,22 +124,48 @@
   }
 }
 
-.menu-load {
-  animation: menu-load 0.3s forwards;
+.fade-in-left {
+  animation: fade-in-left 0.5s forwards;
 }
 
-.menu-deload {
-  animation: menu-load 0.3s reverse;
-}
-
-@keyframes menu-load {
+@keyframes fade-in-left {
   0% {
     opacity: 0;
-    transform: translateX(-25%);
+    transform: translateX(-50px);
   }
   100% {
     opacity: 1;
     transform: translateX(0%);
+  }
+}
+
+.fade-in-right {
+  animation: fade-in-right 0.5s forwards;
+}
+
+@keyframes fade-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.fade-in-bottom {
+  animation: fade-in-bottom 0.5s forwards;
+}
+
+@keyframes fade-in-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }
 

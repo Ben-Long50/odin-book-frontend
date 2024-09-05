@@ -7,7 +7,7 @@ const InputField = (props) => {
     <div className="relative">
       <input
         ref={inputRef}
-        className={`${props.className} text-secondary timing peer w-full rounded border border-transparent bg-gray-200 p-3 outline-none ring-emerald-300 invalid:ring-red-400 focus:bg-transparent focus:ring-2 dark:bg-gray-700`}
+        className={`${props.className} text-secondary timing peer w-full rounded-lg border border-transparent bg-gray-200 p-3 outline-none ring-emerald-300 invalid:ring-red-400 focus:bg-transparent focus:ring-2 dark:bg-gray-700`}
         type={props.type}
         name={props.name}
         id={props.name}

@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import NavHeader from '../components/NavHeader';
 import NavFooter from '../components/NavFooter';
+import Create from '../components/Create';
 import { ThemeContext } from '../components/ThemeContext';
 
 const MainLayout = () => {
@@ -19,6 +20,7 @@ const MainLayout = () => {
       return 'medium';
     }
   });
+  const [createOpen, setCreateOpen] = useState(false);
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
@@ -43,18 +45,20 @@ const MainLayout = () => {
 
   return (
     <div
-      className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid h-dvh`}
+      className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid h-dvh bg-fixed`}
     >
       {layoutSize === 'small' || layoutSize === 'xsmall' ? (
         <>
           <NavHeader layoutSize={layoutSize} setLayoutSize={setLayoutSize} />
-          <Outlet />
+          <Outlet context={[layoutSize]} />
           <NavFooter
             activeItem={activeItem}
             setActiveItem={setActiveItem}
             layoutSize={layoutSize}
             setLayoutSize={setLayoutSize}
+            setCreateOpen={setCreateOpen}
           />
+          <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
         </>
       ) : (
         <>
@@ -63,8 +67,10 @@ const MainLayout = () => {
             setActiveItem={setActiveItem}
             layoutSize={layoutSize}
             setLayoutSize={setLayoutSize}
+            setCreateOpen={setCreateOpen}
           />
-          <Outlet />
+          <Outlet context={[layoutSize]} />
+          <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
         </>
       )}
     </div>

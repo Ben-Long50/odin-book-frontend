@@ -5,6 +5,7 @@ import Button from './Button';
 import Logo from './Logo';
 import { AuthContext } from './AuthContext';
 import AuthOptions from './AuthOptions';
+import PawIcon from '../assets/PawIcon';
 
 const SigninForm = () => {
   const [formData, setFormData] = useState({
@@ -61,8 +62,11 @@ const SigninForm = () => {
 
   return (
     <>
-      <Logo className="logo-load" iconSize="size-48" textSize="text-8xl" />
-      <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
+      <div className="logo-load flex items-center justify-center gap-8">
+        <Logo textSize="text-8xl" />
+        <PawIcon className="size-32" />
+      </div>
+      <div className="form-load bg-secondary shadow-medium flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
         <form
           className="flex w-full flex-col gap-10"
           method="post"

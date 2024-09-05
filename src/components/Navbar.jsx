@@ -29,7 +29,7 @@ const Navbar = (props) => {
       return 'medium';
     }
   });
-  const [navWidth, setNavWidth] = useState(null);
+  const [navWidth, setNavWidth] = useState(85);
   const [prevActiveItem, setPrevActiveItem] = useState('');
   const [menuVisibility, setMenuVisibility] = useState(false);
   const [searchVisibility, setSearchVisibility] = useState(false);
@@ -44,6 +44,9 @@ const Navbar = (props) => {
       } else if (window.innerWidth > 768 && window.innerWidth < 1280) {
         setNavbarSize('medium');
       }
+      setSearchVisibility(false);
+      setNotificationVisibility(false);
+      setMenuVisibility(false);
     };
 
     window.addEventListener('resize', handleResize);
@@ -115,10 +118,9 @@ const Navbar = (props) => {
           <Logo
             className={`timing h-14 ${
               navbarSize === 'medium'
-                ? 'w-0 -translate-x-32 opacity-0'
-                : 'w-[150px]'
+                ? 'w-0 -translate-x-32 pl-0 opacity-0'
+                : 'w-[150px] pl-4'
             }`}
-            iconSize="size-12"
             textSize="text-4xl"
           />
           <PawIcon
@@ -173,17 +175,18 @@ const Navbar = (props) => {
             }}
             navbarSize={navbarSize}
           />
-          <Link className="w-full" to="/create">
-            <ListMenuItem
-              activeItem={props.activeItem}
-              icon={
-                props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline
-              }
-              label="Create"
-              onClick={() => changeActiveItem('create')}
-              navbarSize={navbarSize}
-            />
-          </Link>
+          <ListMenuItem
+            activeItem={props.activeItem}
+            icon={
+              props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline
+            }
+            label="Create"
+            onClick={() => {
+              changeActiveItem('create');
+              props.setCreateOpen(true);
+            }}
+            navbarSize={navbarSize}
+          />
           <Link className="w-full" to="/profile">
             <ListMenuItem
               activeItem={props.activeItem}
@@ -203,7 +206,7 @@ const Navbar = (props) => {
             navbarSize={navbarSize}
           />
           <div
-            className={` ${menuVisibility ? 'menu-load' : 'menu-deload hidden'} shadow-medium bg-secondary text-secondary bottom-115 absolute left-0 box-border flex flex-col items-start justify-center rounded-xl border border-gray-100 p-2 text-lg dark:border-gray-950`}
+            className={` ${menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} timing shadow-medium bg-secondary text-secondary absolute bottom-115 left-0 box-border flex flex-col items-start justify-center rounded-xl p-2 text-lg`}
           >
             <button className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-4 text-left">
               <Icon path={mdiCogOutline} size={1.3} />
@@ -216,7 +219,7 @@ const Navbar = (props) => {
         </div>
       </div>
       <Searchbar
-        className={`${searchVisibility ? 'left-0 opacity-100' : '-translate-x-full opacity-0'} timing absolute top-0 z-10`}
+        className={`${searchVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
         style={{
           transform:
             searchVisibility &&
@@ -224,7 +227,7 @@ const Navbar = (props) => {
         }}
       />
       <Notificationbar
-        className={`${notificationVisibility ? 'left-0 opacity-100' : '-translate-x-full opacity-0'} timing absolute top-0 z-10`}
+        className={`${notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
         style={{
           transform:
             notificationVisibility &&

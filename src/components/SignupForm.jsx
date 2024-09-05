@@ -4,6 +4,7 @@ import InputField from './InputField';
 import Button from './Button';
 import Logo from './Logo';
 import { AuthContext } from './AuthContext';
+import PawIcon from '../assets/PawIcon';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -53,7 +54,10 @@ const SignupForm = () => {
 
   return (
     <>
-      <Logo className="logo-load" iconSize="size-48" textSize="text-8xl" />
+      <div className="logo-load flex items-center justify-center gap-8">
+        <Logo textSize="text-8xl" />
+        <PawIcon className="size-32" />
+      </div>
       <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
         <form
           className="flex w-full flex-col gap-10"

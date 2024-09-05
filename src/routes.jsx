@@ -12,8 +12,8 @@ import SigninForm from './components/SigninForm';
 import MainLayout from './layouts/MainLayout';
 import Feed from './components/Feed';
 import Explore from './components/Explore';
-import Create from './components/Create';
 import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,8 +26,8 @@ const router = createBrowserRouter(
       <Route element={<MainLayout />}>
         <Route path="home" element={<Feed />}></Route>
         <Route path="explore" element={<Explore />}></Route>
-        <Route path="create" element={<Create />}></Route>
         <Route path="profile" element={<Profile />}></Route>
+        <Route path="profile/edit" element={<EditProfile />}></Route>
       </Route>
     </Route>,
   ),

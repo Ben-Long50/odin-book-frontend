@@ -4,7 +4,7 @@ import Icon from '@mdi/react';
 const Searchbar = (props) => {
   return (
     <search
-      className={`${props.className} shadow-md-right bg-secondary flex h-dvh min-w-96 flex-col dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex h-dvh min-w-96 flex-col shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       <div className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
@@ -15,7 +15,9 @@ const Searchbar = (props) => {
             type="text"
             placeholder="Search"
           />
-          <Icon path={mdiCloseCircle} size={1} />
+          <button className="text-tertiary cursor-pointer">
+            <Icon path={mdiCloseCircle} size={1} />
+          </button>
         </div>
       </div>
       <div className="flex flex-col gap-4 p-6">

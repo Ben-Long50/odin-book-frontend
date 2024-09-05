@@ -5,6 +5,7 @@ import AuthProvider from './components/AuthContext';
 import ThemeProvider from './components/ThemeContext';
 import './styles/custom-scrollbar.css';
 import '@fontsource/inter';
+import '@fontsource/pacifico';
 
 const App = () => {
   return (

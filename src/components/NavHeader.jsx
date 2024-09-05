@@ -6,7 +6,7 @@ import PawIcon from '../assets/PawIcon';
 
 const NavHeader = (props) => {
   return (
-    <nav className="bg-secondary sticky top-0 flex w-dvw items-center justify-between border-b px-3 py-2">
+    <nav className="bg-secondary sticky top-0 z-10 flex w-dvw items-center justify-between border-b px-3 py-2">
       {props.layoutSize === 'small' ? (
         <Logo className="absolute left-3" textSize="text-3xl" />
       ) : (
@@ -19,7 +19,9 @@ const NavHeader = (props) => {
             type="text"
             placeholder="Search"
           />
-          <Icon path={mdiCloseCircle} size={1.2} />
+          <button className="text-tertiary cursor-pointer">
+            <Icon path={mdiCloseCircle} size={1} />
+          </button>
         </div>
         <ListMenuItem
           className="w-auto"
