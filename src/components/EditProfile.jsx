@@ -22,8 +22,11 @@ const EditProfile = () => {
     <PerfectScrollbar className="h-full overflow-y-auto">
       <div className="text-primary layout-cols grid py-4 md:p-6 lg:p-8">
         <div className="col-start-2 col-end-3 flex h-full w-full max-w-2xl flex-col gap-8 justify-self-center p-4">
-          <h1 className="text-primary text-2xl font-semibold"> Edit Profile</h1>
-          <div className="bg-secondary-2 flex items-center justify-between rounded-2xl p-4">
+          <h1 className="fade-in-left text-primary text-2xl font-semibold">
+            {' '}
+            Edit Profile
+          </h1>
+          <div className="fade-in-right bg-secondary-2 flex items-center justify-between rounded-2xl p-4">
             <div className="flex items-center justify-start gap-4">
               <ProfilePic className="size-16" />
               <div className="flex flex-col items-start justify-center gap-1">
@@ -36,8 +39,10 @@ const EditProfile = () => {
             </Button>
           </div>
           <div className="flex flex-col items-start gap-4">
-            <h3 className="text-primary text-xl font-semibold">Username</h3>
-            <div className="bg-secondary flex w-full gap-2 rounded-2xl border p-4">
+            <h3 className="fade-in-left text-primary text-xl font-semibold">
+              Username
+            </h3>
+            <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
               <input
                 className="h-full w-full self-center overflow-auto bg-transparent outline-none"
                 type="text"
@@ -48,8 +53,10 @@ const EditProfile = () => {
             </div>
           </div>
           <div className="flex flex-col items-start gap-4">
-            <h3 className="text-primary text-xl font-semibold">Pet name</h3>
-            <div className="bg-secondary flex w-full gap-2 rounded-2xl border p-4">
+            <h3 className="fade-in-left text-primary text-xl font-semibold">
+              Pet name
+            </h3>
+            <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
               <input
                 className="h-full w-full self-center overflow-auto bg-transparent outline-none"
                 type="text"
@@ -60,8 +67,10 @@ const EditProfile = () => {
             </div>
           </div>
           <div className="flex flex-col items-start gap-4">
-            <h3 className="text-primary text-xl font-semibold">Bio</h3>
-            <div className="bg-secondary flex h-24 w-full gap-2 rounded-2xl border p-4">
+            <h3 className="fade-in-left text-primary text-xl font-semibold">
+              Bio
+            </h3>
+            <div className="fade-in-right bg-secondary flex h-24 w-full gap-2 rounded-2xl border p-4">
               <textarea
                 className="h-full w-full resize-none self-center overflow-auto bg-transparent outline-none"
                 type="text"
@@ -75,8 +84,10 @@ const EditProfile = () => {
             </div>
           </div>
           <div className="flex flex-col items-start gap-4">
-            <h3 className="text-primary text-xl font-semibold">Species</h3>
-            <div className="bg-secondary flex w-full gap-2 rounded-2xl border p-4">
+            <h3 className="fade-in-left text-primary text-xl font-semibold">
+              Species
+            </h3>
+            <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
               <input
                 className="h-full w-full self-center overflow-auto bg-transparent outline-none"
                 type="text"
@@ -87,8 +98,10 @@ const EditProfile = () => {
             </div>
           </div>
           <div className="flex flex-col items-start gap-4">
-            <h3 className="text-primary text-xl font-semibold">Breed</h3>
-            <div className="bg-secondary flex w-full gap-2 rounded-2xl border p-4">
+            <h3 className="fade-in-left text-primary text-xl font-semibold">
+              Breed
+            </h3>
+            <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
               <input
                 className="h-full w-full self-center overflow-auto bg-transparent outline-none"
                 type="text"
@@ -98,7 +111,10 @@ const EditProfile = () => {
               />
             </div>
           </div>
-          <Button className="w-1/2 self-end py-2 font-semibold" type="submit">
+          <Button
+            className="fade-in-left w-1/2 self-end py-2 font-semibold"
+            type="submit"
+          >
             Submit
           </Button>
         </div>

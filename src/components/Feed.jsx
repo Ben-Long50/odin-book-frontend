@@ -13,6 +13,7 @@ const Feed = () => {
       likes: [1, 2, 3, 4, 5],
       comments: [1, 2, 3],
       body: 'Look at this cool picture of a Chinese dragon I found. I use this as a placeholder for any image during my app development process.',
+      date: '7h',
     },
     {
       imgUrl:
@@ -21,18 +22,15 @@ const Feed = () => {
       likes: [1, 2, 3, 4, 5],
       comments: [1, 2, 3],
       body: 'Look at this cool picture of a Chinese dragon I found. I use this as a placeholder for any image during my app development process.',
+      date: '7h',
     },
   ]);
 
   return (
-    <PerfectScrollbar className="h-full overflow-y-auto">
-      <div className="text-primary layout-cols center grid md:p-6 lg:p-8">
-        <div className="col-start-2 col-end-3 flex flex-col justify-self-center">
-          {posts.map((post, index) => (
-            <Post key={index} post={post} />
-          ))}
-        </div>
-      </div>
+    <PerfectScrollbar className="text-primary flex flex-col items-center overflow-y-auto md:p-6 lg:p-8">
+      {posts.map((post, index) => (
+        <Post key={index} post={post} />
+      ))}
     </PerfectScrollbar>
   );
 };

@@ -45,7 +45,7 @@ const MainLayout = () => {
 
   return (
     <div
-      className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid h-dvh bg-fixed`}
+      className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary relative grid h-dvh bg-fixed`}
     >
       {layoutSize === 'small' || layoutSize === 'xsmall' ? (
         <>
@@ -69,7 +69,9 @@ const MainLayout = () => {
             setLayoutSize={setLayoutSize}
             setCreateOpen={setCreateOpen}
           />
-          <Outlet context={[layoutSize]} />
+          <div className="flex h-dvh items-start justify-center">
+            <Outlet context={[layoutSize]} />
+          </div>
           <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
         </>
       )}

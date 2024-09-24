@@ -1,6 +1,5 @@
 import {
   mdiAccount,
-  mdiCogOutline,
   mdiCompass,
   mdiCompassOutline,
   mdiHeart,
@@ -12,7 +11,6 @@ import {
   mdiPlusBox,
   mdiPlusBoxOutline,
 } from '@mdi/js';
-import Icon from '@mdi/react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import ListMenuItem from './ListMenuItem';
@@ -20,6 +18,7 @@ import { useEffect, useState, useRef } from 'react';
 import PawIcon from '../assets/PawIcon';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
+import SettingsMenu from './SettingsMenu';
 
 const Navbar = (props) => {
   const [navbarSize, setNavbarSize] = useState(() => {
@@ -205,17 +204,10 @@ const Navbar = (props) => {
             onClick={toggleMenuVisibility}
             navbarSize={navbarSize}
           />
-          <div
-            className={` ${menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} timing shadow-medium bg-secondary text-secondary absolute bottom-115 left-0 box-border flex flex-col items-start justify-center rounded-xl p-2 text-lg`}
-          >
-            <button className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-4 text-left">
-              <Icon path={mdiCogOutline} size={1.3} />
-              <h2>Settings</h2>
-            </button>
-            <button className="hover:bg-secondary-2 w-full rounded-lg p-4 text-left">
-              Log out
-            </button>
-          </div>
+          <SettingsMenu
+            className={`${menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} bottom-115 absolute left-0`}
+            toggleMenuVisibility={toggleMenuVisibility}
+          />
         </div>
       </div>
       <Searchbar

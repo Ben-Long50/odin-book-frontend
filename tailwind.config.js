@@ -31,6 +31,16 @@ export default {
         'md-right':
           '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0px 4px -2px rgb(0, 0, 0, 0.1)',
       },
+      inset: {
+        115: '115%',
+      },
+      aspectRatio: {
+        portrait: '4 / 5',
+        landscape: '1.91 / 1',
+      },
+      height: {
+        'dvh-95': '95dvh',
+      },
     },
   },
   plugins: [],
