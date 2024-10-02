@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 import {
+  mdiAccountCog,
   mdiBookmarkOutline,
   mdiCogOutline,
   mdiLogout,
@@ -17,6 +18,15 @@ const SettingsMenu = (props) => {
     <div
       className={`${props.className} timing shadow-medium bg-secondary text-secondary flex flex-col items-start justify-center rounded-xl p-2 text-lg`}
     >
+      <Link to="manage">
+        <button
+          className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
+          onClick={props.toggleMenuVisibility}
+        >
+          <Icon path={mdiAccountCog} size={1.2} />
+          Manage profiles
+        </button>
+      </Link>
       <Link className="w-full" to="profile/edit">
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"

@@ -3,6 +3,7 @@ import Post from './Post';
 import { useState } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/custom-scrollbar.css';
+import { useOutletContext } from 'react-router-dom';
 
 const Feed = () => {
   const [posts, setPosts] = useState([
@@ -25,11 +26,12 @@ const Feed = () => {
       date: '7h',
     },
   ]);
+  const [layoutSize] = useOutletContext();
 
   return (
     <PerfectScrollbar className="text-primary flex flex-col items-center overflow-y-auto md:p-6 lg:p-8">
       {posts.map((post, index) => (
-        <Post key={index} post={post} />
+        <Post key={index} post={post} layoutSize={layoutSize} />
       ))}
     </PerfectScrollbar>
   );

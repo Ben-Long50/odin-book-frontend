@@ -88,6 +88,7 @@ const Post = (props) => {
       </div>
       <PostDetail
         post={props.post}
+        layoutSize={props.layoutSize}
         following={following}
         setFollowing={setFollowing}
         postOpen={postOpen}

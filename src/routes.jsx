@@ -13,9 +13,11 @@ import MainLayout from './layouts/MainLayout';
 import Feed from './components/Feed';
 import Explore from './components/Explore';
 import PersonalProfile from './components/PersonalProfile';
-import EditProfile from './components/EditProfile';
 import ForeignProfile from './components/ForeignProfile';
 import Bookmarks from './components/Bookmarks';
+import ManageProfiles from './components/ManageProfiles';
+import ProfileEdit from './components/ProfileEdit';
+import ProfileCreate from './components/ProfileCreate';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,9 +31,11 @@ const router = createBrowserRouter(
         <Route path="home" element={<Feed />}></Route>
         <Route path="explore" element={<Explore />}></Route>
         <Route path="profile" element={<PersonalProfile />}></Route>
+        <Route path="manage" element={<ManageProfiles />}></Route>
         <Route path="profile/:username" element={<ForeignProfile />}></Route>
         <Route path="profile/bookmarks" element={<Bookmarks />}></Route>
-        <Route path="profile/edit" element={<EditProfile />}></Route>
+        <Route path="profile/edit" element={<ProfileEdit />}></Route>
+        <Route path="manage/create" element={<ProfileCreate />}></Route>
       </Route>
     </Route>,
   ),

@@ -10,15 +10,10 @@ import BookmarkButton from './BookmarkButton';
 const PostDetail = (props) => {
   return (
     props.postOpen && (
-      <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-75">
-        <div className="fade-in-bottom bg-secondary-2 h-dvh-95 fixed z-30 mx-auto grid max-w-7xl grid-cols-3 bg-black">
-          <img
-            className="col-span-2 w-full self-center"
-            src={props.post.imgUrl}
-            alt="post image"
-          />
-          <div className="bg-secondary col-span-1 flex flex-col items-start justify-start">
-            <div className="flex items-center p-4">
+      <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-75 sm:p-4 md:p-8">
+        <div className="fade-in-bottom bg-secondary-2 max-h-dvh-95 z-30 mx-auto flex max-w-7xl flex-col bg-black md:grid md:grid-cols-3">
+          {(props.layoutSize === 'small' || props.layoutSize === 'xsmall') && (
+            <div className="bg-secondary flex items-center p-4">
               <Link to={`/profile/${props.post.author}`}>
                 <ProfilePic className="mr-4 size-10" />
               </Link>
@@ -39,6 +34,38 @@ const PostDetail = (props) => {
                 )}
               </div>
             </div>
+          )}
+          <img
+            className="col-span-2 w-full self-center"
+            src={props.post.imgUrl}
+            alt="post image"
+          />
+          <div className="bg-secondary col-span-1 flex grow flex-col items-start justify-start">
+            {props.layoutSize !== 'small' && props.layoutSize !== 'xsmall' && (
+              <div className="flex items-center p-4">
+                <Link to={`/profile/${props.post.author}`}>
+                  <ProfilePic className="mr-4 size-10" />
+                </Link>
+                <div className="text-primary flex items-center">
+                  <Link to={`/profile/${props.post.author}`}>
+                    <h3 className="text-lg font-semibold">
+                      {props.post.author}
+                    </h3>
+                  </Link>
+                  {!props.following && (
+                    <>
+                      <Icon path={mdiCircleSmall} size={1} />
+                      <button
+                        className="text-accent"
+                        onClick={() => props.setFollowing(true)}
+                      >
+                        Follow
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
             <hr className="text-tertiary w-full self-center" />
             <div className="flex items-start p-4">
               <Link to={`/profile/${props.post.author}`}>
@@ -56,18 +83,32 @@ const PostDetail = (props) => {
             </div>
             <hr className="text-tertiary mt-auto w-full self-center" />
             <div className="w-full p-3">
-              <div className="mb-3 flex w-full items-center justify-between">
+              <div className="flex w-full items-center justify-between md:mb-3">
                 <div className="flex items-center justify-start gap-4">
                   <LikeButton />
                   <CommentButton />
                   <ShareButton />
                 </div>
-                <BookmarkButton />
+                <div className="flex items-center gap-2">
+                  {(props.layoutSize === 'small' ||
+                    props.layoutSize === 'xsmall') && (
+                    <p className="text-primary font-semibold">
+                      {props.post.likes.length} likes
+                    </p>
+                  )}
+                  <BookmarkButton />
+                </div>
               </div>
-              <p className="text-primary font-semibold">
-                {props.post.likes.length} likes
-              </p>
-              <p className="text-tertiary text-sm">{props.post.date}</p>
+
+              {props.layoutSize !== 'small' &&
+                props.layoutSize !== 'xsmall' && (
+                  <>
+                    <p className="text-primary font-semibold">
+                      {props.post.likes.length} likes
+                    </p>
+                    <p className="text-tertiary text-sm">{props.post.date}</p>
+                  </>
+                )}
             </div>
             <hr className="text-tertiary w-full self-center" />
             <form className="text-primary flex w-full items-center justify-between p-3">

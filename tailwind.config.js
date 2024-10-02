@@ -41,6 +41,9 @@ export default {
       height: {
         'dvh-95': '95dvh',
       },
+      maxHeight: {
+        'dvh-95': '95dvh',
+      },
     },
   },
   plugins: [],
