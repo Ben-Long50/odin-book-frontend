@@ -5,6 +5,7 @@ const getProfiles = async (apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
+    console.log(data);
 
     return data;
   } catch (error) {

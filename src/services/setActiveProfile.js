@@ -1,7 +1,7 @@
-const createProfile = async (profileData, apiUrl) => {
+const setActiveProfile = async (profileData, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profile`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -16,4 +16,4 @@ const createProfile = async (profileData, apiUrl) => {
   }
 };
 
-export default createProfile;
+export default setActiveProfile;

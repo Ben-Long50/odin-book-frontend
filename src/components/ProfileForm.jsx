@@ -1,15 +1,21 @@
 import { useContext, useState } from 'react';
 import ProfilePic from './ProfilePic';
 import Button from './Button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import createProfile from '../services/createProfile';
 import { AuthContext } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileForm = (props) => {
   const { apiUrl } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (formData) => {
       return createProfile(formData, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['profiles']);
     },
   });
 
@@ -28,7 +34,7 @@ const ProfileForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      id: props.profile?.id || 2,
+      id: props.profile?.id || null,
       username: usernameInput,
       petName: petNameInput,
       bio: bioInput,
@@ -126,7 +132,10 @@ const ProfileForm = (props) => {
       </div>
       <Button
         className="fade-in-left w-1/2 self-end py-2 font-semibold"
-        onClick={(e) => handleSubmit(e)}
+        onClick={(e) => {
+          handleSubmit(e);
+          navigate('/manage');
+        }}
       >
         {props.submitText}
       </Button>

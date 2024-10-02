@@ -4,17 +4,31 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Link } from 'react-router-dom';
 import { mdiSquareEditOutline } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import getProfiles from '../services/getProfiles';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
+import setActiveProfile from '../services/setActiveProfile';
 
 const ManageProfiles = () => {
   const { apiUrl } = useContext(AuthContext);
+  const queryClient = useQueryClient();
   const profiles = useQuery({
     queryKey: ['profiles'],
     queryFn: () => getProfiles(apiUrl),
   });
+  const mutation = useMutation({
+    mutationFn: (profileData) => {
+      return setActiveProfile(profileData, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['profiles']);
+    },
+  });
+
+  const handleActive = (profile) => {
+    mutation.mutate(profile);
+  };
 
   if (profiles.isPending) {
     return <span>Loading...</span>;
@@ -56,7 +70,10 @@ const ManageProfiles = () => {
                     Active profile
                   </Button>
                 ) : (
-                  <Button className="px-3 py-2 text-sm font-semibold opacity-50">
+                  <Button
+                    className="px-3 py-2 text-sm font-semibold opacity-50"
+                    onClick={() => handleActive(profile)}
+                  >
                     Switch profile
                   </Button>
                 )}
