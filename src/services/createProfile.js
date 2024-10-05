@@ -1,19 +1,19 @@
 const createProfile = async (profileData, apiUrl) => {
-  try {
-    const response = await fetch(`${apiUrl}/profile`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(profileData),
-    });
-    const data = await response.json();
-    console.log(data.message);
-    return data;
-  } catch (error) {
-    console.error(error.message);
+  const response = await fetch(`${apiUrl}/profile`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(profileData),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    const error = new Error('Failed to create profile');
+    error.response = data;
+    throw error;
   }
+  return data;
 };
 
 export default createProfile;
