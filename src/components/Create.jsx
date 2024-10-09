@@ -35,7 +35,7 @@ const Create = (props) => {
     <>
       <dialog
         open={props.createOpen}
-        className="fade-in-bottom bg-secondary-2 z-30 w-full max-w-4xl self-center rounded-xl"
+        className="fade-in-bottom bg-secondary-2 z-30 max-h-dvh-95 w-full max-w-4xl self-center rounded-xl"
         ref={dialogRef}
       >
         {!imagePreview ? (
@@ -80,7 +80,7 @@ const Create = (props) => {
               />
             </label>
           ) : (
-            <div className="flex flex-col justify-between gap-4">
+            <div className="flex flex-col justify-between">
               <div className="flex aspect-square max-w-4xl items-center justify-center overflow-hidden bg-black">
                 <img
                   className={`fade-in-bottom ${imageAr === 'portrait' && 'h-full'} ${imageAr === 'landscape' && 'w-full'} ${'object-' + imageFit}`}
@@ -88,7 +88,7 @@ const Create = (props) => {
                   alt="Preview"
                 />
               </div>
-              <div className="flex items-center justify-center gap-8">
+              <div className="mt-4 flex items-center justify-center gap-8">
                 <div className="fade-in-left flex flex-col items-center gap-2">
                   <h3 className="text-primary">Aspect ratio</h3>
                   <div className="flex gap-2">

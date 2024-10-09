@@ -42,7 +42,10 @@ const Searchbar = (props) => {
           />
           <button
             className="text-tertiary cursor-pointer"
-            onClick={() => setSearchQuery('')}
+            onClick={() => {
+              setSearchQuery('');
+              setResults([]);
+            }}
           >
             <Icon path={mdiCloseCircle} size={1} />
           </button>
@@ -63,7 +66,10 @@ const Searchbar = (props) => {
                 key={profile.id}
                 className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
               >
-                <ProfilePic className="size-12 shrink-0" />
+                <ProfilePic
+                  image={profile.profilePicUrl}
+                  className="size-12 shrink-0"
+                />
                 <div>
                   <p className="text-primary text-lg">{profile.username}</p>
                   <p className="text-tertiary">{profile.petName}</p>

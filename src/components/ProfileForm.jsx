@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import ProfilePic from './ProfilePic';
 import Button from './Button';
 import Icon from '@mdi/react';
@@ -31,6 +31,10 @@ const ProfileForm = (props) => {
     },
   });
 
+  const [file, setFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(
+    props.profile?.profilePicUrl || null,
+  );
   const [usernameInput, setUsernameInput] = useState(
     props.profile?.username || '',
   );
@@ -43,37 +47,77 @@ const ProfileForm = (props) => {
   );
   const [breedInput, setBreedInput] = useState(props.profile?.breed || '');
 
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0]; // Get the selected file
+
+    if (selectedFile) {
+      setFile(selectedFile); // Update the state with the selected file
+
+      // Create a URL for the selected file to preview
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setImagePreview(fileUrl);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {
-      id: props.profile?.id || null,
-      username: usernameInput,
-      petName: petNameInput,
-      bio: bioInput,
-      species: speciesInput,
-      breed: breedInput,
-    };
+    const formData = new FormData();
+
+    formData.append('id', props.profile?.id || null);
+    formData.append('image', file);
+    formData.append('username', usernameInput);
+    formData.append('petName', petNameInput);
+    formData.append('bio', bioInput);
+    formData.append('species', speciesInput);
+    formData.append('breed', breedInput);
 
     newProfile.mutate(formData);
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = () => {
     oldProfile.mutate(props.profile?.id);
+  };
+
+  const inputRef = useRef(null);
+
+  const handleButtonClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
   };
 
   return (
     <>
       <div className="fade-in-right bg-secondary-2 flex items-center justify-between rounded-2xl p-4">
-        <div className="flex items-center justify-start gap-4">
-          <ProfilePic className="size-16" />
+        <div className="flex items-center justify-start gap-4 md:gap-8">
+          {!imagePreview ? (
+            <ProfilePic className="size-20 md:size-32" />
+          ) : (
+            <ProfilePic image={imagePreview} className="size-20 md:size-32" />
+          )}
           <div className="flex flex-col items-start justify-center gap-1">
-            <p className="font-semibold">{usernameInput}</p>
-            <p>{petNameInput}</p>
+            <p className="font-semibold md:text-2xl">{usernameInput}</p>
+            <p className="md:text-xl">{petNameInput}</p>
           </div>
         </div>
-        <Button className="px-3 py-2 text-sm font-semibold">
-          Change photo
-        </Button>
+        <label>
+          <Button
+            className="px-3 py-2 text-sm font-semibold"
+            type="button"
+            onClick={handleButtonClick}
+          >
+            Change photo
+          </Button>
+          <input
+            ref={inputRef}
+            id="file"
+            type="file"
+            name="image"
+            className="hidden"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </label>
       </div>
       <div className="flex flex-col items-start gap-4">
         <h3 className="fade-in-left text-primary text-xl font-semibold">

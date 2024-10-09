@@ -27,7 +27,10 @@ const Profile = (props) => {
         {layoutSize !== 'small' && layoutSize !== 'xsmall' ? (
           <>
             <div className="flex items-center justify-center">
-              <ProfilePic className="fade-in-left mr-12 size-40" />
+              <ProfilePic
+                image={props.profile.profilePicUrl}
+                className="fade-in-left mr-12 size-40"
+              />
               <div className="fade-in-right flex h-full flex-col items-start justify-between gap-2">
                 <div className="flex items-center justify-start gap-2">
                   <h2 className="text-primary mr-4 text-2xl">

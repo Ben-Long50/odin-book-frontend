@@ -2,11 +2,8 @@ const createProfile = async (profileData, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profile`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       credentials: 'include',
-      body: JSON.stringify(profileData),
+      body: profileData,
     });
     const data = await response.json();
     console.log(data.message);

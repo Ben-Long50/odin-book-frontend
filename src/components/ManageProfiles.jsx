@@ -44,7 +44,10 @@ const ManageProfiles = () => {
               className="fade-in-right bg-secondary-2 flex items-center justify-between rounded-2xl p-4"
             >
               <div className="mr-4 flex items-center justify-start gap-4">
-                <ProfilePic className="size-16 shrink-0" />
+                <ProfilePic
+                  image={profile.profilePicUrl}
+                  className="size-16 shrink-0"
+                />
                 <div className="flex flex-col items-start justify-center gap-1">
                   <p className="font-semibold">{profile.username}</p>
                   <p>{profile.petName}</p>
