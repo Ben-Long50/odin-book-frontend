@@ -1,5 +1,4 @@
 import { createContext, useState } from 'react';
-import Loading from './Loading';
 
 export const AuthContext = createContext();
 

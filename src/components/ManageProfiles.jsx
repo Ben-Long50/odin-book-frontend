@@ -4,25 +4,22 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Link } from 'react-router-dom';
 import { mdiSquareEditOutline } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import getProfiles from '../services/getProfiles';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import setActiveProfile from '../services/setActiveProfile';
+import { GlobalContext } from './GlobalContext';
 
 const ManageProfiles = () => {
   const { apiUrl } = useContext(AuthContext);
+  const { profiles } = useContext(GlobalContext);
   const queryClient = useQueryClient();
-  const profiles = useQuery({
-    queryKey: ['profiles'],
-    queryFn: () => getProfiles(apiUrl),
-  });
   const mutation = useMutation({
     mutationFn: (profileData) => {
       return setActiveProfile(profileData, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['profiles']);
+      queryClient.invalidateQueries(['profiles', 'activeProfile']);
     },
   });
 

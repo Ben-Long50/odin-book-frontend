@@ -1,21 +1,33 @@
 import { useContext, useState } from 'react';
 import ProfilePic from './ProfilePic';
 import Button from './Button';
+import Icon from '@mdi/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import createProfile from '../services/createProfile';
 import { AuthContext } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { mdiTrashCanOutline } from '@mdi/js';
+import deleteProfile from '../services/deleteProfile';
 
 const ProfileForm = (props) => {
   const { apiUrl } = useContext(AuthContext);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+  const newProfile = useMutation({
     mutationFn: (formData) => {
       return createProfile(formData, apiUrl);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['profiles']);
+    },
+  });
+  const oldProfile = useMutation({
+    mutationFn: (profileId) => {
+      return deleteProfile(profileId, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['profiles']);
+      navigate('/manage');
     },
   });
 
@@ -42,7 +54,11 @@ const ProfileForm = (props) => {
       breed: breedInput,
     };
 
-    mutation.mutate(formData);
+    newProfile.mutate(formData);
+  };
+
+  const handleDelete = (e) => {
+    oldProfile.mutate(props.profile?.id);
   };
 
   return (
@@ -130,15 +146,41 @@ const ProfileForm = (props) => {
           />
         </div>
       </div>
-      <Button
-        className="fade-in-left w-1/2 self-end py-2 font-semibold"
-        onClick={(e) => {
-          handleSubmit(e);
-          navigate('/manage');
-        }}
-      >
-        {props.submitText}
-      </Button>
+      <div className="flex items-center justify-between">
+        <div className="flex gap-4">
+          {props.formType === 'edit' && (
+            <button
+              className="text-secondary fade-in-left timing bg-secondary rounded-lg border p-2 hover:bg-red-600 dark:hover:bg-red-500"
+              onClick={props.deleteMode ? handleDelete : props.toggleDeleteMode}
+            >
+              <Icon path={mdiTrashCanOutline} size={1.25} />
+            </button>
+          )}
+          {props.deleteMode && (
+            <button
+              className="fade-in-right text-secondary hover:underline"
+              onClick={props.toggleDeleteMode}
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+        <Button
+          className="fade-in-left w-1/2 self-end py-2 font-semibold"
+          onClick={(e) => {
+            handleSubmit(e);
+            navigate('/manage');
+          }}
+        >
+          {props.submitText}
+        </Button>
+      </div>
+      {props.deleteMode && (
+        <p className="fade-in-left text-error">
+          Press the delete button one more time to confirm deletion of this
+          profile
+        </p>
+      )}
     </>
   );
 };

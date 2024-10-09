@@ -10,7 +10,7 @@ const Profile = (props) => {
   const [layoutSize] = useOutletContext();
 
   useEffect(() => {
-    if (!props.profile.posts || props.profile.posts.length === 0) return;
+    if (!props.profile.posts || props.profile.posts?.length === 0) return;
 
     props.profile.posts.forEach((post, index) => {
       setTimeout(() => {
@@ -38,19 +38,19 @@ const Profile = (props) => {
                 <div className="flex items-center justify-start gap-8">
                   <div className="flex items-center justify-center gap-2">
                     <h2 className="text-primary text-xl">
-                      {props.profile.posts.length}
+                      {props.profile.posts?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Posts</h3>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <h2 className="text-primary text-xl">
-                      {props.profile.posts.length}
+                      {props.profile.posts?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Followers</h3>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <h2 className="text-primary text-xl">
-                      {props.profile.posts.length}
+                      {props.profile.posts?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Following</h3>
                   </div>
@@ -120,13 +120,13 @@ const Profile = (props) => {
               </div>
               <div className="flex flex-col items-center justify-center">
                 <h2 className="text-primary text-lg">
-                  {props.profile.posts.length}
+                  {props.profile.posts?.length}
                 </h2>
                 <h3 className="text-tertiary">Followers</h3>
               </div>
               <div className="flex flex-col items-center justify-center">
                 <h2 className="text-primary text-lg">
-                  {props.profile.posts.length}
+                  {props.profile.posts?.length}
                 </h2>
                 <h3 className="text-tertiary">Following</h3>
               </div>

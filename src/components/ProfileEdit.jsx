@@ -1,11 +1,17 @@
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import ProfileForm from './ProfileForm';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ProfileEdit = () => {
+  const [deleteMode, setDeleteMode] = useState(false);
   const location = useLocation();
   const { state } = location;
   const profile = state;
+
+  const toggleDeleteMode = () => {
+    setDeleteMode(!deleteMode);
+  };
 
   return (
     <PerfectScrollbar className="h-full overflow-y-auto">
@@ -14,7 +20,13 @@ const ProfileEdit = () => {
           <h1 className="fade-in-left text-primary text-2xl font-semibold">
             Edit Profile
           </h1>
-          <ProfileForm profile={profile} submitText="Save" />
+          <ProfileForm
+            formType="edit"
+            deleteMode={deleteMode}
+            toggleDeleteMode={toggleDeleteMode}
+            profile={profile}
+            submitText="Save"
+          />
         </div>
       </div>
     </PerfectScrollbar>

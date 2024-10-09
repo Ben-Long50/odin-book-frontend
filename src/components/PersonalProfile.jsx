@@ -1,21 +1,15 @@
 import Profile from './Profile';
 import { Link } from 'react-router-dom';
 import Button from './Button';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { GlobalContext } from './GlobalContext';
 
 const PersonalProfile = () => {
-  const [profile, setProfile] = useState({
-    username: 'Kitty_da_TA',
-    posts: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    petName: 'Kitty',
-    species: 'Cat',
-    breed: 'Turkish Angora',
-    bio: "I'm just a little Turkish Angora!",
-  });
+  const { activeProfile } = useContext(GlobalContext);
 
   return (
-    <Profile profile={profile}>
-      <Link to="edit" state={profile}>
+    <Profile profile={activeProfile}>
+      <Link to="edit" state={activeProfile}>
         <Button className="px-3 py-1 text-sm font-semibold">
           Edit profile
         </Button>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Icon from '@mdi/react';
 import {
   mdiAccountCog,
@@ -10,9 +10,32 @@ import {
 } from '@mdi/js';
 import { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
+import { AuthContext } from './AuthContext';
+import { GlobalContext } from './GlobalContext';
 
 const SettingsMenu = (props) => {
+  const { apiUrl } = useContext(AuthContext);
   const { theme, changeTheme } = useContext(ThemeContext);
+  const { activeProfile } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/signout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const result = await response.json();
+      if (response.ok) {
+        console.log(result.message);
+        navigate('/signin');
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <div
@@ -27,7 +50,7 @@ const SettingsMenu = (props) => {
           Manage profiles
         </button>
       </Link>
-      <Link className="w-full" to="profile/edit">
+      <Link className="w-full" to="profile/edit" state={activeProfile}>
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}
@@ -61,7 +84,10 @@ const SettingsMenu = (props) => {
       <Link className="w-full" to="signin">
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
-          onClick={props.toggleMenuVisibility}
+          onClick={() => {
+            props.toggleMenuVisibility();
+            logout();
+          }}
         >
           <Icon path={mdiLogout} size={1.2} />
           Log out

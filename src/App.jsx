@@ -6,13 +6,16 @@ import ThemeProvider from './components/ThemeContext';
 import './styles/custom-scrollbar.css';
 import '@fontsource/inter';
 import '@fontsource/pacifico';
+import GlobalProvider from './components/GlobalContext';
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <Outlet />
+          <GlobalProvider>
+            <Outlet />
+          </GlobalProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>

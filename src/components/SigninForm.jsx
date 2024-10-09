@@ -43,6 +43,7 @@ const SigninForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       });
       const result = await response.json();
