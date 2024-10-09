@@ -1,7 +1,27 @@
 import { mdiCloseCircle } from '@mdi/js';
 import Icon from '@mdi/react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useContext, useState } from 'react';
+import ProfilePic from './ProfilePic';
+import { AuthContext } from './AuthContext';
+import getSearchMatch from '../services/getSearchMatch';
 
 const Searchbar = (props) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const { apiUrl } = useContext(AuthContext);
+
+  const searchResults = useMutation({
+    mutationFn: async () => {
+      const result = await getSearchMatch(searchQuery, apiUrl);
+      if (result) {
+        setResults(result);
+      } else {
+        setResults([]);
+      }
+    },
+  });
+
   return (
     <search
       className={`${props.className} bg-secondary flex h-dvh min-w-96 flex-col shadow-md-right dark:shadow-gray-950`}
@@ -14,19 +34,44 @@ const Searchbar = (props) => {
             className="text-secondary grow border-none bg-transparent text-lg outline-none"
             type="text"
             placeholder="Search"
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              searchResults.mutate();
+            }}
+            value={searchQuery}
           />
-          <button className="text-tertiary cursor-pointer">
+          <button
+            className="text-tertiary cursor-pointer"
+            onClick={() => setSearchQuery('')}
+          >
             <Icon path={mdiCloseCircle} size={1} />
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-4 p-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-primary text-xl font-semibold">Recent</h3>
-          <p className="hover:text-primary cursor-pointer text-lg text-blue-500">
-            Clear all
-          </p>
-        </div>
+      <div className="flex flex-col gap-2 p-4">
+        {results.length < 1 ? (
+          <div className="flex items-center justify-between p-2">
+            <h3 className="text-primary text-xl font-semibold">Recent</h3>
+            <p className="hover:text-primary cursor-pointer text-lg text-blue-500">
+              Clear all
+            </p>
+          </div>
+        ) : (
+          results.map((profile) => {
+            return (
+              <div
+                key={profile.id}
+                className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
+              >
+                <ProfilePic className="size-12 shrink-0" />
+                <div>
+                  <p className="text-primary text-lg">{profile.username}</p>
+                  <p className="text-tertiary">{profile.petName}</p>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </search>
   );

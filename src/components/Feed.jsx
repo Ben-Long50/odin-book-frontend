@@ -29,7 +29,7 @@ const Feed = () => {
   const [layoutSize] = useOutletContext();
 
   return (
-    <PerfectScrollbar className="text-primary flex flex-col items-center overflow-y-auto md:p-6 lg:p-8">
+    <PerfectScrollbar className="text-primary flex w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8">
       {posts.map((post, index) => (
         <Post key={index} post={post} layoutSize={layoutSize} />
       ))}

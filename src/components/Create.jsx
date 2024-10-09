@@ -81,9 +81,9 @@ const Create = (props) => {
             </label>
           ) : (
             <div className="flex flex-col justify-between gap-4">
-              <div className="flex aspect-square max-w-4xl items-center justify-center">
+              <div className="flex aspect-square max-w-4xl items-center justify-center overflow-hidden bg-black">
                 <img
-                  className={`fade-in-bottom ${imageAr === 'portrait' && 'h-full'} ${imageAr === 'landscape' && 'w-full'} ${'aspect-' + imageAr} bg-black ${'object-' + imageFit}`}
+                  className={`fade-in-bottom ${imageAr === 'portrait' && 'h-full'} ${imageAr === 'landscape' && 'w-full'} ${'object-' + imageFit}`}
                   src={imagePreview}
                   alt="Preview"
                 />
