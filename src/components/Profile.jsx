@@ -1,25 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Icon from '@mdi/react';
 import { mdiCircleSmall, mdiViewGrid } from '@mdi/js';
 import { useOutletContext } from 'react-router-dom';
 import ProfilePic from './ProfilePic';
+import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from './AuthContext';
+import getPosts from '../services/getPosts';
+import PostCard from './PostCard';
 
 const Profile = (props) => {
-  const [visiblePosts, setVisiblePosts] = useState([]);
+  const { apiUrl } = useContext(AuthContext);
   const [layoutSize] = useOutletContext();
 
-  useEffect(() => {
-    if (!props.profile.posts || props.profile.posts?.length === 0) return;
+  const posts = useQuery({
+    queryKey: ['posts'],
+    queryFn: async () => {
+      const result = await getPosts(props.profile.id, apiUrl);
 
-    props.profile.posts.forEach((post, index) => {
-      setTimeout(() => {
-        setVisiblePosts((prevPosts) => [...prevPosts, post]);
-      }, 100 * index);
-    });
+      if (result) {
+        return result.posts;
+      } else {
+        return [];
+      }
+    },
+  });
 
-    return () => setVisiblePosts([]);
-  }, [props.profile.posts]);
+  if (posts.isPending) {
+    return <div>...Loading</div>;
+  }
 
   return (
     <PerfectScrollbar className="text-primary w-full overflow-y-auto md:p-6 lg:p-8">
@@ -40,20 +49,18 @@ const Profile = (props) => {
                 </div>
                 <div className="flex items-center justify-start gap-8">
                   <div className="flex items-center justify-center gap-2">
-                    <h2 className="text-primary text-xl">
-                      {props.profile.posts?.length}
-                    </h2>
+                    <h2 className="text-primary text-xl">{posts.length}</h2>
                     <h3 className="text-tertiary text-lg">Posts</h3>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <h2 className="text-primary text-xl">
-                      {props.profile.posts?.length}
+                      {props.followers?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Followers</h3>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <h2 className="text-primary text-xl">
-                      {props.profile.posts?.length}
+                      {props.following?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Following</h3>
                   </div>
@@ -63,10 +70,20 @@ const Profile = (props) => {
                     <p className="text-primary text-xl font-semibold">
                       {props.profile.petName}
                     </p>
-                    <Icon path={mdiCircleSmall} size={1} />
-                    <p className="text-secondary">
-                      {props.profile.species} ({props.profile.breed})
-                    </p>
+                    {props.profile.species && (
+                      <>
+                        <Icon path={mdiCircleSmall} size={1} />
+                        <p className="text-secondary">
+                          {props.profile.species}
+                        </p>
+                      </>
+                    )}
+                    {props.profile.breed && (
+                      <>
+                        <Icon path={mdiCircleSmall} size={1} />
+                        <p className="text-tertiary">({props.profile.breed})</p>
+                      </>
+                    )}
                   </div>
                   <p className="text-secondary">{props.profile.bio}</p>
                 </div>
@@ -78,12 +95,10 @@ const Profile = (props) => {
               <h3 className="text-center text-2xl">Posts</h3>
             </div>
             <div className="grid w-full grid-cols-3 gap-1">
-              {visiblePosts.map((post, index) => (
-                <div
-                  key={index}
-                  className="fade-in-bottom bg-secondary-2 aspect-square"
-                />
-              ))}
+              {posts.data.length > 0 &&
+                posts.data.map((post, index) => (
+                  <PostCard key={index} image={post.mediaUrl} />
+                ))}
             </div>
           </>
         ) : (
@@ -140,12 +155,10 @@ const Profile = (props) => {
               <h3 className="text-center">Posts</h3>
             </div>
             <div className="grid w-full grid-cols-3 gap-1">
-              {visiblePosts.map((post, index) => (
-                <div
-                  key={index}
-                  className="fade-in-bottom bg-secondary-2 aspect-square"
-                />
-              ))}
+              {posts.data.length > 0 &&
+                posts.data.map((post, index) => (
+                  <PostCard key={index} image={post.mediaUrl} />
+                ))}
             </div>
           </>
         )}

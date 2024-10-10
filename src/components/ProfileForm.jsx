@@ -64,7 +64,9 @@ const ProfileForm = (props) => {
     const formData = new FormData();
 
     formData.append('id', props.profile?.id || null);
-    formData.append('image', file);
+    if (file) {
+      formData.append('image', file);
+    }
     formData.append('username', usernameInput);
     formData.append('petName', petNameInput);
     formData.append('bio', bioInput);

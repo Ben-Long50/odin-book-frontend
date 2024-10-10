@@ -5,11 +5,14 @@ import { useContext, useState } from 'react';
 import ProfilePic from './ProfilePic';
 import { AuthContext } from './AuthContext';
 import getSearchMatch from '../services/getSearchMatch';
+import { GlobalContext } from './GlobalContext';
+import { Link } from 'react-router-dom';
 
 const Searchbar = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState([]);
   const { apiUrl } = useContext(AuthContext);
+  const { activeProfile } = useContext(GlobalContext);
 
   const searchResults = useMutation({
     mutationFn: async () => {
@@ -61,21 +64,26 @@ const Searchbar = (props) => {
           </div>
         ) : (
           results.map((profile) => {
-            return (
-              <div
-                key={profile.id}
-                className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
-              >
-                <ProfilePic
-                  image={profile.profilePicUrl}
-                  className="size-12 shrink-0"
-                />
-                <div>
-                  <p className="text-primary text-lg">{profile.username}</p>
-                  <p className="text-tertiary">{profile.petName}</p>
-                </div>
-              </div>
-            );
+            if (profile.id !== activeProfile.id) {
+              return (
+                <Link
+                  to={`/profile/${profile.username}`}
+                  key={profile.id}
+                  className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
+                  state={profile}
+                  onClick={props.toggleSearchbar}
+                >
+                  <ProfilePic
+                    image={profile.profilePicUrl}
+                    className="size-12 shrink-0"
+                  />
+                  <div>
+                    <p className="text-primary text-lg">{profile.username}</p>
+                    <p className="text-tertiary">{profile.petName}</p>
+                  </div>
+                </Link>
+              );
+            }
           })
         )}
       </div>

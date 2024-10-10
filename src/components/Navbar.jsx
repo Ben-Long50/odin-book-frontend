@@ -205,7 +205,7 @@ const Navbar = (props) => {
             navbarSize={navbarSize}
           />
           <SettingsMenu
-            className={`${menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} bottom-115 absolute left-0`}
+            className={`${menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} absolute bottom-115 left-0`}
             toggleMenuVisibility={toggleMenuVisibility}
           />
         </div>
@@ -217,6 +217,7 @@ const Navbar = (props) => {
             searchVisibility &&
             `translateX(${navRef.current ? navWidth + 'px' : '0px'})`,
         }}
+        toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
         className={`${notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}

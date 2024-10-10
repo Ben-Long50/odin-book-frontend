@@ -9,7 +9,11 @@ import {
   mdiImagePlus,
 } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useRef, useState } from 'react';
+import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useContext, useRef, useState } from 'react';
+import createPost from '../services/createPost';
+import { AuthContext } from './AuthContext';
+import { GlobalContext } from './GlobalContext';
 
 const Create = (props) => {
   const [file, setFile] = useState(null);
@@ -17,7 +21,18 @@ const Create = (props) => {
   const [imageAr, setImageAr] = useState('square');
   const [imageFit, setImageFit] = useState('contain');
   const [captionInput, setCaptionInput] = useState('');
+  const { apiUrl } = useContext(AuthContext);
+  const { activeProfile } = useContext(GlobalContext);
   const dialogRef = useRef(null);
+
+  const newPost = useMutation({
+    mutationFn: (formData) => {
+      return createPost(formData, activeProfile.id, apiUrl);
+    },
+    onSuccess: () => {
+      QueryClient.invalidateQueries(['posts']);
+    },
+  });
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]; // Get the selected file
@@ -29,6 +44,18 @@ const Create = (props) => {
       const fileUrl = URL.createObjectURL(selectedFile);
       setImagePreview(fileUrl);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    if (file) {
+      formData.append('image', file);
+    }
+    formData.append('caption', captionInput);
+
+    newPost.mutate(formData);
   };
 
   return (
@@ -53,7 +80,10 @@ const Create = (props) => {
             <h2 className="text-primary py-2 text-center text-lg font-semibold">
               Post details
             </h2>
-            <button className="fade-in-right text-accent font-semibold hover:underline">
+            <button
+              className="fade-in-right text-accent font-semibold hover:underline"
+              onClick={handleSubmit}
+            >
               Post
             </button>
           </div>

@@ -8,8 +8,12 @@ const deleteProfile = async (profileId, apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
-    console.log(data.message);
-    return data;
+    if (!response.ok) {
+      console.error(data.message);
+    } else {
+      console.log(data.message);
+      return data;
+    }
   } catch (error) {
     console.error(error.message);
   }
