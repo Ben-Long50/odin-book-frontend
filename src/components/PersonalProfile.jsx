@@ -1,15 +1,18 @@
 import Profile from './Profile';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import Button from './Button';
 import { useContext } from 'react';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import getFollows from '../services/getFollows';
+import { mdiBookmarkOutline, mdiSquareEditOutline } from '@mdi/js';
+import Icon from '@mdi/react';
 
 const PersonalProfile = () => {
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
+  const [layoutSize] = useOutletContext();
 
   const follows = useQuery({
     queryKey: ['personalFollows'],
@@ -30,12 +33,20 @@ const PersonalProfile = () => {
     >
       <Link to="edit" state={activeProfile}>
         <Button className="px-3 py-1 text-sm font-semibold">
-          Edit profile
+          {layoutSize !== 'xsmall' ? (
+            <p>Edit profile</p>
+          ) : (
+            <Icon path={mdiSquareEditOutline} size={1} />
+          )}
         </Button>
       </Link>
       <Link to="bookmarks">
         <Button className="px-3 py-1 text-sm font-semibold">
-          View bookmarks
+          {layoutSize !== 'xsmall' ? (
+            <p>View Bookmarks</p>
+          ) : (
+            <Icon path={mdiBookmarkOutline} size={1} />
+          )}
         </Button>
       </Link>
     </Profile>

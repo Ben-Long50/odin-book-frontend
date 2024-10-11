@@ -8,7 +8,7 @@ const ProfilePic = (props) => {
     >
       {props.image ? (
         <img
-          className="min-h-full min-w-full object-cover"
+          className="aspect-square min-h-full min-w-full object-cover"
           src={props.image}
           alt="Profile picture"
         />

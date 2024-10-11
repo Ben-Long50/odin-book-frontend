@@ -23,12 +23,17 @@ const Post = (props) => {
       <div className="bg-secondary flex max-w-xl flex-col border-b">
         <div className="flex items-center justify-between px-2 py-3 sm:px-0 sm:py-4">
           <div className="flex items-center">
-            <Link to={`/profile/${props.post.author}`}>
-              <ProfilePic className="mr-4 size-10 md:mr-6" />
+            <Link to={`/profile/${props.post.profile.username}`}>
+              <ProfilePic
+                image={props.post.profile.profilePicUrl}
+                className="mr-4 size-10 md:mr-6"
+              />
             </Link>
             <div className="flex items-center">
-              <Link to={`/profile/${props.post.author}`}>
-                <h3 className="text-lg font-semibold">{props.post.author}</h3>
+              <Link to={`/profile/${props.post.profile.username}`}>
+                <h3 className="text-lg font-semibold">
+                  {props.post.profile.username}
+                </h3>
               </Link>
               <Icon path={mdiCircleSmall} size={1} />
               <p className="text-tertiary">3d</p>
@@ -45,23 +50,19 @@ const Post = (props) => {
               )}
             </div>
           </div>
-
           <Icon path={mdiDotsHorizontal} size={1.2} />
         </div>
-        <img
-          className="-mx-4 aspect-square self-center"
-          src={props.post.imgUrl}
-        />
+        <img className="-mx-4 self-center" src={props.post.mediaUrl} />
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
               <div className="flex items-center gap-2">
                 <LikeButton />
-                <p className="text-primary">{props.post.likes.length}</p>
+                <p className="text-primary">3</p>
               </div>
               <div className="flex items-center gap-2">
                 <CommentButton togglePostOpen={togglePostOpen} />
-                <p>{props.post.comments.length}</p>
+                <p>3</p>
               </div>
               <ShareButton />
             </div>
@@ -88,6 +89,7 @@ const Post = (props) => {
       </div>
       <PostDetail
         post={props.post}
+        profile={props.post.profile}
         layoutSize={props.layoutSize}
         following={following}
         setFollowing={setFollowing}

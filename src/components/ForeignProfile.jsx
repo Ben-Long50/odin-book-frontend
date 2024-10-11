@@ -51,6 +51,8 @@ const ForeignProfile = () => {
       profile={profile}
       followers={follows.data.followers}
       following={follows.data.following}
+      followStats={followStatus}
+      setFollowingStatus={setFollowingStatus}
     >
       <Button
         className={`${followStatus && 'opacity-50'} px-3 py-1 text-sm font-semibold`}

@@ -45,6 +45,7 @@ const MainLayout = () => {
 
   return (
     <div
+      id="portal-root"
       className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary relative grid h-dvh bg-fixed`}
     >
       {layoutSize === 'small' || layoutSize === 'xsmall' ? (
