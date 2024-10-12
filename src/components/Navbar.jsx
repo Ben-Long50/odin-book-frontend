@@ -14,11 +14,13 @@ import {
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import ListMenuItem from './ListMenuItem';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import PawIcon from '../assets/PawIcon';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';
+import { GlobalContext } from './GlobalContext';
+import ProfilePic from './ProfilePic';
 
 const Navbar = (props) => {
   const [navbarSize, setNavbarSize] = useState(() => {
@@ -35,6 +37,7 @@ const Navbar = (props) => {
   const [notificationVisibility, setNotificationVisibility] = useState(false);
 
   const navRef = useRef(null);
+  const { activeProfile } = useContext(GlobalContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -193,7 +196,12 @@ const Navbar = (props) => {
               label="Profile"
               onClick={() => changeActiveItem('profile')}
               navbarSize={navbarSize}
-            />
+            >
+              <ProfilePic
+                className="size-10"
+                image={activeProfile.profilePicUrl}
+              />
+            </ListMenuItem>
           </Link>
         </div>
         <div className="relative flex flex-col items-start justify-end">

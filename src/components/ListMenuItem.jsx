@@ -6,7 +6,12 @@ const ListMenuItem = (props) => {
       className={`${props.className} text-secondary timing hover:bg-secondary-2 flex w-full items-center rounded-lg fill-current p-2`}
       onClick={props.onClick}
     >
-      <Icon className="timing" path={props.icon} size={1.5} />
+      {props.children ? (
+        props.children
+      ) : (
+        <Icon className="timing" path={props.icon} size={1.5} />
+      )}
+
       {props.navbarSize && (
         <h2
           className={`flex items-center justify-start text-lg transition-all duration-300 ${

@@ -2,18 +2,20 @@ import {
   mdiAccount,
   mdiCompass,
   mdiCompassOutline,
-  mdiHeart,
-  mdiHeartOutline,
   mdiHomeVariant,
   mdiHomeVariantOutline,
-  mdiMagnify,
   mdiPlusBox,
   mdiPlusBoxOutline,
 } from '@mdi/js';
 import { Link } from 'react-router-dom';
 import ListMenuItem from './ListMenuItem';
+import ProfilePic from './ProfilePic';
+import { useContext } from 'react';
+import { GlobalContext } from './GlobalContext';
 
 const NavFooter = (props) => {
+  const { activeProfile } = useContext(GlobalContext);
+
   const changeActiveItem = (item) => {
     props.setActiveItem(item);
   };
@@ -55,7 +57,9 @@ const NavFooter = (props) => {
           icon={mdiAccount}
           label="Profile"
           onClick={() => changeActiveItem('profile')}
-        />
+        >
+          <ProfilePic className="size-10" image={activeProfile.profilePicUrl} />
+        </ListMenuItem>
       </Link>
     </nav>
   );
