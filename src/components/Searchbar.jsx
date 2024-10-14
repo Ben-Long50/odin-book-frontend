@@ -17,11 +17,7 @@ const Searchbar = (props) => {
   const searchResults = useMutation({
     mutationFn: async () => {
       const result = await getSearchMatch(searchQuery, apiUrl);
-      if (result) {
-        setResults(result);
-      } else {
-        setResults([]);
-      }
+      result ? setResults(result) : setResults([]);
     },
   });
 
@@ -71,7 +67,11 @@ const Searchbar = (props) => {
                   key={profile.id}
                   className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
                   state={profile}
-                  onClick={props.toggleSearchbar}
+                  onClick={() => {
+                    props.toggleSearchbar();
+                    setSearchQuery('');
+                    setResults([]);
+                  }}
                 >
                   <ProfilePic
                     image={profile.profilePicUrl}

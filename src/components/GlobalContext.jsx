@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import getProfiles from '../services/getProfiles.js';
 import getActiveProfile from '../services/getActiveProfile.js';
+import Loading from './Loading.jsx';
 
 export const GlobalContext = createContext();
 
@@ -16,6 +17,10 @@ const GlobalProvider = ({ children }) => {
     queryKey: ['activeProfile'],
     queryFn: () => getActiveProfile(apiUrl),
   });
+
+  if (profiles.isLoading) {
+    return <Loading />;
+  }
 
   return (
     <GlobalContext.Provider

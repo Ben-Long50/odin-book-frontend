@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Icon from '@mdi/react';
 import { mdiCircleSmall, mdiViewGrid } from '@mdi/js';
@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from './AuthContext';
 import getPosts from '../services/getPosts';
 import PostCard from './PostCard';
+import Loading from './Loading';
 
 const Profile = (props) => {
   const { apiUrl } = useContext(AuthContext);
@@ -17,17 +18,18 @@ const Profile = (props) => {
     queryKey: ['posts'],
     queryFn: async () => {
       const result = await getPosts(props.profile.id, apiUrl);
-
-      if (result) {
-        return result.posts;
-      } else {
-        return [];
-      }
+      return result ? result.posts : [];
     },
   });
 
-  if (posts.isPending) {
-    return <div>...Loading</div>;
+  useEffect(() => {
+    if (posts.refetch) {
+      posts.refetch();
+    }
+  }, [props.profile, posts.refetch]);
+
+  if (posts.isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -92,10 +94,11 @@ const Profile = (props) => {
               </div>
             </div>
             <hr className="fade-in-bottom bg-secondary col-start-2 col-end-3 mt-12 w-full" />
-            <div className="fade-in-bottom my-4 flex items-center justify-center gap-3">
+            <div className="fade-in-bottom my-2 flex items-center justify-center gap-3">
               <Icon path={mdiViewGrid} size={1.3} />
               <h3 className="text-center text-2xl">Posts</h3>
             </div>
+            <hr className="fade-in-bottom bg-secondary w-full" />
           </>
         ) : (
           <>
@@ -161,11 +164,13 @@ const Profile = (props) => {
               <Icon path={mdiViewGrid} size={0.9} />
               <h3 className="text-center">Posts</h3>
             </div>
+            <hr className="fade-in-bottom bg-secondary w-full" />
           </>
         )}
-        <div className="fade-in-bottom grid w-full grid-cols-3 gap-1">
-          {posts.data.length > 0 &&
-            posts.data.map((post, index) => (
+
+        {posts.data.length > 0 ? (
+          <div className="fade-in-bottom grid w-full grid-cols-3 gap-1">
+            {posts.data.map((post, index) => (
               <PostCard
                 key={index}
                 post={post}
@@ -175,7 +180,12 @@ const Profile = (props) => {
                 setFollowingStatus={props.setFollowingStatus}
               />
             ))}
-        </div>
+          </div>
+        ) : (
+          <h2 className="fade-in-bottom mt-4 w-full text-center text-lg font-semibold sm:text-2xl">
+            This profile currently has no posts
+          </h2>
+        )}
       </div>
     </PerfectScrollbar>
   );

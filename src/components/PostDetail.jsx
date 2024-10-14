@@ -8,6 +8,7 @@ import ShareButton from './ShareButton';
 import BookmarkButton from './BookmarkButton';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import Timestamp from './Timestamp';
 
 const PostDetail = (props) => {
   const [commentInput, setCommentInput] = useState('');
@@ -18,22 +19,31 @@ const PostDetail = (props) => {
 
   return createPortal(
     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black bg-opacity-75 sm:p-4 md:p-8">
-      <div className="fade-in-bottom bg-secondary-2 z-30 mx-auto flex max-h-dvh-95 max-w-7xl flex-col bg-black md:grid md:grid-cols-3">
+      <div
+        className="fade-in-bottom bg-secondary-2 z-30 mx-auto flex max-h-dvh-95 max-w-7xl flex-col bg-black md:grid md:grid-cols-3"
+        onClick={(e) => e.stopPropagation()}
+      >
         {(props.layoutSize === 'small' || props.layoutSize === 'xsmall') && (
           <div className="bg-secondary flex items-center p-4">
-            <Link to={`/profile/${props.profile.username}`}>
+            <Link
+              to={`/profile/${props.profile.username}`}
+              state={props.profile}
+            >
               <ProfilePic
                 image={props.profile.profilePicUrl}
                 className="mr-4 size-10"
               />
             </Link>
             <div className="text-primary flex items-center">
-              <Link to={`/profile/${props.profile.username}`}>
+              <Link
+                to={`/profile/${props.profile.username}`}
+                state={props.profile}
+              >
                 <h3 className="text-lg font-semibold">
                   {props.profile.username}
                 </h3>
               </Link>
-              {!props.followStatus && (
+              {props.followStatus === false && (
                 <>
                   <Icon path={mdiCircleSmall} size={1} />
                   <button
@@ -47,24 +57,33 @@ const PostDetail = (props) => {
             </div>
           </div>
         )}
-        <img
-          className="col-span-2 w-full self-center"
-          src={props.post.mediaUrl}
-          alt="post image"
-        />
+        <div className="col-span-2 flex aspect-square items-center justify-center">
+          <img
+            className="w-full self-center"
+            src={props.post.mediaUrl}
+            alt="post image"
+          />
+        </div>
+
         <div className="bg-secondary col-span-1 flex grow flex-col items-start justify-start">
           {props.layoutSize !== 'small' && props.layoutSize !== 'xsmall' && (
             <div className="flex items-center p-4">
-              <Link to={`/profile/${props.profile.username}`}>
+              <Link
+                to={`/profile/${props.profile.username}`}
+                state={props.profile}
+              >
                 <ProfilePic
                   image={props.profile.profilePicUrl}
                   className="mr-4 size-10"
                 />
               </Link>
               <div className="text-primary flex items-center">
-                <Link to={`/profile/${props.profile.username}`}>
+                <Link
+                  to={`/profile/${props.profile.username}`}
+                  state={props.profile}
+                >
                   <h3 className="text-lg font-semibold">
-                    {props.post.username}
+                    {props.profile.username}
                   </h3>
                 </Link>
                 {!props.followStatus && (
@@ -83,27 +102,36 @@ const PostDetail = (props) => {
           )}
           <hr className="text-tertiary w-full self-center" />
           <div className="flex items-start p-4">
-            <Link to={`/profile/${props.profile.username}`}>
+            <Link
+              to={`/profile/${props.profile.username}`}
+              state={props.profile}
+            >
               <ProfilePic
                 image={props.profile.profilePicUrl}
                 className="mr-4 size-10"
               />
             </Link>
-            <div className="flex flex-col gap-3">
-              <Link to={`/profile/${props.profile.username}`}>
+            <div className="flex flex-col gap-1">
+              <Link
+                to={`/profile/${props.profile.username}`}
+                state={props.profile}
+              >
                 <h3 className="text-primary text-lg font-semibold">
                   {props.profile.username}
                 </h3>
               </Link>
               <p className="text-secondary">{props.post.body}</p>
-              <p className="text-tertiary">{props.post.createdAt}</p>
+              <Timestamp date={props.post.createdAt} />
             </div>
           </div>
           <hr className="text-tertiary mt-auto w-full self-center" />
           <div className="w-full p-3">
             <div className="flex w-full items-center justify-between md:mb-3">
               <div className="flex items-center justify-start gap-4">
-                <LikeButton />
+                <LikeButton
+                  likedStatus={props.likedStatus}
+                  onClick={() => props.toggleLikedStatus.mutate()}
+                />
                 <CommentButton />
                 <ShareButton />
               </div>
@@ -118,8 +146,10 @@ const PostDetail = (props) => {
 
             {props.layoutSize !== 'small' && props.layoutSize !== 'xsmall' && (
               <>
-                <p className="text-primary font-semibold">3 likes</p>
-                <p className="text-tertiary text-sm">{props.post.createdAt}</p>
+                <p className="text-primary font-semibold">
+                  {props.post.likes.length} likes
+                </p>
+                <Timestamp date={props.post.createdAt} />
               </>
             )}
           </div>

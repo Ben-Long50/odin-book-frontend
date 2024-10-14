@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Profile from './Profile';
 import Button from './Button';
 import { useLocation } from 'react-router-dom';
@@ -7,6 +7,8 @@ import followProfile from '../services/followProfile';
 import { AuthContext } from './AuthContext';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import getFollows from '../services/getFollows';
+import Loading from './Loading';
+import unfollowProfile from '../services/unfollowProfile';
 
 const ForeignProfile = () => {
   const [followStatus, setFollowStatus] = useState(false);
@@ -21,7 +23,7 @@ const ForeignProfile = () => {
     queryFn: async () => {
       const results = await getFollows(profile.id, apiUrl);
 
-      let status = followStatus;
+      let status = false;
 
       results.followers.forEach((follower) => {
         if (follower.followerId === activeProfile.id) {
@@ -29,21 +31,32 @@ const ForeignProfile = () => {
         }
       });
       setFollowStatus(status);
+
       return results;
     },
   });
 
   const setFollowingStatus = useMutation({
     mutationFn: async () => {
-      await followProfile(activeProfile.id, profile.id, apiUrl);
+      if (!followStatus) {
+        await followProfile(activeProfile.id, profile.id, apiUrl);
+      } else {
+        await unfollowProfile(activeProfile.id, profile.id, apiUrl);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['foreignFollows']);
     },
   });
 
-  if (follows.isPending) {
-    return <div>...Loading</div>;
+  useEffect(() => {
+    if (follows.refetch) {
+      follows.refetch();
+    }
+  }, [profile, follows.refetch]);
+
+  if (follows.isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -51,14 +64,13 @@ const ForeignProfile = () => {
       profile={profile}
       followers={follows.data.followers}
       following={follows.data.following}
-      followStats={followStatus}
+      followStatus={followStatus}
       setFollowingStatus={setFollowingStatus}
     >
       <Button
         className={`${followStatus && 'opacity-50'} px-3 py-1 text-sm font-semibold`}
         onClick={() => {
           setFollowingStatus.mutate();
-          console.log(followStatus);
         }}
       >
         {followStatus ? 'Unfollow' : 'Follow'}

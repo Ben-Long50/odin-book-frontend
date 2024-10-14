@@ -58,7 +58,10 @@ const NavFooter = (props) => {
           label="Profile"
           onClick={() => changeActiveItem('profile')}
         >
-          <ProfilePic className="size-10" image={activeProfile.profilePicUrl} />
+          <ProfilePic
+            className="size-10"
+            image={activeProfile?.profilePicUrl}
+          />
         </ListMenuItem>
       </Link>
     </nav>

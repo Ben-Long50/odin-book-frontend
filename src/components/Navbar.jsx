@@ -189,7 +189,7 @@ const Navbar = (props) => {
             }}
             navbarSize={navbarSize}
           />
-          <Link className="w-full" to="/profile">
+          <Link className="w-full" to={`/profile`}>
             <ListMenuItem
               activeItem={props.activeItem}
               icon={mdiAccount}
@@ -199,7 +199,7 @@ const Navbar = (props) => {
             >
               <ProfilePic
                 className="size-10"
-                image={activeProfile.profilePicUrl}
+                image={activeProfile?.profilePicUrl}
               />
             </ListMenuItem>
           </Link>

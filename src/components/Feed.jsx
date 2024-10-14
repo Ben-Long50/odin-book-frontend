@@ -19,6 +19,7 @@ const Feed = () => {
     queryKey: ['feedPosts'],
     queryFn: async () => {
       const posts = await getFollowedPosts(activeProfile.id, apiUrl);
+      console.log(posts);
 
       if (posts.length > 0) {
         return posts;

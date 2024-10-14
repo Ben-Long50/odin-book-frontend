@@ -30,6 +30,7 @@ const PersonalProfile = () => {
       profile={activeProfile}
       followers={follows.data.followers}
       following={follows.data.following}
+      followStatus={true}
     >
       <Link to="edit" state={activeProfile}>
         <Button className="px-3 py-1 text-sm font-semibold">

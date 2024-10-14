@@ -1,19 +1,12 @@
 import Icon from '@mdi/react';
 import { mdiHeart, mdiHeartOutline } from '@mdi/js';
-import { useState } from 'react';
 
-const LikeButton = () => {
-  const [liked, setLiked] = useState(false);
-
-  const toggleLiked = () => {
-    setLiked(!liked);
-  };
-
+const LikeButton = (props) => {
   return (
-    <button className="text-primary" onClick={toggleLiked}>
+    <button className="text-primary" onClick={props.onClick}>
       <Icon
-        className={`${liked && 'text-pink-600'}`}
-        path={liked ? mdiHeart : mdiHeartOutline}
+        className={`${props.likedStatus && 'text-pink-600'}`}
+        path={props.likedStatus ? mdiHeart : mdiHeartOutline}
         size={1.25}
       />
     </button>
