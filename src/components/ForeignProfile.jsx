@@ -21,11 +21,13 @@ const ForeignProfile = () => {
   const follows = useQuery({
     queryKey: ['foreignFollows'],
     queryFn: async () => {
+      console.log(profile);
+
       const results = await getFollows(profile.id, apiUrl);
 
       let status = false;
 
-      results.followers.forEach((follower) => {
+      results.followers?.forEach((follower) => {
         if (follower.followerId === activeProfile.id) {
           status = true;
         }

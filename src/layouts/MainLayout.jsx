@@ -7,7 +7,6 @@ import Create from '../components/Create';
 import { ThemeContext } from '../components/ThemeContext';
 
 const MainLayout = () => {
-  const [loading, setLoading] = useState(true);
   const [activeItem, setActiveItem] = useState('home');
   const [layoutSize, setLayoutSize] = useState(() => {
     if (window.innerWidth >= 1280) {
@@ -50,7 +49,12 @@ const MainLayout = () => {
     >
       {layoutSize === 'small' || layoutSize === 'xsmall' ? (
         <>
-          <NavHeader layoutSize={layoutSize} setLayoutSize={setLayoutSize} />
+          <NavHeader
+            layoutSize={layoutSize}
+            setLayoutSize={setLayoutSize}
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
+          />
           <Outlet context={[layoutSize]} />
           <NavFooter
             activeItem={activeItem}

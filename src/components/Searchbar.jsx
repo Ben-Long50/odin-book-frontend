@@ -24,6 +24,8 @@ const Searchbar = (props) => {
     queryKey: ['searchHistory'],
     queryFn: async () => {
       const searches = await getSearchHistory(activeProfile.id, apiUrl);
+      console.log(searches);
+
       return searches;
     },
   });
@@ -64,11 +66,13 @@ const Searchbar = (props) => {
 
   return (
     <search
-      className={`${props.className} bg-secondary flex h-dvh min-w-96 flex-col shadow-md-right dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex h-dvh w-full flex-col shadow-md-right md:min-w-96 dark:shadow-gray-950`}
       style={props.style}
     >
       <div className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
-        <h1 className="text-primary text-3xl font-semibold">Search</h1>
+        {props.layoutSize !== 'xsmall' && props.layoutSize !== 'small' && (
+          <h1 className="text-primary text-3xl font-semibold">Search</h1>
+        )}
         <div className="bg-secondary-2 flex w-full items-center justify-between rounded-lg p-2">
           <input
             className="text-secondary grow border-none bg-transparent text-lg outline-none"
@@ -82,7 +86,8 @@ const Searchbar = (props) => {
           />
           <button
             className="text-tertiary cursor-pointer"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               setSearchQuery('');
               setResults([]);
             }}
@@ -108,27 +113,29 @@ const Searchbar = (props) => {
             ) : (
               searchHistory.data.length > 0 &&
               searchHistory.data.map((search) => {
+                const profile = search.searchedProfile;
                 return (
                   <Link
-                    to={`/profile/${search.searchedProfile.username}`}
+                    to={`/profile/${profile.username}`}
                     className="timing hover:bg-secondary-2 flex w-full cursor-pointer items-center gap-4 rounded-lg p-2"
-                    state={search.searchedProfile}
-                    key={search.searchedProfile.id}
-                    onClick={() => props.toggleSearchbar()}
+                    state={profile}
+                    key={profile.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      props.toggleSearchbar();
+                    }}
                   >
                     <ProfilePic
-                      image={search.searchedProfile.profilePicUrl}
+                      image={profile.profilePicUrl}
                       className="size-12 shrink-0"
                     />
-                    <p className="text-primary text-lg">
-                      {search.searchedProfile.username}
-                    </p>
+                    <p className="text-primary text-lg">{profile.username}</p>
                     <button
                       className="ml-auto p-2"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        deleteSearch.mutate(search.searchedProfile.id);
+                        deleteSearch.mutate(profile.id);
                       }}
                     >
                       <Icon

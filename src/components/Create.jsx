@@ -62,7 +62,7 @@ const Create = (props) => {
     <>
       <dialog
         open={props.createOpen}
-        className="fade-in-bottom bg-secondary-2 z-30 max-h-dvh-95 w-full max-w-4xl self-center rounded-xl"
+        className="fade-in-bottom bg-secondary-2 z-30 max-h-dvh-95 w-full max-w-4xl self-center md:rounded-xl"
         ref={dialogRef}
       >
         {!imagePreview ? (
