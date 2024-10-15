@@ -7,7 +7,7 @@ const LikeButton = (props) => {
       <Icon
         className={`${props.likedStatus && 'text-pink-600'}`}
         path={props.likedStatus ? mdiHeart : mdiHeartOutline}
-        size={1.25}
+        size={props.size || 1.25}
       />
     </button>
   );

@@ -43,6 +43,7 @@ export default {
       },
       maxHeight: {
         'dvh-95': '95dvh',
+        'dvh-50': '50dvh',
       },
     },
   },

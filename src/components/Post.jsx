@@ -14,6 +14,7 @@ import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
 import likePost from '../services/likePost';
 import unlikePost from '../services/unlikePost';
+import createComment from '../services/createComment';
 
 const Post = (props) => {
   const [likedStatus, setLikedStatus] = useState(false);
@@ -40,6 +41,15 @@ const Post = (props) => {
       } else {
         await unlikePost(props.post.id, activeProfile.id, apiUrl);
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['posts']);
+    },
+  });
+
+  const comment = useMutation({
+    mutationFn: async (comment) => {
+      await createComment(props.post.id, activeProfile.id, comment, apiUrl);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['posts']);
@@ -104,12 +114,17 @@ const Post = (props) => {
               className="bg-transparent py-1 outline-none"
               type="text"
               placeholder="Add a comment..."
+              value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
             />
             {commentInput.length > 0 && (
               <button
                 type="submit"
                 className="text-accent font-semibold hover:underline"
+                onClick={() => {
+                  comment.mutate(commentInput);
+                  setCommentInput('');
+                }}
               >
                 Post
               </button>
@@ -126,8 +141,7 @@ const Post = (props) => {
         postOpen={postOpen}
         followStatus={true}
         togglePostOpen={togglePostOpen}
-        commentInput={commentInput}
-        setCommentInput={setCommentInput}
+        comment={comment}
       />
     </>
   );
