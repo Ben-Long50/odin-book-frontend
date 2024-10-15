@@ -66,7 +66,7 @@ const Searchbar = (props) => {
 
   return (
     <search
-      className={`${props.className} bg-secondary flex h-dvh w-full flex-col shadow-md-right md:min-w-96 dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex w-full flex-col shadow-md-right md:h-dvh md:min-w-96 dark:shadow-gray-950`}
       style={props.style}
     >
       <div className="bg-secondary flex flex-col items-start gap-10 border-b p-6">

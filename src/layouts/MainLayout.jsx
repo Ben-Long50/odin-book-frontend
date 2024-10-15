@@ -8,6 +8,7 @@ import { ThemeContext } from '../components/ThemeContext';
 
 const MainLayout = () => {
   const [activeItem, setActiveItem] = useState('home');
+  const [prevActiveItem, setPrevActiveItem] = useState('');
   const [layoutSize, setLayoutSize] = useState(() => {
     if (window.innerWidth >= 1280) {
       return 'large';
@@ -54,11 +55,15 @@ const MainLayout = () => {
             setLayoutSize={setLayoutSize}
             activeItem={activeItem}
             setActiveItem={setActiveItem}
+            prevActiveItem={prevActiveItem}
+            setPrevActiveItem={setPrevActiveItem}
           />
           <Outlet context={[layoutSize]} />
           <NavFooter
             activeItem={activeItem}
             setActiveItem={setActiveItem}
+            prevActiveItem={prevActiveItem}
+            setPrevActiveItem={setPrevActiveItem}
             layoutSize={layoutSize}
             setLayoutSize={setLayoutSize}
             setCreateOpen={setCreateOpen}
@@ -70,6 +75,8 @@ const MainLayout = () => {
           <Navbar
             activeItem={activeItem}
             setActiveItem={setActiveItem}
+            prevActiveItem={prevActiveItem}
+            setPrevActiveItem={setPrevActiveItem}
             layoutSize={layoutSize}
             setLayoutSize={setLayoutSize}
             setCreateOpen={setCreateOpen}

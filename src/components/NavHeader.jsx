@@ -11,11 +11,23 @@ const NavHeader = (props) => {
   const [notificationVisibility, setNotificationVisibility] = useState(false);
 
   const toggleSearchbar = () => {
+    if (searchVisibility) {
+      props.setActiveItem(props.prevActiveItem);
+    } else if (!searchVisibility) {
+      props.setPrevActiveItem(props.activeItem);
+      props.setActiveItem('search');
+    }
     setNotificationVisibility(false);
     setSearchVisibility(!searchVisibility);
   };
 
   const toggleNotificationbar = () => {
+    if (notificationVisibility) {
+      props.setActiveItem(props.prevActiveItem);
+    } else if (!notificationVisibility) {
+      props.setPrevActiveItem(props.activeItem);
+      props.setActiveItem('notifications');
+    }
     setSearchVisibility(false);
     setNotificationVisibility(!notificationVisibility);
   };
@@ -35,7 +47,6 @@ const NavHeader = (props) => {
             label="Search"
             onClick={() => {
               toggleSearchbar();
-              props.setActiveItem('search');
             }}
           />
           <ListMenuItem
@@ -47,7 +58,6 @@ const NavHeader = (props) => {
             label="Notifications"
             onClick={() => {
               toggleNotificationbar();
-              props.setActiveItem('notifications');
             }}
           />
         </div>

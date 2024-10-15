@@ -31,7 +31,6 @@ const Navbar = (props) => {
     }
   });
   const [navWidth, setNavWidth] = useState(85);
-  const [prevActiveItem, setPrevActiveItem] = useState('');
   const [menuVisibility, setMenuVisibility] = useState(false);
   const [searchVisibility, setSearchVisibility] = useState(false);
   const [notificationVisibility, setNotificationVisibility] = useState(false);
@@ -65,7 +64,7 @@ const Navbar = (props) => {
       setNavbarSize('large');
     }
     if (props.activeItem !== 'search' && props.activeItem !== 'notifications') {
-      setPrevActiveItem(props.activeItem);
+      props.setPrevActiveItem(props.activeItem);
     }
     props.setActiveItem(item);
   };
@@ -82,7 +81,7 @@ const Navbar = (props) => {
       if (props.layoutSize === 'large') {
         setNavbarSize('large');
       }
-      props.setActiveItem(prevActiveItem);
+      props.setActiveItem(props.prevActiveItem);
     } else {
       setNavbarSize('medium');
     }
@@ -100,7 +99,7 @@ const Navbar = (props) => {
       if (props.layoutSize === 'large') {
         setNavbarSize('large');
       }
-      props.setActiveItem(prevActiveItem);
+      props.setActiveItem(props.prevActiveItem);
     } else {
       setNavbarSize('medium');
     }
