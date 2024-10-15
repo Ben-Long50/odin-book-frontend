@@ -93,7 +93,7 @@ const PostDetail = (props) => {
                       <Icon path={mdiCircleSmall} size={1} />
                       <button
                         className="text-accent"
-                        onClick={() => props.setFollowingStatus()}
+                        onClick={() => props.setFollowingStatus.mutate()}
                       >
                         Follow
                       </button>
@@ -166,7 +166,8 @@ const PostDetail = (props) => {
             {commentInput.length > 0 && (
               <button
                 className="text-accent font-semibold hover:underline"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   props.comment.mutate(commentInput);
                   setCommentInput('');
                 }}

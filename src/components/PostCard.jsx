@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import likePost from '../services/likePost';
 import { AuthContext } from './AuthContext';
 import unlikePost from '../services/unlikePost';
+import createComment from '../services/createComment';
 
 const PostCard = (props) => {
   const [likedStatus, setLikedStatus] = useState(false);
@@ -36,6 +37,15 @@ const PostCard = (props) => {
     },
   });
 
+  const comment = useMutation({
+    mutationFn: async (comment) => {
+      await createComment(props.post.id, activeProfile.id, comment, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['posts']);
+    },
+  });
+
   const togglePostOpen = () => {
     setPostOpen(!postOpen);
   };
@@ -56,6 +66,7 @@ const PostCard = (props) => {
         profile={props.profile}
         postOpen={postOpen}
         togglePostOpen={togglePostOpen}
+        comment={comment}
       />
     </div>
   );
