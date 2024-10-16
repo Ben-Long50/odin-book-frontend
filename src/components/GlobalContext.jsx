@@ -44,6 +44,7 @@ const GlobalProvider = ({ children }) => {
         activeProfile,
         activeFollowers,
         activeFollowing,
+        setActiveFollowing,
       }}
     >
       {children}

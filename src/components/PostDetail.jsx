@@ -6,7 +6,7 @@ import LikeButton from './LikeButton';
 import CommentButton from './CommentButton';
 import ShareButton from './ShareButton';
 import BookmarkButton from './BookmarkButton';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Timestamp from './Timestamp';
 import Comment from './Comment';
@@ -14,8 +14,17 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
 
 const PostDetail = (props) => {
+  const [followStatus, setFollowStatus] = useState(props.followStatus || false);
   const [commentInput, setCommentInput] = useState('');
-  const { activeProfile } = useContext(GlobalContext);
+  const { activeProfile, activeFollowing } = useContext(GlobalContext);
+
+  useEffect(() => {
+    if (activeFollowing.includes(props.profile.id)) {
+      setFollowStatus(true);
+    } else {
+      setFollowStatus(false);
+    }
+  }, [activeFollowing, props.profile.id]);
 
   if (!props.postOpen) return null;
 
@@ -56,12 +65,15 @@ const PostDetail = (props) => {
                     {props.profile.username}
                   </h3>
                 </Link>
-                {props.followStatus === false && (
+                {!followStatus && (
                   <>
                     <Icon path={mdiCircleSmall} size={1} />
                     <button
                       className="text-accent"
-                      onClick={() => props.setFollowingStatus()}
+                      onClick={() => {
+                        props.setFollowingStatus.mutate(props.profile.id);
+                        setFollowStatus(true);
+                      }}
                     >
                       Follow
                     </button>
@@ -115,12 +127,15 @@ const PostDetail = (props) => {
                       {props.profile.username}
                     </h3>
                   </Link>
-                  {!props.followStatus && (
+                  {!followStatus && (
                     <>
                       <Icon path={mdiCircleSmall} size={1} />
                       <button
                         className="text-accent"
-                        onClick={() => props.setFollowingStatus.mutate()}
+                        onClick={() => {
+                          props.setFollowingStatus.mutate(props.profile.id);
+                          setFollowStatus(true);
+                        }}
                       >
                         Follow
                       </button>

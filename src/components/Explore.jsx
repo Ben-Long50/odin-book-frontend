@@ -2,30 +2,40 @@ import { useContext, useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Icon from '@mdi/react';
 import { mdiCompassOutline } from '@mdi/js';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import Loading from './Loading';
 import getExplorePosts from '../services/getExplorePosts';
 import PostCard from './PostCard';
 import { useOutletContext } from 'react-router-dom';
+import followProfile from '../services/followProfile';
 
 const Explore = () => {
-  const { activeProfile } = useContext(GlobalContext);
+  const { activeProfile, setActiveFollowing } = useContext(GlobalContext);
   const { apiUrl } = useContext(AuthContext);
   const [layoutSize] = useOutletContext();
+  // const queryClient = useQueryClient();
 
   const posts = useQuery({
     queryKey: ['explorePosts'],
     queryFn: async () => {
       const posts = await getExplorePosts(activeProfile.id, apiUrl);
       if (posts) {
-        console.log(posts);
-
         return posts;
       } else {
         return [];
       }
+    },
+  });
+
+  const setFollowingStatus = useMutation({
+    mutationFn: async (profileId) => {
+      await followProfile(activeProfile.id, profileId, apiUrl);
+      return profileId;
+    },
+    onSuccess: (profileId) => {
+      setActiveFollowing((prevFollowing) => [...prevFollowing, profileId]);
     },
   });
 
@@ -54,6 +64,8 @@ const Explore = () => {
                 post={post}
                 layoutSize={layoutSize}
                 profile={post.profile}
+                followStatus={false}
+                setFollowingStatus={setFollowingStatus}
               />
             ))
           )}

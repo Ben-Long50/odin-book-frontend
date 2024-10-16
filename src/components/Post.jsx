@@ -111,7 +111,7 @@ const Post = (props) => {
           <p>{props.post.body}</p>
           <form className="flex items-center justify-between">
             <input
-              className="bg-transparent py-1 outline-none"
+              className="w-full bg-transparent py-1 outline-none"
               type="text"
               placeholder="Add a comment..."
               value={commentInput}

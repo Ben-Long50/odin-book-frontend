@@ -23,8 +23,6 @@ const ForeignProfile = () => {
   const profile = useQuery({
     queryKey: ['foreignProfile'],
     queryFn: async () => {
-      console.log(profileId);
-
       const profile = await getProfile(profileId, apiUrl);
       const followers = profile.followers.map(
         (follower) => follower.followerId,
@@ -40,11 +38,11 @@ const ForeignProfile = () => {
   });
 
   const setFollowingStatus = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (id) => {
       if (!followStatus) {
-        await followProfile(activeProfile.id, profileId, apiUrl);
+        await followProfile(activeProfile.id, id, apiUrl);
       } else {
-        await unfollowProfile(activeProfile.id, profileId, apiUrl);
+        await unfollowProfile(activeProfile.id, id, apiUrl);
       }
     },
     onSuccess: () => {
@@ -79,7 +77,7 @@ const ForeignProfile = () => {
       <Button
         className={`${followStatus && 'opacity-50'} px-3 py-1 text-sm font-semibold`}
         onClick={() => {
-          setFollowingStatus.mutate();
+          setFollowingStatus.mutate(profileId);
         }}
       >
         {followStatus ? 'Unfollow' : 'Follow'}

@@ -24,8 +24,6 @@ const Searchbar = (props) => {
     queryKey: ['searchHistory'],
     queryFn: async () => {
       const searches = await getSearchHistory(activeProfile.id, apiUrl);
-      console.log(searches);
-
       return searches;
     },
   });
@@ -33,7 +31,6 @@ const Searchbar = (props) => {
   const searchResults = useMutation({
     mutationFn: async () => {
       const result = await getSearchMatch(searchQuery, apiUrl);
-
       result ? setResults(result) : setResults([]);
     },
   });
