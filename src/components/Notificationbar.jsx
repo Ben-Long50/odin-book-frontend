@@ -3,7 +3,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 const Notificationbar = (props) => {
   return (
     <PerfectScrollbar
-      className={`${props.className} bg-secondary flex min-w-96 flex-col shadow-md-right md:h-dvh dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex min-w-96 flex-col shadow-md md:h-dvh md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       {props.layoutSize !== 'xsmall' && props.layoutSize !== 'small' && (

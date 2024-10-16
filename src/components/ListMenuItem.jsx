@@ -3,7 +3,7 @@ import Icon from '@mdi/react';
 const ListMenuItem = (props) => {
   return (
     <button
-      className={`${props.className} text-secondary timing hover:bg-secondary-2 flex w-full items-center rounded-lg fill-current p-2`}
+      className={`${props.className} text-secondary timing md:hover:bg-secondary-2 flex w-full items-center rounded-lg fill-current p-2`}
       onClick={props.onClick}
     >
       {props.children ? (

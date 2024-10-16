@@ -1,14 +1,16 @@
 import ListMenuItem from './ListMenuItem';
-import { mdiHeart, mdiHeartOutline, mdiMagnify } from '@mdi/js';
+import { mdiHeart, mdiHeartOutline, mdiMagnify, mdiMenu } from '@mdi/js';
 import Logo from './Logo';
 import PawIcon from '../assets/PawIcon';
 import { useState } from 'react';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
+import SettingsMenu from './SettingsMenu';
 
 const NavHeader = (props) => {
   const [searchVisibility, setSearchVisibility] = useState(false);
   const [notificationVisibility, setNotificationVisibility] = useState(false);
+  const [menuVisibility, setMenuVisibility] = useState(false);
 
   const toggleSearchbar = () => {
     if (searchVisibility) {
@@ -18,6 +20,7 @@ const NavHeader = (props) => {
       props.setActiveItem('search');
     }
     setNotificationVisibility(false);
+    setMenuVisibility(false);
     setSearchVisibility(!searchVisibility);
   };
 
@@ -29,7 +32,20 @@ const NavHeader = (props) => {
       props.setActiveItem('notifications');
     }
     setSearchVisibility(false);
+    setMenuVisibility(false);
     setNotificationVisibility(!notificationVisibility);
+  };
+
+  const toggleMenuVisibility = () => {
+    if (menuVisibility) {
+      props.setActiveItem(props.prevActiveItem);
+    } else if (!menuVisibility) {
+      props.setPrevActiveItem(props.activeItem);
+      props.setActiveItem('menu');
+    }
+    setSearchVisibility(false);
+    setNotificationVisibility(false);
+    setMenuVisibility(!menuVisibility);
   };
 
   return (
@@ -60,6 +76,13 @@ const NavHeader = (props) => {
               toggleNotificationbar();
             }}
           />
+          <ListMenuItem
+            className={`${props.activeItem === 'menu' && 'rotate-180'}`}
+            activeItem={props.activeItem}
+            icon={mdiMenu}
+            label="More"
+            onClick={toggleMenuVisibility}
+          />
         </div>
       </nav>
       <Searchbar
@@ -70,6 +93,10 @@ const NavHeader = (props) => {
       <Notificationbar
         className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${notificationVisibility && 'translate-y-full opacity-100'} `}
         layoutSize={props.layoutSize}
+      />
+      <SettingsMenu
+        className={`${menuVisibility && 'translate-y-full opacity-100'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
+        toggleMenuVisibility={toggleMenuVisibility}
       />
     </div>
   );

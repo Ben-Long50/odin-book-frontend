@@ -41,7 +41,7 @@ const SettingsMenu = (props) => {
     <div
       className={`${props.className} timing shadow-medium bg-secondary text-secondary flex flex-col items-start justify-center rounded-xl p-2 text-lg`}
     >
-      <Link to="manage">
+      <Link className="w-full" to="manage">
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}

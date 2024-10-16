@@ -67,7 +67,7 @@ const Post = (props) => {
           <div className="flex items-center">
             <Link
               to={`/profile/${props.post.profile.username}`}
-              state={props.post.profile}
+              state={props.post.profile.id}
             >
               <ProfilePic
                 image={props.post.profile.profilePicUrl}
@@ -77,7 +77,7 @@ const Post = (props) => {
             <div className="flex items-center">
               <Link
                 to={`/profile/${props.post.profile.username}`}
-                state={props.post.profile}
+                state={props.post.profile.id}
               >
                 <h3 className="text-lg font-semibold">
                   {props.post.profile.username}

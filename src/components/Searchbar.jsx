@@ -33,6 +33,7 @@ const Searchbar = (props) => {
   const searchResults = useMutation({
     mutationFn: async () => {
       const result = await getSearchMatch(searchQuery, apiUrl);
+
       result ? setResults(result) : setResults([]);
     },
   });
@@ -66,7 +67,7 @@ const Searchbar = (props) => {
 
   return (
     <search
-      className={`${props.className} bg-secondary flex w-full flex-col shadow-md-right md:h-dvh md:min-w-96 dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex w-full flex-col shadow-md md:h-dvh md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       <div className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
@@ -118,7 +119,7 @@ const Searchbar = (props) => {
                   <Link
                     to={`/profile/${profile.username}`}
                     className="timing hover:bg-secondary-2 flex w-full cursor-pointer items-center gap-4 rounded-lg p-2"
-                    state={profile}
+                    state={profile.id}
                     key={profile.id}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -157,7 +158,7 @@ const Searchbar = (props) => {
                   to={`/profile/${profile.username}`}
                   key={profile.id}
                   className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
-                  state={profile}
+                  state={profile.id}
                   onClick={() => {
                     props.toggleSearchbar();
                     setSearchQuery('');

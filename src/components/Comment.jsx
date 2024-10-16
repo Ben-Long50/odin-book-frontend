@@ -40,14 +40,28 @@ const Comment = (props) => {
 
   return (
     <div className="flex w-full items-start">
-      <Link to={`/profile/${props.profile.username}`} state={props.profile}>
+      <Link
+        to={
+          activeProfile.id === props.profile.id
+            ? `/profile`
+            : `/profile/${props.profile.username}`
+        }
+        state={props.profile.id}
+      >
         <ProfilePic
           image={props.profile.profilePicUrl}
           className="mr-4 size-10"
         />
       </Link>
       <div className="flex flex-col gap-1">
-        <Link to={`/profile/${props.profile.username}`} state={props.profile}>
+        <Link
+          to={
+            activeProfile.id === props.profile.id
+              ? `/profile`
+              : `/profile/${props.profile.username}`
+          }
+          state={props.profile.id}
+        >
           <h3 className="text-primary text-lg font-semibold">
             {props.profile.username}
           </h3>

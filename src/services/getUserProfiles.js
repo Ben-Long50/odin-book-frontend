@@ -1,4 +1,4 @@
-const getProfiles = async (apiUrl) => {
+const getUserProfiles = async (apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profiles`, {
       method: 'GET',
@@ -13,4 +13,4 @@ const getProfiles = async (apiUrl) => {
   }
 };
 
-export default getProfiles;
+export default getUserProfiles;

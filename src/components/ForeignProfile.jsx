@@ -6,66 +6,73 @@ import { GlobalContext } from './GlobalContext';
 import followProfile from '../services/followProfile';
 import { AuthContext } from './AuthContext';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import getFollows from '../services/getFollows';
-import Loading from './Loading';
 import unfollowProfile from '../services/unfollowProfile';
+import getProfile from '../services/getProfile';
+import Loading from './Loading';
 
 const ForeignProfile = () => {
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const [followStatus, setFollowStatus] = useState(false);
   const { apiUrl } = useContext(AuthContext);
-  const { activeProfile } = useContext(GlobalContext);
+  const { activeProfile, activeFollowing } = useContext(GlobalContext);
   const queryClient = useQueryClient();
   const location = useLocation();
-  const profile = location.state;
+  const profileId = location.state;
 
-  const follows = useQuery({
-    queryKey: ['foreignFollows'],
+  const profile = useQuery({
+    queryKey: ['foreignProfile'],
     queryFn: async () => {
-      console.log(profile);
+      console.log(profileId);
 
-      const results = await getFollows(profile.id, apiUrl);
+      const profile = await getProfile(profileId, apiUrl);
+      const followers = profile.followers.map(
+        (follower) => follower.followerId,
+      );
+      const following = profile.following.map(
+        (following) => following.profileId,
+      );
+      setFollowers(followers);
+      setFollowing(following);
 
-      let status = false;
-
-      results.followers?.forEach((follower) => {
-        if (follower.followerId === activeProfile.id) {
-          status = true;
-        }
-      });
-      setFollowStatus(status);
-
-      return results;
+      return profile;
     },
   });
 
   const setFollowingStatus = useMutation({
     mutationFn: async () => {
       if (!followStatus) {
-        await followProfile(activeProfile.id, profile.id, apiUrl);
+        await followProfile(activeProfile.id, profileId, apiUrl);
       } else {
-        await unfollowProfile(activeProfile.id, profile.id, apiUrl);
+        await unfollowProfile(activeProfile.id, profileId, apiUrl);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['foreignFollows']);
+      queryClient.invalidateQueries(['activeProfile', 'foreignProfile']);
     },
   });
 
   useEffect(() => {
-    if (follows.refetch) {
-      follows.refetch();
-    }
-  }, [profile, follows.refetch]);
+    queryClient.invalidateQueries('foreignProfile');
+  }, [location.pathname]);
 
-  if (follows.isLoading) {
+  useEffect(() => {
+    if (activeFollowing.includes(profileId)) {
+      setFollowStatus(true);
+    } else {
+      setFollowStatus(false);
+    }
+  }, [activeFollowing, profile]);
+
+  if (profile.isLoading) {
     return <Loading />;
   }
 
   return (
     <Profile
-      profile={profile}
-      followers={follows.data.followers}
-      following={follows.data.following}
+      profile={profile.data}
+      followers={followers}
+      following={following}
       followStatus={followStatus}
       setFollowingStatus={setFollowingStatus}
     >

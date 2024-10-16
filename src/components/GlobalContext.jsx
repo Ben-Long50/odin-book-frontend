@@ -1,21 +1,36 @@
 import { useQuery } from '@tanstack/react-query';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import getProfiles from '../services/getProfiles.js';
+import getUserProfiles from '../services/getUserProfiles.js';
 import getActiveProfile from '../services/getActiveProfile.js';
 import Loading from './Loading.jsx';
 
 export const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
+  const [activeFollowers, setActiveFollowers] = useState([]);
+  const [activeFollowing, setActiveFollowing] = useState([]);
   const { apiUrl } = useContext(AuthContext);
+
   const profiles = useQuery({
     queryKey: ['profiles'],
-    queryFn: () => getProfiles(apiUrl),
+    queryFn: () => getUserProfiles(apiUrl),
   });
+
   const { data: activeProfile } = useQuery({
     queryKey: ['activeProfile'],
-    queryFn: () => getActiveProfile(apiUrl),
+    queryFn: async () => {
+      const profile = await getActiveProfile(apiUrl);
+      const followers = profile.followers.map(
+        (follower) => follower.followerId,
+      );
+      const following = profile.following.map(
+        (following) => following.profileId,
+      );
+      setActiveFollowers(followers);
+      setActiveFollowing(following);
+      return profile;
+    },
   });
 
   if (profiles.isLoading) {
@@ -27,6 +42,8 @@ const GlobalProvider = ({ children }) => {
       value={{
         profiles,
         activeProfile,
+        activeFollowers,
+        activeFollowing,
       }}
     >
       {children}
