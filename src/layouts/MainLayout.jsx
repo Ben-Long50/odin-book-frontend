@@ -20,7 +20,17 @@ const MainLayout = () => {
       return 'medium';
     }
   });
+  const [navbarSize, setNavbarSize] = useState(() => {
+    if (layoutSize === 'large') {
+      return 'large';
+    } else {
+      return 'medium';
+    }
+  });
   const [createOpen, setCreateOpen] = useState(false);
+  const [menuVisibility, setMenuVisibility] = useState(false);
+  const [searchVisibility, setSearchVisibility] = useState(false);
+  const [notificationVisibility, setNotificationVisibility] = useState(false);
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
@@ -43,6 +53,15 @@ const MainLayout = () => {
     };
   }, [layoutSize]);
 
+  const closeNavbar = () => {
+    setMenuVisibility(false);
+    setSearchVisibility(false);
+    setNotificationVisibility(false);
+    if (layoutSize !== 'xsmall' && layoutSize !== 'small') {
+      setNavbarSize('large');
+    }
+  };
+
   return (
     <div
       id="portal-root"
@@ -57,8 +76,16 @@ const MainLayout = () => {
             setActiveItem={setActiveItem}
             prevActiveItem={prevActiveItem}
             setPrevActiveItem={setPrevActiveItem}
+            menuVisibility={menuVisibility}
+            setMenuVisibility={setMenuVisibility}
+            searchVisibility={searchVisibility}
+            setSearchVisibility={setSearchVisibility}
+            notificationVisibility={notificationVisibility}
+            setNotificationVisibility={setNotificationVisibility}
           />
-          <Outlet context={[layoutSize]} />
+          <div onClick={closeNavbar}>
+            <Outlet context={[layoutSize, setActiveItem]} />
+          </div>
           <NavFooter
             activeItem={activeItem}
             setActiveItem={setActiveItem}
@@ -79,10 +106,21 @@ const MainLayout = () => {
             setPrevActiveItem={setPrevActiveItem}
             layoutSize={layoutSize}
             setLayoutSize={setLayoutSize}
+            navbarSize={navbarSize}
+            setNavbarSize={setNavbarSize}
             setCreateOpen={setCreateOpen}
+            menuVisibility={menuVisibility}
+            setMenuVisibility={setMenuVisibility}
+            searchVisibility={searchVisibility}
+            setSearchVisibility={setSearchVisibility}
+            notificationVisibility={notificationVisibility}
+            setNotificationVisibility={setNotificationVisibility}
           />
-          <div className="flex h-dvh items-start justify-center">
-            <Outlet context={[layoutSize]} />
+          <div
+            className="flex h-dvh items-start justify-center"
+            onClick={closeNavbar}
+          >
+            <Outlet context={[layoutSize, setActiveItem]} />
           </div>
           <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
         </>

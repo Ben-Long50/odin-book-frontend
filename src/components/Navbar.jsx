@@ -23,17 +23,7 @@ import { GlobalContext } from './GlobalContext';
 import ProfilePic from './ProfilePic';
 
 const Navbar = (props) => {
-  const [navbarSize, setNavbarSize] = useState(() => {
-    if (props.layoutSize === 'large') {
-      return 'large';
-    } else {
-      return 'medium';
-    }
-  });
   const [navWidth, setNavWidth] = useState(85);
-  const [menuVisibility, setMenuVisibility] = useState(false);
-  const [searchVisibility, setSearchVisibility] = useState(false);
-  const [notificationVisibility, setNotificationVisibility] = useState(false);
 
   const navRef = useRef(null);
   const { activeProfile, notifications } = useContext(GlobalContext);
@@ -41,13 +31,13 @@ const Navbar = (props) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1280) {
-        setNavbarSize('large');
+        props.setNavbarSize('large');
       } else if (window.innerWidth > 768 && window.innerWidth < 1280) {
-        setNavbarSize('medium');
+        props.setNavbarSize('medium');
       }
-      setSearchVisibility(false);
-      setNotificationVisibility(false);
-      setMenuVisibility(false);
+      props.setSearchVisibility(false);
+      props.setNotificationVisibility(false);
+      props.setMenuVisibility(false);
     };
 
     window.addEventListener('resize', handleResize);
@@ -58,10 +48,10 @@ const Navbar = (props) => {
   }, []);
 
   const changeActiveItem = (item) => {
-    setNotificationVisibility(false);
-    setSearchVisibility(false);
+    props.setNotificationVisibility(false);
+    props.setSearchVisibility(false);
     if (props.layoutSize === 'large') {
-      setNavbarSize('large');
+      props.setNavbarSize('large');
     }
     if (props.activeItem !== 'search' && props.activeItem !== 'notifications') {
       props.setPrevActiveItem(props.activeItem);
@@ -70,62 +60,62 @@ const Navbar = (props) => {
   };
 
   const toggleMenuVisibility = () => {
-    setMenuVisibility(!menuVisibility);
+    props.setMenuVisibility(!props.menuVisibility);
   };
 
   const toggleSearchbar = () => {
-    if (navbarSize === 'medium') {
+    if (props.navbarSize === 'medium') {
       setNavWidth(navRef.current.offsetWidth);
     }
-    if (searchVisibility) {
+    if (props.searchVisibility) {
       if (props.layoutSize === 'large') {
-        setNavbarSize('large');
+        props.setNavbarSize('large');
       }
       props.setActiveItem(props.prevActiveItem);
     } else {
-      setNavbarSize('medium');
+      props.setNavbarSize('medium');
     }
-    if (notificationVisibility) {
-      setNotificationVisibility(false);
+    if (props.notificationVisibility) {
+      props.setNotificationVisibility(false);
     }
-    setSearchVisibility(!searchVisibility);
+    props.setSearchVisibility(!props.searchVisibility);
   };
 
   const toggleNotificationbar = () => {
-    if (navbarSize === 'medium') {
+    if (props.navbarSize === 'medium') {
       setNavWidth(navRef.current.offsetWidth);
     }
-    if (notificationVisibility) {
+    if (props.notificationVisibility) {
       if (props.layoutSize === 'large') {
-        setNavbarSize('large');
+        props.setNavbarSize('large');
       }
       props.setActiveItem(props.prevActiveItem);
     } else {
-      setNavbarSize('medium');
+      props.setNavbarSize('medium');
     }
-    if (searchVisibility) {
-      setSearchVisibility(false);
+    if (props.searchVisibility) {
+      props.setSearchVisibility(false);
     }
-    setNotificationVisibility(!notificationVisibility);
+    props.setNotificationVisibility(!props.notificationVisibility);
   };
 
   return (
     <div className="relative flex w-full">
       <div
-        className={`${navbarSize === 'large' && 'grow'} timing text-primary bg-secondary md:navbar-layout-md sticky top-0 z-20 grid h-dvh gap-14 border-r px-4 pb-6 pt-10`}
+        className={`${props.navbarSize === 'large' && 'grow'} timing text-primary bg-secondary md:navbar-layout-md sticky top-0 z-20 grid h-dvh gap-14 border-r px-4 pb-6 pt-10`}
         ref={navRef}
       >
         <div className="flex">
           <Logo
             className={`timing h-14 ${
-              navbarSize === 'medium'
+              props.navbarSize === 'medium'
                 ? 'w-0 -translate-x-32 pl-0 opacity-0'
                 : 'w-[150px] pl-4'
             }`}
             textSize="text-4xl"
           />
           <PawIcon
-            className={`timing size-12 h-14 justify-self-center ${props.layoutSize === 'medium' || navbarSize === 'medium' ? 'opacity-100' : 'opacity-0'}`}
+            className={`timing size-12 h-14 justify-self-center ${props.layoutSize === 'medium' || props.navbarSize === 'medium' ? 'opacity-100' : 'opacity-0'}`}
           />
         </div>
 
@@ -140,7 +130,7 @@ const Navbar = (props) => {
               }
               label="Home"
               onClick={() => changeActiveItem('home')}
-              navbarSize={navbarSize}
+              navbarSize={props.navbarSize}
             />
           </Link>
           <ListMenuItem
@@ -151,7 +141,7 @@ const Navbar = (props) => {
               changeActiveItem('search');
               toggleSearchbar();
             }}
-            navbarSize={navbarSize}
+            navbarSize={props.navbarSize}
           />
           <Link className="w-full" to="/explore">
             <ListMenuItem
@@ -161,7 +151,7 @@ const Navbar = (props) => {
               }
               label="Explore"
               onClick={() => changeActiveItem('explore')}
-              navbarSize={navbarSize}
+              navbarSize={props.navbarSize}
             />
           </Link>
           <ListMenuItem
@@ -175,7 +165,7 @@ const Navbar = (props) => {
               changeActiveItem('notifications');
               toggleNotificationbar();
             }}
-            navbarSize={navbarSize}
+            navbarSize={props.navbarSize}
           />
           <ListMenuItem
             activeItem={props.activeItem}
@@ -187,7 +177,7 @@ const Navbar = (props) => {
               changeActiveItem('create');
               props.setCreateOpen(true);
             }}
-            navbarSize={navbarSize}
+            navbarSize={props.navbarSize}
           />
           <Link className="w-full" to={`/profile`}>
             <ListMenuItem
@@ -195,7 +185,7 @@ const Navbar = (props) => {
               icon={mdiAccount}
               label="Profile"
               onClick={() => changeActiveItem('profile')}
-              navbarSize={navbarSize}
+              navbarSize={props.navbarSize}
             >
               <ProfilePic
                 className="size-10"
@@ -210,28 +200,28 @@ const Navbar = (props) => {
             icon={mdiMenu}
             label="More"
             onClick={toggleMenuVisibility}
-            navbarSize={navbarSize}
+            navbarSize={props.navbarSize}
           />
           <SettingsMenu
-            className={`${menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} absolute bottom-115 left-0`}
+            className={`${props.menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} absolute bottom-115 left-0`}
             toggleMenuVisibility={toggleMenuVisibility}
           />
         </div>
       </div>
       <Searchbar
-        className={`${searchVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
+        className={`${props.searchVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
         style={{
           transform:
-            searchVisibility &&
+            props.searchVisibility &&
             `translateX(${navRef.current ? navWidth + 'px' : '0px'})`,
         }}
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
-        className={`${notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
+        className={`${props.notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
         style={{
           transform:
-            notificationVisibility &&
+            props.notificationVisibility &&
             `translateX(${navRef.current ? navWidth + 'px' : '0px'})`,
         }}
         toggleNotificationbar={toggleNotificationbar}

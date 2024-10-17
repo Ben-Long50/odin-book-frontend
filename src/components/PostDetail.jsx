@@ -34,7 +34,7 @@ const PostDetail = (props) => {
   return (
     <RootPortal onClick={() => props.togglePostOpen()}>
       <div
-        className="fade-in-bottom bg-secondary-2 z-30 m-auto flex min-h-dvh max-w-7xl flex-col bg-black md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:grid-cols-3"
+        className="fade-in-bottom bg-secondary-2 z-30 m-auto flex min-h-dvh max-w-7xl flex-col bg-black md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:grid-cols-3 md:rounded-l-xl"
         onClick={(e) => e.stopPropagation()}
       >
         {(props.layoutSize === 'small' || props.layoutSize === 'xsmall') && (
@@ -87,12 +87,12 @@ const PostDetail = (props) => {
         )}
         <div className="my-auto flex aspect-square items-center justify-center md:col-span-2">
           <img
-            className="w-full self-center"
+            className="w-full self-center md:rounded-l-xl"
             src={props.post.mediaUrl}
             alt="post image"
           />
         </div>
-        <div className="bg-secondary col-span-1 flex grow flex-col items-start justify-start md:max-h-dvh-95">
+        <div className="bg-secondary col-span-1 flex grow flex-col items-start justify-start md:max-h-dvh-95 md:rounded-r-xl">
           {props.layoutSize !== 'small' && props.layoutSize !== 'xsmall' && (
             <>
               <div className="flex items-center p-4">
@@ -160,7 +160,7 @@ const PostDetail = (props) => {
               );
             })}
           </PerfectScrollbar>
-          <div className="bg-secondary sticky bottom-0 w-full">
+          <div className="bg-secondary sticky bottom-0 w-full md:rounded-br-xl">
             <hr className="text-tertiary mt-auto w-full self-center" />
             <div className="w-full p-3">
               <div className="flex w-full items-center justify-between md:mb-3">
@@ -198,7 +198,7 @@ const PostDetail = (props) => {
                 )}
             </div>
             <hr className="text-tertiary w-full self-center" />
-            <form className="text-primary flex w-full items-center justify-between p-3">
+            <form className="text-primary flex w-full items-center justify-between p-3 md:rounded-br-xl">
               <input
                 className="bg-transparent py-1 outline-none"
                 type="text"

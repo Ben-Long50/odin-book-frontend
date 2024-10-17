@@ -1,5 +1,5 @@
 import { mdiCircleSmall, mdiDotsHorizontal } from '@mdi/js';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import Icon from '@mdi/react';
 import { useContext, useEffect, useState } from 'react';
 import ProfilePic from './ProfilePic';
@@ -22,6 +22,7 @@ const Post = (props) => {
   const [postOpen, setPostOpen] = useState(false);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
+  const [layoutSize, setActiveItem] = useOutletContext();
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -64,6 +65,7 @@ const Post = (props) => {
 
   const togglePostOpen = () => {
     setPostOpen(!postOpen);
+    setActiveItem('home');
   };
 
   return (
@@ -95,7 +97,11 @@ const Post = (props) => {
           </div>
           <Icon path={mdiDotsHorizontal} size={1.2} />
         </div>
-        <img className="-mx-4 self-center" src={props.post.mediaUrl} />
+        <img
+          className="-mx-4 cursor-pointer self-center"
+          src={props.post.mediaUrl}
+          onClick={togglePostOpen}
+        />
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">

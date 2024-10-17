@@ -2,52 +2,49 @@ import ListMenuItem from './ListMenuItem';
 import { mdiHeart, mdiHeartOutline, mdiMagnify, mdiMenu } from '@mdi/js';
 import Logo from './Logo';
 import PawIcon from '../assets/PawIcon';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';
 import { GlobalContext } from './GlobalContext';
 
 const NavHeader = (props) => {
-  const [searchVisibility, setSearchVisibility] = useState(false);
-  const [notificationVisibility, setNotificationVisibility] = useState(false);
-  const [menuVisibility, setMenuVisibility] = useState(false);
   const { notifications } = useContext(GlobalContext);
 
   const toggleSearchbar = () => {
-    if (searchVisibility) {
+    if (props.searchVisibility) {
       props.setActiveItem(props.prevActiveItem);
-    } else if (!searchVisibility) {
+    } else if (!props.searchVisibility) {
       props.setPrevActiveItem(props.activeItem);
       props.setActiveItem('search');
     }
-    setNotificationVisibility(false);
-    setMenuVisibility(false);
-    setSearchVisibility(!searchVisibility);
+    props.setNotificationVisibility(false);
+    props.setMenuVisibility(false);
+    props.setSearchVisibility(!props.searchVisibility);
   };
 
   const toggleNotificationbar = () => {
-    if (notificationVisibility) {
+    if (props.notificationVisibility) {
       props.setActiveItem(props.prevActiveItem);
-    } else if (!notificationVisibility) {
+    } else if (!props.notificationVisibility) {
       props.setPrevActiveItem(props.activeItem);
       props.setActiveItem('notifications');
     }
-    setSearchVisibility(false);
-    setMenuVisibility(false);
-    setNotificationVisibility(!notificationVisibility);
+    props.setSearchVisibility(false);
+    props.setMenuVisibility(false);
+    props.setNotificationVisibility(!props.notificationVisibility);
   };
 
   const toggleMenuVisibility = () => {
-    if (menuVisibility) {
+    if (props.menuVisibility) {
       props.setActiveItem(props.prevActiveItem);
-    } else if (!menuVisibility) {
+    } else if (!props.menuVisibility) {
       props.setPrevActiveItem(props.activeItem);
       props.setActiveItem('menu');
     }
-    setSearchVisibility(false);
-    setNotificationVisibility(false);
-    setMenuVisibility(!menuVisibility);
+    props.setSearchVisibility(false);
+    props.setNotificationVisibility(false);
+    props.setMenuVisibility(!props.menuVisibility);
   };
 
   return (
@@ -89,17 +86,17 @@ const NavHeader = (props) => {
         </div>
       </nav>
       <Searchbar
-        className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${searchVisibility && 'translate-y-full opacity-100'} `}
+        className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${props.searchVisibility && 'translate-y-full opacity-100'} `}
         layoutSize={props.layoutSize}
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
-        className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${notificationVisibility && 'translate-y-full opacity-100'} `}
+        className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${props.notificationVisibility && 'translate-y-full opacity-100'} `}
         layoutSize={props.layoutSize}
         toggleNotificationbar={toggleNotificationbar}
       />
       <SettingsMenu
-        className={`${menuVisibility && 'translate-y-full opacity-100'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
+        className={`${props.menuVisibility && 'translate-y-full opacity-100'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
         toggleMenuVisibility={toggleMenuVisibility}
       />
     </div>
