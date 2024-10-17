@@ -2,9 +2,20 @@ import { useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
 import Notification from './Notification';
+import { AuthContext } from './AuthContext';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import deleteAllNotifications from '../services/deleteAllNotifications';
 
 const Notificationbar = (props) => {
-  const { notifications } = useContext(GlobalContext);
+  const { apiUrl } = useContext(AuthContext);
+  const { activeProfile, notifications } = useContext(GlobalContext);
+  const queryClient = useQueryClient();
+
+  const mutateNotifications = useMutation({
+    mutationFn: async () =>
+      await deleteAllNotifications(activeProfile.id, apiUrl),
+    onSuccess: () => queryClient.invalidateQueries(['activeProfile']),
+  });
 
   return (
     <PerfectScrollbar
@@ -20,7 +31,10 @@ const Notificationbar = (props) => {
       <div className="flex flex-col gap-4 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-primary text-xl font-semibold">Recent</h3>
-          <p className="hover:text-primary cursor-pointer text-lg text-blue-500">
+          <p
+            className="hover:text-primary cursor-pointer text-lg text-blue-500"
+            onClick={() => mutateNotifications.mutate()}
+          >
             Clear all
           </p>
         </div>

@@ -1,19 +1,25 @@
 import ProfilePic from './ProfilePic';
 import Button from './Button';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { Link } from 'react-router-dom';
-import { mdiSquareEditOutline } from '@mdi/js';
+import { Link, useOutletContext } from 'react-router-dom';
+import {
+  mdiCheckboxBlankOutline,
+  mdiCheckboxMarkedOutline,
+  mdiSquareEditOutline,
+} from '@mdi/js';
 import Icon from '@mdi/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import setActiveProfile from '../services/setActiveProfile';
 import { GlobalContext } from './GlobalContext';
+import { input } from '@testing-library/user-event/dist/cjs/event/input.js';
 
 const ManageProfiles = () => {
   const { apiUrl } = useContext(AuthContext);
   const { profiles } = useContext(GlobalContext);
   const queryClient = useQueryClient();
+  const [layoutSize] = useOutletContext();
 
   const changeActiveProfile = useMutation({
     mutationFn: (profileData) => {
@@ -58,7 +64,25 @@ const ManageProfiles = () => {
                     size={1.25}
                   />
                 </Link>
-                {profile.active ? (
+                {layoutSize === 'xsmall' || layoutSize === 'small' ? (
+                  profile.active ? (
+                    <button>
+                      <Icon
+                        className="text-accent"
+                        path={mdiCheckboxMarkedOutline}
+                        size={1.25}
+                      />
+                    </button>
+                  ) : (
+                    <button>
+                      <Icon
+                        path={mdiCheckboxBlankOutline}
+                        size={1.25}
+                        onClick={() => changeActiveProfile.mutate(profile)}
+                      />
+                    </button>
+                  )
+                ) : profile.active ? (
                   <Button className="px-3 py-2 text-sm font-semibold">
                     Active profile
                   </Button>

@@ -5,10 +5,21 @@ import ProfilePic from './ProfilePic';
 import Timestamp from './Timestamp';
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import deleteNotification from '../services/deleteNotification';
+import { AuthContext } from './AuthContext';
 
 const Notification = (props) => {
   const [message, setMessage] = useState('');
+  const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
+  const queryClient = useQueryClient();
+
+  const mutateNotification = useMutation({
+    mutationFn: async () =>
+      await deleteNotification(props.notification.id, apiUrl),
+    onSuccess: () => queryClient.invalidateQueries(['activeProfile']),
+  });
 
   useEffect(() => {
     switch (true) {
@@ -68,6 +79,7 @@ const Notification = (props) => {
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          mutateNotification.mutate();
         }}
       >
         <Icon className="text-tertiary" path={mdiClose} size={0.9} />

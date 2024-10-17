@@ -1,12 +1,12 @@
-const deleteComment = async (postId, commentId, apiUrl) => {
+const deleteAllNotifications = async (activeId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/comment`, {
+    const response = await fetch(`${apiUrl}/notifications`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ commentId }),
+      body: JSON.stringify({ activeId }),
     });
     const data = await response.json();
     console.log(data.message);
@@ -16,4 +16,4 @@ const deleteComment = async (postId, commentId, apiUrl) => {
   }
 };
 
-export default deleteComment;
+export default deleteAllNotifications;
