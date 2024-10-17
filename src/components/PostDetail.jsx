@@ -19,7 +19,10 @@ const PostDetail = (props) => {
   const { activeProfile, activeFollowing } = useContext(GlobalContext);
 
   useEffect(() => {
-    if (activeFollowing.includes(props.profile.id)) {
+    if (
+      activeFollowing.includes(props.profile.id) ||
+      activeProfile.id === props.profile.id
+    ) {
       setFollowStatus(true);
     } else {
       setFollowStatus(false);
@@ -31,9 +34,9 @@ const PostDetail = (props) => {
   const portalRoot = document.getElementById('portal-root');
 
   return createPortal(
-    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black bg-opacity-75 sm:p-4 md:p-8">
+    <div className="absolute inset-0 z-20 bg-black bg-opacity-75 sm:p-4 md:p-8">
       <div
-        className="fade-in-bottom bg-secondary-2 z-30 mx-auto h-dvh max-w-7xl bg-black md:grid md:h-auto md:max-h-dvh-95 md:grid-cols-3"
+        className="fade-in-bottom bg-secondary-2 md:min-h-dvh-75 z-30 m-auto flex min-h-dvh max-w-7xl flex-col bg-black md:grid md:h-auto md:max-h-dvh-95 md:grid-cols-3"
         onClick={(e) => e.stopPropagation()}
       >
         {(props.layoutSize === 'small' || props.layoutSize === 'xsmall') && (
@@ -90,14 +93,14 @@ const PostDetail = (props) => {
             <hr className="text-tertiary w-full self-center" />
           </div>
         )}
-        <div className="col-span-2 my-auto flex aspect-square items-center justify-center">
+        <div className="my-auto flex aspect-square items-center justify-center md:col-span-2">
           <img
             className="w-full self-center"
             src={props.post.mediaUrl}
             alt="post image"
           />
         </div>
-        <div className="bg-secondary col-span-1 flex flex-col items-start justify-start md:max-h-dvh-95">
+        <div className="bg-secondary col-span-1 flex grow flex-col items-start justify-start md:max-h-dvh-95">
           {props.layoutSize !== 'small' && props.layoutSize !== 'xsmall' && (
             <>
               <div className="flex items-center p-4">

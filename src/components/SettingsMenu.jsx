@@ -39,7 +39,7 @@ const SettingsMenu = (props) => {
 
   return (
     <div
-      className={`${props.className} timing shadow-medium bg-secondary text-secondary flex flex-col items-start justify-center rounded-xl p-2 text-lg`}
+      className={`${props.className} timing shadow-medium bg-secondary text-secondary flex flex-col items-start justify-center p-2 text-lg md:rounded-xl`}
     >
       <Link className="w-full" to="manage">
         <button

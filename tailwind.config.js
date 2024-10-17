@@ -45,6 +45,9 @@ export default {
         'dvh-95': '95dvh',
         'dvh-50': '50dvh',
       },
+      minHeight: {
+        'dvh-75': '75dvh',
+      },
     },
   },
   plugins: [],

@@ -33,7 +33,10 @@ const Notificationbar = (props) => {
           <h3 className="text-primary text-xl font-semibold">Recent</h3>
           <p
             className="hover:text-primary cursor-pointer text-lg text-blue-500"
-            onClick={() => mutateNotifications.mutate()}
+            onClick={() => {
+              mutateNotifications.mutate();
+              props.toggleNotificationbar();
+            }}
           >
             Clear all
           </p>
