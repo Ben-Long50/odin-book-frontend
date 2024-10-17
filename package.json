@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "vite",
+    "host": "vite --host",
     "build": "vite build",
     "test": "vitest",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",

@@ -54,17 +54,19 @@ const SignupForm = () => {
 
   return (
     <>
-      <div className="logo-load flex items-center justify-center gap-8">
-        <Logo textSize="text-8xl" />
-        <PawIcon className="size-32" />
+      <div className="logo-load flex items-center justify-center gap-4 md:gap-8">
+        <Logo textSize="text-5xl md:text-8xl " />
+        <PawIcon className="size-16 md:size-32" />
       </div>
-      <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 rounded-xl px-12 py-8">
+      <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 px-12 py-8 md:rounded-xl">
         <form
           className="flex w-full flex-col gap-10"
           method="post"
           onSubmit={handleSubmit}
         >
-          <h1 className="text-primary text-4xl font-medium">Sign Up</h1>
+          <h1 className="text-primary font-mediu text-2xl md:text-4xl">
+            Sign Up
+          </h1>
           <div className="flex flex-col gap-6">
             <InputField
               label="First Name"
