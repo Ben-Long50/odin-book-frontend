@@ -7,11 +7,11 @@ import CommentButton from './CommentButton';
 import ShareButton from './ShareButton';
 import BookmarkButton from './BookmarkButton';
 import { useContext, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import Timestamp from './Timestamp';
 import Comment from './Comment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
+import RootPortal from '../layouts/RootPortal';
 
 const PostDetail = (props) => {
   const [followStatus, setFollowStatus] = useState(props.followStatus || false);
@@ -31,12 +31,10 @@ const PostDetail = (props) => {
 
   if (!props.postOpen) return null;
 
-  const portalRoot = document.getElementById('portal-root');
-
-  return createPortal(
-    <div className="absolute inset-0 z-20 bg-black bg-opacity-75 sm:p-4 md:p-8">
+  return (
+    <RootPortal onClick={() => props.togglePostOpen()}>
       <div
-        className="fade-in-bottom bg-secondary-2 md:min-h-dvh-75 z-30 m-auto flex min-h-dvh max-w-7xl flex-col bg-black md:grid md:h-auto md:max-h-dvh-95 md:grid-cols-3"
+        className="fade-in-bottom bg-secondary-2 z-30 m-auto flex min-h-dvh max-w-7xl flex-col bg-black md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:grid-cols-3"
         onClick={(e) => e.stopPropagation()}
       >
         {(props.layoutSize === 'small' || props.layoutSize === 'xsmall') && (
@@ -84,12 +82,6 @@ const PostDetail = (props) => {
                 )}
               </div>
             </div>
-            <button
-              className="text-primary absolute right-0 top-0 z-30 p-2"
-              onClick={() => props.togglePostOpen()}
-            >
-              <Icon path={mdiClose} size={1.3} />
-            </button>
             <hr className="text-tertiary w-full self-center" />
           </div>
         )}
@@ -145,12 +137,6 @@ const PostDetail = (props) => {
                     </>
                   )}
                 </div>
-                <button
-                  className="text-primary absolute right-0 top-0 z-30 p-2"
-                  onClick={() => props.togglePostOpen()}
-                >
-                  <Icon path={mdiClose} size={1.3} />
-                </button>
               </div>
               <hr className="text-tertiary w-full self-center" />
             </>
@@ -189,7 +175,11 @@ const PostDetail = (props) => {
                 <div className="flex items-center gap-2">
                   {(props.layoutSize === 'small' ||
                     props.layoutSize === 'xsmall') && (
-                    <p className="text-primary font-semibold">3 likes</p>
+                    <p className="text-primary font-semibold">
+                      {props.post.likes.length +
+                        '  ' +
+                        (props.post.likes.length === 1 ? 'like' : 'likes')}
+                    </p>
                   )}
                   <BookmarkButton />
                 </div>
@@ -199,7 +189,9 @@ const PostDetail = (props) => {
                 props.layoutSize !== 'xsmall' && (
                   <>
                     <p className="text-primary font-semibold">
-                      {props.post.likes.length} likes
+                      {props.post.likes.length +
+                        '  ' +
+                        (props.post.likes.length === 1 ? 'like' : 'likes')}
                     </p>
                     <Timestamp date={props.post.createdAt} />
                   </>
@@ -230,8 +222,7 @@ const PostDetail = (props) => {
           </div>
         </div>
       </div>
-    </div>,
-    portalRoot,
+    </RootPortal>
   );
 };
 

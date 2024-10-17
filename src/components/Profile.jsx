@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Icon from '@mdi/react';
 import { mdiCircleSmall, mdiViewGrid } from '@mdi/js';
@@ -9,10 +9,15 @@ import { AuthContext } from './AuthContext';
 import getPosts from '../services/getPosts';
 import PostCard from './PostCard';
 import Loading from './Loading';
+import ProfileList from './ProfileList';
 
 const Profile = (props) => {
   const { apiUrl } = useContext(AuthContext);
   const [layoutSize] = useOutletContext();
+  const [followingProfiles, setFollowingProfiles] = useState([]);
+  const [followedProfiles, setFollowedProfiles] = useState([]);
+  const [followersOpen, setFollowersOpen] = useState(false);
+  const [followingOpen, setFollowingOpen] = useState(false);
 
   const posts = useQuery({
     queryKey: ['posts'],
@@ -26,11 +31,26 @@ const Profile = (props) => {
     if (posts.refetch) {
       posts.refetch();
     }
-  }, [props.profile, posts.refetch]);
+
+    setFollowingProfiles(() => {
+      return props.profile.followers.map((follower) => follower.following);
+    });
+    setFollowedProfiles(() => {
+      return props.profile.following.map((following) => following.follower);
+    });
+  }, [props.profile]);
 
   if (posts.isLoading) {
     return <Loading />;
   }
+
+  const toggleFollowersOpen = () => {
+    setFollowersOpen(!followersOpen);
+  };
+
+  const toggleFollowingOpen = () => {
+    setFollowingOpen(!followingOpen);
+  };
 
   return (
     <PerfectScrollbar className="text-primary w-full overflow-y-auto md:p-6 lg:p-8">
@@ -56,17 +76,37 @@ const Profile = (props) => {
                     </h2>
                     <h3 className="text-tertiary text-lg">Posts</h3>
                   </div>
-                  <div className="flex items-center justify-center gap-2">
+                  <div
+                    className="flex cursor-pointer items-center justify-center gap-2"
+                    onClick={toggleFollowersOpen}
+                  >
                     <h2 className="text-primary text-xl">
                       {props.followers?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Followers</h3>
+                    <ProfileList
+                      className="min-w-96"
+                      title="Followers"
+                      profiles={followingProfiles}
+                      modalOpen={followersOpen}
+                      toggleModal={toggleFollowersOpen}
+                    />
                   </div>
-                  <div className="flex items-center justify-center gap-2">
+                  <div
+                    className="flex cursor-pointer items-center justify-center gap-2"
+                    onClick={toggleFollowingOpen}
+                  >
                     <h2 className="text-primary text-xl">
                       {props.following?.length}
                     </h2>
                     <h3 className="text-tertiary text-lg">Following</h3>
+                    <ProfileList
+                      className="min-w-96"
+                      title="Following"
+                      profiles={followedProfiles}
+                      modalOpen={followingOpen}
+                      toggleModal={toggleFollowingOpen}
+                    />
                   </div>
                 </div>
                 <div className="flex w-full flex-col gap-2 text-lg">
@@ -146,17 +186,37 @@ const Profile = (props) => {
                 <h2 className="text-primary text-lg">{posts.data.length}</h2>
                 <h3 className="text-tertiary">Posts</h3>
               </div>
-              <div className="flex flex-col items-center justify-center">
+              <div
+                className="flex cursor-pointer flex-col items-center justify-center"
+                onClick={toggleFollowersOpen}
+              >
                 <h2 className="text-primary text-lg">
                   {props.followers?.length}
                 </h2>
                 <h3 className="text-tertiary">Followers</h3>
+                <ProfileList
+                  className="w-full"
+                  title="Followers"
+                  profiles={followingProfiles}
+                  modalOpen={followersOpen}
+                  toggleModal={toggleFollowersOpen}
+                />
               </div>
-              <div className="flex flex-col items-center justify-center">
+              <div
+                className="flex cursor-pointer flex-col items-center justify-center"
+                onClick={toggleFollowingOpen}
+              >
                 <h2 className="text-primary text-lg">
                   {props.following?.length}
                 </h2>
                 <h3 className="text-tertiary">Following</h3>
+                <ProfileList
+                  className="w-full"
+                  title="Following"
+                  profiles={followedProfiles}
+                  modalOpen={followingOpen}
+                  toggleModal={toggleFollowingOpen}
+                />
               </div>
             </div>
             <hr className="fade-in-bottom bg-secondary mb-2 mt-4" />

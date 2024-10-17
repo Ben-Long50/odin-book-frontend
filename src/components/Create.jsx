@@ -9,11 +9,12 @@ import {
   mdiImagePlus,
 } from '@mdi/js';
 import Icon from '@mdi/react';
-import { QueryClient, useMutation } from '@tanstack/react-query';
-import { useContext, useRef, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useContext, useState } from 'react';
 import createPost from '../services/createPost';
 import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
+import RootPortal from '../layouts/RootPortal';
 
 const Create = (props) => {
   const [file, setFile] = useState(null);
@@ -23,14 +24,14 @@ const Create = (props) => {
   const [captionInput, setCaptionInput] = useState('');
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const dialogRef = useRef(null);
+  const queryClient = useQueryClient();
 
   const newPost = useMutation({
     mutationFn: (formData) => {
       return createPost(formData, activeProfile.id, apiUrl);
     },
     onSuccess: () => {
-      QueryClient.invalidateQueries(['posts']);
+      queryClient.invalidateQueries(['posts']);
     },
   });
 
@@ -38,7 +39,7 @@ const Create = (props) => {
     const selectedFile = e.target.files[0]; // Get the selected file
 
     if (selectedFile) {
-      setFile(selectedFile); // Update the state with the selected file
+      setFile(selectedFile);
 
       // Create a URL for the selected file to preview
       const fileUrl = URL.createObjectURL(selectedFile);
@@ -54,16 +55,20 @@ const Create = (props) => {
       formData.append('image', file);
     }
     formData.append('caption', captionInput);
-
     newPost.mutate(formData);
+    setFile(null);
+    setImagePreview(null);
+    setCaptionInput('');
+    props.setCreateOpen(false);
   };
 
+  if (!props.createOpen) return null;
+
   return (
-    <>
-      <dialog
-        open={props.createOpen}
-        className="fade-in-bottom bg-secondary-2 z-30 max-h-dvh-95 w-full max-w-4xl self-center md:rounded-xl"
-        ref={dialogRef}
+    <RootPortal onClick={() => props.setCreateOpen(false)}>
+      <div
+        className="fade-in-bottom bg-secondary-2 z-30 mx-auto max-h-dvh-95 w-full max-w-4xl self-center md:rounded-xl"
+        onClick={(e) => e.stopPropagation()}
       >
         {!imagePreview ? (
           <h2 className="text-primary py-2 text-center text-lg font-semibold">
@@ -220,20 +225,8 @@ const Create = (props) => {
             </div>
           )}
         </form>
-      </dialog>
-      {props.createOpen && (
-        <>
-          <div className="fixed inset-0 z-20 bg-black opacity-75"></div>
-
-          <button
-            className="text-primary absolute right-0 top-0 z-30 p-2"
-            onClick={() => props.setCreateOpen(false)}
-          >
-            <Icon path={mdiClose} size={1.3} />
-          </button>
-        </>
-      )}
-    </>
+      </div>
+    </RootPortal>
   );
 };
 

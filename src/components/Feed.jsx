@@ -35,7 +35,7 @@ const Feed = () => {
     return <Loading />;
   }
 
-  if (feedPosts.data.length < 1) {
+  if (feedPosts.data?.length < 1) {
     return (
       <div className="fade-in-bottom mt-4 flex flex-col items-center gap-4 px-2 md:mt-8">
         <h2 className="text-primary text-center text-2xl font-semibold">
@@ -53,7 +53,7 @@ const Feed = () => {
 
   return (
     <PerfectScrollbar className="text-primary flex w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8">
-      {feedPosts.data.map((post, index) => {
+      {feedPosts.data?.map((post, index) => {
         return <Post key={index} post={post} layoutSize={layoutSize} />;
       })}
     </PerfectScrollbar>

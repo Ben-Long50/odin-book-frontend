@@ -41,7 +41,7 @@ const Notificationbar = (props) => {
             Clear all
           </p>
         </div>
-        {notifications.length > 0 &&
+        {notifications?.length > 0 &&
           notifications.map((notification) => {
             return (
               <Notification

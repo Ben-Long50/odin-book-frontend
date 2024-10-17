@@ -14,7 +14,14 @@ const GlobalProvider = ({ children }) => {
 
   const profiles = useQuery({
     queryKey: ['profiles'],
-    queryFn: () => getUserProfiles(apiUrl),
+    queryFn: () => {
+      const profiles = getUserProfiles(apiUrl);
+      if (profiles) {
+        return profiles;
+      } else {
+        return [];
+      }
+    },
   });
 
   const activeProfile = useQuery({

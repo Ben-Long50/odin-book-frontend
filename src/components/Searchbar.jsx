@@ -2,16 +2,15 @@ import { mdiClose, mdiCloseCircle } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
-import ProfilePic from './ProfilePic';
 import { AuthContext } from './AuthContext';
 import getSearchMatch from '../services/getSearchMatch';
 import { GlobalContext } from './GlobalContext';
-import { Link } from 'react-router-dom';
 import getSearchHistory from '../services/getSearchHistory';
 import createSearchEntry from '../services/createSearchEntry';
 import Loading from './Loading';
 import deleteSearchEntry from '../services/deleteSearchEntry';
 import deleteSearchHistory from '../services/deleteSearchHistory';
+import ProfileCard from './ProfileCard';
 
 const Searchbar = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -109,25 +108,17 @@ const Searchbar = (props) => {
             {searchHistory.isLoading ? (
               <Loading />
             ) : (
-              searchHistory.data.length > 0 &&
+              searchHistory.data?.length > 0 &&
               searchHistory.data.map((search) => {
                 const profile = search.searchedProfile;
                 return (
-                  <Link
-                    to={`/profile/${profile.username}`}
-                    className="timing hover:bg-secondary-2 flex w-full cursor-pointer items-center gap-4 rounded-lg p-2"
-                    state={profile.id}
+                  <ProfileCard
                     key={profile.id}
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    profile={profile}
+                    onClick={() => {
                       props.toggleSearchbar();
                     }}
                   >
-                    <ProfilePic
-                      image={profile.profilePicUrl}
-                      className="size-12 shrink-0"
-                    />
-                    <p className="text-primary text-lg">{profile.username}</p>
                     <button
                       className="ml-auto p-2"
                       onClick={(e) => {
@@ -142,36 +133,25 @@ const Searchbar = (props) => {
                         size={0.9}
                       />
                     </button>
-                  </Link>
+                  </ProfileCard>
                 );
               })
             )}
           </>
         ) : (
           results.map((profile) => {
-            if (profile.id !== activeProfile.id) {
+            if (profile.id !== activeProfile?.id) {
               return (
-                <Link
-                  to={`/profile/${profile.username}`}
+                <ProfileCard
                   key={profile.id}
-                  className="timing hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
-                  state={profile.id}
+                  profile={profile}
                   onClick={() => {
                     props.toggleSearchbar();
                     setSearchQuery('');
                     setResults([]);
                     createSearch.mutate(profile.id);
                   }}
-                >
-                  <ProfilePic
-                    image={profile.profilePicUrl}
-                    className="size-12 shrink-0"
-                  />
-                  <div>
-                    <p className="text-primary text-lg">{profile.username}</p>
-                    <p className="text-tertiary">{profile.petName}</p>
-                  </div>
-                </Link>
+                />
               );
             }
           })

@@ -37,6 +37,12 @@ const ForeignProfile = () => {
     },
   });
 
+  useEffect(() => {
+    if (profile.refetch) {
+      profile.refetch();
+    }
+  }, [location, profileId]);
+
   const setFollowingStatus = useMutation({
     mutationFn: async (id) => {
       if (!followStatus) {
