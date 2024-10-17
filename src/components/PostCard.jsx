@@ -39,7 +39,13 @@ const PostCard = (props) => {
 
   const comment = useMutation({
     mutationFn: async (comment) => {
-      await createComment(props.post.id, activeProfile.id, comment, apiUrl);
+      await createComment(
+        props.post.id,
+        props.post.profileId,
+        activeProfile.id,
+        comment,
+        apiUrl,
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['posts']);

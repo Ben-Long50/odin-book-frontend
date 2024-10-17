@@ -5,31 +5,19 @@ import { useContext } from 'react';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import getFollows from '../services/getFollows';
 import { mdiBookmarkOutline, mdiSquareEditOutline } from '@mdi/js';
 import Icon from '@mdi/react';
 
 const PersonalProfile = () => {
-  const { apiUrl } = useContext(AuthContext);
-  const { activeProfile } = useContext(GlobalContext);
+  const { activeProfile, activeFollowers, activeFollowing } =
+    useContext(GlobalContext);
   const [layoutSize] = useOutletContext();
-
-  const follows = useQuery({
-    queryKey: ['personalFollows'],
-    queryFn: async () => {
-      return await getFollows(activeProfile.id, apiUrl);
-    },
-  });
-
-  if (follows.isPending) {
-    return <div>...Loading</div>;
-  }
 
   return (
     <Profile
       profile={activeProfile}
-      followers={follows.data.followers}
-      following={follows.data.following}
+      followers={activeFollowers}
+      following={activeFollowing}
       followStatus={true}
     >
       <Link to="edit" state={activeProfile}>

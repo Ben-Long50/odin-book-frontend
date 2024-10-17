@@ -2,15 +2,17 @@ import ListMenuItem from './ListMenuItem';
 import { mdiHeart, mdiHeartOutline, mdiMagnify, mdiMenu } from '@mdi/js';
 import Logo from './Logo';
 import PawIcon from '../assets/PawIcon';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';
+import { GlobalContext } from './GlobalContext';
 
 const NavHeader = (props) => {
   const [searchVisibility, setSearchVisibility] = useState(false);
   const [notificationVisibility, setNotificationVisibility] = useState(false);
   const [menuVisibility, setMenuVisibility] = useState(false);
+  const { notifications } = useContext(GlobalContext);
 
   const toggleSearchbar = () => {
     if (searchVisibility) {
@@ -72,6 +74,7 @@ const NavHeader = (props) => {
               props.activeItem === 'notifications' ? mdiHeart : mdiHeartOutline
             }
             label="Notifications"
+            notifications={notifications}
             onClick={() => {
               toggleNotificationbar();
             }}
@@ -93,6 +96,7 @@ const NavHeader = (props) => {
       <Notificationbar
         className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${notificationVisibility && 'translate-y-full opacity-100'} `}
         layoutSize={props.layoutSize}
+        toggleNotificationbar={toggleNotificationbar}
       />
       <SettingsMenu
         className={`${menuVisibility && 'translate-y-full opacity-100'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}

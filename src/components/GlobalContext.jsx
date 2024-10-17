@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import getUserProfiles from '../services/getUserProfiles.js';
@@ -17,7 +17,7 @@ const GlobalProvider = ({ children }) => {
     queryFn: () => getUserProfiles(apiUrl),
   });
 
-  const { data: activeProfile } = useQuery({
+  const activeProfile = useQuery({
     queryKey: ['activeProfile'],
     queryFn: async () => {
       const profile = await getActiveProfile(apiUrl);
@@ -27,13 +27,14 @@ const GlobalProvider = ({ children }) => {
       const following = profile.following.map(
         (following) => following.profileId,
       );
+
       setActiveFollowers(followers);
       setActiveFollowing(following);
       return profile;
     },
   });
 
-  if (profiles.isLoading) {
+  if (profiles.isLoading || activeProfile.isLoading) {
     return <Loading />;
   }
 
@@ -41,10 +42,11 @@ const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         profiles,
-        activeProfile,
+        activeProfile: activeProfile.data,
         activeFollowers,
         activeFollowing,
         setActiveFollowing,
+        notifications: activeProfile.data?.notified,
       }}
     >
       {children}

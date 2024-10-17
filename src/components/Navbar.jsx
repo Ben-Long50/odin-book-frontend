@@ -36,7 +36,7 @@ const Navbar = (props) => {
   const [notificationVisibility, setNotificationVisibility] = useState(false);
 
   const navRef = useRef(null);
-  const { activeProfile } = useContext(GlobalContext);
+  const { activeProfile, notifications } = useContext(GlobalContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -170,6 +170,7 @@ const Navbar = (props) => {
               props.activeItem === 'notifications' ? mdiHeart : mdiHeartOutline
             }
             label="Notifications"
+            notifications={notifications}
             onClick={() => {
               changeActiveItem('notifications');
               toggleNotificationbar();
@@ -233,6 +234,7 @@ const Navbar = (props) => {
             notificationVisibility &&
             `translateX(${navRef.current ? navWidth + 'px' : '0px'})`,
         }}
+        toggleNotificationbar={toggleNotificationbar}
       />
     </div>
   );

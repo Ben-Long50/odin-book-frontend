@@ -1,4 +1,4 @@
-const createComment = async (postId, activeId, comment, apiUrl) => {
+const createComment = async (postId, profileId, activeId, comment, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/posts/${postId}/comment`, {
       method: 'POST',
@@ -6,7 +6,7 @@ const createComment = async (postId, activeId, comment, apiUrl) => {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ activeId, comment }),
+      body: JSON.stringify({ activeId, profileId, comment }),
     });
     const data = await response.json();
     console.log(data.message);

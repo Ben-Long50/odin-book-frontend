@@ -13,13 +13,13 @@
     @apply hover:bg-emerald-300 hover:dark:text-gray-900;
   }
   .bg-secondary {
-    @apply border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900;
+    @apply border-gray-300 bg-zinc-100 dark:border-gray-600 dark:bg-zinc-900;
   }
   .bg-secondary-2 {
-    @apply bg-gray-200 dark:bg-gray-800;
+    @apply bg-zinc-200 dark:bg-zinc-800;
   }
   .hover-secondary {
-    @apply bg-gray-200 dark:bg-gray-700;
+    @apply bg-zinc-300 dark:bg-zinc-700;
   }
   .text-primary {
     @apply text-gray-900 dark:text-gray-50;

@@ -14,7 +14,8 @@ const ManageProfiles = () => {
   const { apiUrl } = useContext(AuthContext);
   const { profiles } = useContext(GlobalContext);
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+
+  const changeActiveProfile = useMutation({
     mutationFn: (profileData) => {
       return setActiveProfile(profileData, apiUrl);
     },
@@ -22,14 +23,6 @@ const ManageProfiles = () => {
       queryClient.invalidateQueries(['profiles', 'activeProfile']);
     },
   });
-
-  const handleActive = (profile) => {
-    mutation.mutate(profile);
-  };
-
-  if (profiles.isPending) {
-    return <span>Loading...</span>;
-  }
 
   return (
     <PerfectScrollbar className="text-primary flex w-full flex-col items-center overflow-y-auto p-4 md:p-6 lg:p-8">
@@ -72,7 +65,7 @@ const ManageProfiles = () => {
                 ) : (
                   <Button
                     className="px-3 py-2 text-sm font-semibold opacity-50"
-                    onClick={() => handleActive(profile)}
+                    onClick={() => changeActiveProfile.mutate(profile)}
                   >
                     Switch profile
                   </Button>

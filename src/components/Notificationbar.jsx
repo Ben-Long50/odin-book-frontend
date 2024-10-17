@@ -1,6 +1,11 @@
+import { useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { GlobalContext } from './GlobalContext';
+import Notification from './Notification';
 
 const Notificationbar = (props) => {
+  const { notifications } = useContext(GlobalContext);
+
   return (
     <PerfectScrollbar
       className={`${props.className} bg-secondary flex min-w-96 flex-col shadow-md md:h-dvh md:shadow-md-right dark:shadow-gray-950`}
@@ -19,6 +24,18 @@ const Notificationbar = (props) => {
             Clear all
           </p>
         </div>
+        {notifications.length > 0 &&
+          notifications.map((notification) => {
+            return (
+              <Notification
+                key={notification.id}
+                notification={notification}
+                profile={notification.profile}
+                date={notification.createdAt}
+                toggleNotificationbar={props.toggleNotificationbar}
+              />
+            );
+          })}
       </div>
     </PerfectScrollbar>
   );

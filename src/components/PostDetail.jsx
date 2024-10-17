@@ -45,7 +45,7 @@ const PostDetail = (props) => {
                     ? `/profile`
                     : `/profile/${props.profile.username}`
                 }
-                state={props.profilel.id}
+                state={props.profile.id}
               >
                 <ProfilePic
                   image={props.profile.profilePicUrl}
