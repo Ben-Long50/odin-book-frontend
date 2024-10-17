@@ -12,12 +12,14 @@ import { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
 import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
+import { useQueryClient } from '@tanstack/react-query';
 
 const SettingsMenu = (props) => {
   const { apiUrl } = useContext(AuthContext);
   const { theme, changeTheme } = useContext(ThemeContext);
   const { activeProfile } = useContext(GlobalContext);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const logout = async () => {
     try {
@@ -27,6 +29,7 @@ const SettingsMenu = (props) => {
       });
       const result = await response.json();
       if (response.ok) {
+        queryClient.clear();
         console.log(result.message);
         navigate('/signin');
       } else {

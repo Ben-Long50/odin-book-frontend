@@ -5,6 +5,7 @@ import NavHeader from '../components/NavHeader';
 import NavFooter from '../components/NavFooter';
 import Create from '../components/Create';
 import { ThemeContext } from '../components/ThemeContext';
+import GlobalProvider from '../components/GlobalContext';
 
 const MainLayout = () => {
   const [activeItem, setActiveItem] = useState('home');
@@ -63,69 +64,71 @@ const MainLayout = () => {
   };
 
   return (
-    <div
-      id="portal-root"
-      className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary relative grid h-dvh bg-fixed`}
-    >
-      {layoutSize === 'small' || layoutSize === 'xsmall' ? (
-        <>
-          <NavHeader
-            layoutSize={layoutSize}
-            setLayoutSize={setLayoutSize}
-            activeItem={activeItem}
-            setActiveItem={setActiveItem}
-            prevActiveItem={prevActiveItem}
-            setPrevActiveItem={setPrevActiveItem}
-            menuVisibility={menuVisibility}
-            setMenuVisibility={setMenuVisibility}
-            searchVisibility={searchVisibility}
-            setSearchVisibility={setSearchVisibility}
-            notificationVisibility={notificationVisibility}
-            setNotificationVisibility={setNotificationVisibility}
-          />
-          <div onClick={closeNavbar}>
-            <Outlet context={[layoutSize, setActiveItem]} />
-          </div>
-          <NavFooter
-            activeItem={activeItem}
-            setActiveItem={setActiveItem}
-            prevActiveItem={prevActiveItem}
-            setPrevActiveItem={setPrevActiveItem}
-            layoutSize={layoutSize}
-            setLayoutSize={setLayoutSize}
-            setCreateOpen={setCreateOpen}
-          />
-          <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
-        </>
-      ) : (
-        <>
-          <Navbar
-            activeItem={activeItem}
-            setActiveItem={setActiveItem}
-            prevActiveItem={prevActiveItem}
-            setPrevActiveItem={setPrevActiveItem}
-            layoutSize={layoutSize}
-            setLayoutSize={setLayoutSize}
-            navbarSize={navbarSize}
-            setNavbarSize={setNavbarSize}
-            setCreateOpen={setCreateOpen}
-            menuVisibility={menuVisibility}
-            setMenuVisibility={setMenuVisibility}
-            searchVisibility={searchVisibility}
-            setSearchVisibility={setSearchVisibility}
-            notificationVisibility={notificationVisibility}
-            setNotificationVisibility={setNotificationVisibility}
-          />
-          <div
-            className="flex h-dvh items-start justify-center"
-            onClick={closeNavbar}
-          >
-            <Outlet context={[layoutSize, setActiveItem]} />
-          </div>
-          <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
-        </>
-      )}
-    </div>
+    <GlobalProvider>
+      <div
+        id="portal-root"
+        className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary relative grid h-dvh bg-fixed`}
+      >
+        {layoutSize === 'small' || layoutSize === 'xsmall' ? (
+          <>
+            <NavHeader
+              layoutSize={layoutSize}
+              setLayoutSize={setLayoutSize}
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+              prevActiveItem={prevActiveItem}
+              setPrevActiveItem={setPrevActiveItem}
+              menuVisibility={menuVisibility}
+              setMenuVisibility={setMenuVisibility}
+              searchVisibility={searchVisibility}
+              setSearchVisibility={setSearchVisibility}
+              notificationVisibility={notificationVisibility}
+              setNotificationVisibility={setNotificationVisibility}
+            />
+            <div onClick={closeNavbar}>
+              <Outlet context={[layoutSize, setActiveItem]} />
+            </div>
+            <NavFooter
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+              prevActiveItem={prevActiveItem}
+              setPrevActiveItem={setPrevActiveItem}
+              layoutSize={layoutSize}
+              setLayoutSize={setLayoutSize}
+              setCreateOpen={setCreateOpen}
+            />
+            <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
+          </>
+        ) : (
+          <>
+            <Navbar
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+              prevActiveItem={prevActiveItem}
+              setPrevActiveItem={setPrevActiveItem}
+              layoutSize={layoutSize}
+              setLayoutSize={setLayoutSize}
+              navbarSize={navbarSize}
+              setNavbarSize={setNavbarSize}
+              setCreateOpen={setCreateOpen}
+              menuVisibility={menuVisibility}
+              setMenuVisibility={setMenuVisibility}
+              searchVisibility={searchVisibility}
+              setSearchVisibility={setSearchVisibility}
+              notificationVisibility={notificationVisibility}
+              setNotificationVisibility={setNotificationVisibility}
+            />
+            <div
+              className="flex h-dvh items-start justify-center"
+              onClick={closeNavbar}
+            >
+              <Outlet context={[layoutSize, setActiveItem]} />
+            </div>
+            <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
+          </>
+        )}
+      </div>
+    </GlobalProvider>
   );
 };
 

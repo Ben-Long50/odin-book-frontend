@@ -25,10 +25,10 @@ const ListMenuItem = (props) => {
       )}
       {props.notifications?.length > 0 && (
         <div
-          className={`${props.navbarSize === 'large' ? 'ml-auto size-7' : 'absolute right-1 top-1 size-5'} timing flex shrink-0 items-center justify-center rounded-full bg-red-600`}
+          className={`${props.navbarSize === 'large' ? 'ml-auto' : 'absolute right-1 top-1'} timing flex shrink-0 items-center justify-center rounded-full bg-red-600 p-1`}
         >
           <p
-            className={`${props.navbarSize === 'large' ? 'text-xl' : 'text-sm'} text-primary`}
+            className={`${props.navbarSize === 'large' ? 'size-7 text-xl' : 'size-5 text-sm'} text-primary`}
           >
             {props.notifications.length}
           </p>

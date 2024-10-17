@@ -38,7 +38,7 @@ const Profile = (props) => {
     setFollowedProfiles(() => {
       return props.profile.following.map((following) => following.follower);
     });
-  }, [props.profile]);
+  }, [props.profile, posts.refetch]);
 
   if (posts.isLoading) {
     return <Loading />;

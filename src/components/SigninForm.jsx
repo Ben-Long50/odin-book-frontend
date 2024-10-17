@@ -48,7 +48,7 @@ const SigninForm = () => {
       });
       const result = await response.json();
       if (response.ok) {
-        console.log(result);
+        console.log(result.message);
         navigate('/home');
       } else {
         const errorArray = result.map((error) => {

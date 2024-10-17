@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Icon from '@mdi/react';
 import { mdiCompassOutline } from '@mdi/js';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import Loading from './Loading';
@@ -15,7 +15,6 @@ const Explore = () => {
   const { activeProfile, setActiveFollowing } = useContext(GlobalContext);
   const { apiUrl } = useContext(AuthContext);
   const [layoutSize] = useOutletContext();
-  // const queryClient = useQueryClient();
 
   const posts = useQuery({
     queryKey: ['explorePosts'],
