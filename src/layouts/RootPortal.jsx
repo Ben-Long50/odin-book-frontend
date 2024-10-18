@@ -7,7 +7,7 @@ const RootPortal = (props) => {
 
   return createPortal(
     <div
-      className={`${props.className} absolute inset-0 z-20 flex items-center bg-black bg-opacity-75 sm:p-4 md:p-8`}
+      className={`${props.className} absolute inset-0 z-20 flex h-dvh items-center overflow-auto bg-black bg-opacity-75 sm:p-4 md:p-8`}
       onClick={props.onClick}
     >
       {props.children}

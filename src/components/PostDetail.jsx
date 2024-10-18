@@ -1,5 +1,5 @@
 import Icon from '@mdi/react';
-import { mdiClose, mdiCircleSmall } from '@mdi/js';
+import { mdiCircleSmall } from '@mdi/js';
 import { Link } from 'react-router-dom';
 import ProfilePic from './ProfilePic';
 import LikeButton from './LikeButton';
@@ -12,6 +12,7 @@ import Comment from './Comment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
 import RootPortal from '../layouts/RootPortal';
+import PostHeader from './PostHeader';
 
 const PostDetail = (props) => {
   const [followStatus, setFollowStatus] = useState(props.followStatus || false);
@@ -32,195 +33,188 @@ const PostDetail = (props) => {
   if (!props.postOpen) return null;
 
   return (
-    <RootPortal onClick={() => props.togglePostOpen()}>
+    <RootPortal
+      onClick={() => props.togglePostOpen()}
+      postOpen={props.postOpen}
+    >
       <div
-        className="fade-in-bottom bg-secondary-2 z-30 m-auto flex min-h-dvh max-w-7xl flex-col bg-black md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:grid-cols-3 md:rounded-l-xl"
+        className="fade-in-bottom bg-secondary main-layout z-30 grid h-dvh w-full md:m-auto md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:max-w-7xl md:grid-cols-3 md:grid-rows-1 md:rounded-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {(props.layoutSize === 'small' || props.layoutSize === 'xsmall') && (
-          <div className="bg-secondary sticky left-0 top-0 z-30">
-            <div className="flex items-center p-4">
-              <Link
-                to={
-                  activeProfile.id === props.profile.id
-                    ? `/profile`
-                    : `/profile/${props.profile.username}`
-                }
-                state={props.profile.id}
-              >
-                <ProfilePic
-                  image={props.profile.profilePicUrl}
-                  className="mr-4 size-10"
+        {props.layoutSize === 'small' || props.layoutSize === 'xsmall' ? (
+          <>
+            <div className="bg-secondary sticky top-0 z-30 row-span-1 w-full border-b">
+              <PostHeader
+                activeProfile={activeProfile}
+                profile={props.profile}
+                followStatus={followStatus}
+                setFollowStatus={setFollowStatus}
+                setFollowingStatus={props.setFollowingStatus}
+              />
+            </div>
+            <div
+              className="bg-secondary row-span-1 w-full overflow-y-auto"
+              onScroll={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-center overflow-hidden bg-black">
+                <img
+                  className="w-full self-center"
+                  src={props.post.mediaUrl}
+                  alt="post image"
                 />
-              </Link>
-              <div className="text-primary flex items-center">
-                <Link
-                  to={
-                    activeProfile.id === props.profile.id
-                      ? `/profile`
-                      : `/profile/${props.profile.username}`
-                  }
-                  state={props.profile.id}
-                >
-                  <h3 className="text-lg font-semibold">
-                    {props.profile.username}
-                  </h3>
-                </Link>
-                {!followStatus && (
-                  <>
-                    <Icon path={mdiCircleSmall} size={1} />
+              </div>
+              <div className="bg-secondary flex grow flex-col gap-4 border-t p-4">
+                <Comment
+                  profile={props.profile}
+                  body={props.post.body}
+                  date={props.post.createdAt}
+                />
+                {props.post.comments.map((comment) => {
+                  return (
+                    <Comment
+                      key={comment.id}
+                      id={comment.id}
+                      likes={comment.likes}
+                      profile={comment.profile}
+                      body={comment.body}
+                      date={comment.createdAt}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <div className="bg-secondary sticky bottom-0 row-span-1 w-full border-t">
+              <div className="w-full p-3">
+                <div className="flex w-full items-center justify-between md:mb-3">
+                  <div className="flex items-center justify-start gap-4">
+                    <LikeButton
+                      likedStatus={props.likedStatus}
+                      onClick={() => props.toggleLikedStatus.mutate()}
+                    />
+                    <CommentButton />
+                    <ShareButton />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p className="text-primary font-semibold">
+                      {props.post.likes.length +
+                        '  ' +
+                        (props.post.likes.length === 1 ? 'like' : 'likes')}
+                    </p>
+                    <BookmarkButton />
+                  </div>
+                </div>
+              </div>
+              <form className="text-primary bg-secondary flex w-full items-center justify-between border-t p-3 md:rounded-br-xl">
+                <input
+                  className="w-full bg-transparent py-1 outline-none"
+                  type="text"
+                  placeholder="Add a comment..."
+                  onChange={(e) => setCommentInput(e.target.value)}
+                  value={commentInput}
+                />
+                {commentInput.length > 0 && (
+                  <button
+                    className="text-accent font-semibold hover:underline"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      props.comment.mutate(commentInput);
+                      setCommentInput('');
+                    }}
+                  >
+                    Post
+                  </button>
+                )}
+              </form>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex h-full items-center justify-center overflow-hidden rounded-l-xl bg-black md:col-span-2 md:my-auto">
+              <img
+                className="w-full self-center md:rounded-l-xl"
+                src={props.post.mediaUrl}
+                alt="post image"
+              />
+            </div>
+            <div className="bg-secondary col-span-1 flex h-full max-h-dvh-95 flex-col items-start justify-start rounded-r-xl">
+              <PostHeader
+                className="rounded-tr-xl border-b"
+                activeProfile={activeProfile}
+                profile={props.profile}
+                followStatus={followStatus}
+                setFollowStatus={setFollowStatus}
+                setFollowingStatus={props.setFollowingStatus}
+              />
+              <PerfectScrollbar className="w-full overflow-y-auto">
+                <div className="flex flex-col gap-4 p-4">
+                  <Comment
+                    profile={props.profile}
+                    body={props.post.body}
+                    date={props.post.createdAt}
+                  />
+                  {props.post.comments.map((comment) => {
+                    return (
+                      <Comment
+                        key={comment.id}
+                        id={comment.id}
+                        likes={comment.likes}
+                        profile={comment.profile}
+                        body={comment.body}
+                        date={comment.createdAt}
+                      />
+                    );
+                  })}
+                </div>
+              </PerfectScrollbar>
+              <div className="bg-secondary sticky bottom-0 row-span-1 w-full border-t md:rounded-br-xl">
+                <div className="w-full p-3">
+                  <div className="flex w-full items-center justify-between md:mb-3">
+                    <div className="flex items-center justify-start gap-4">
+                      <LikeButton
+                        likedStatus={props.likedStatus}
+                        onClick={() => props.toggleLikedStatus.mutate()}
+                      />
+                      <CommentButton />
+                      <ShareButton />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <BookmarkButton />
+                    </div>
+                  </div>
+
+                  <p className="text-primary font-semibold">
+                    {props.post.likes.length +
+                      '  ' +
+                      (props.post.likes.length === 1 ? 'like' : 'likes')}
+                  </p>
+                  <Timestamp date={props.post.createdAt} />
+                </div>
+                <form className="text-primary bg-secondary flex w-full items-center justify-between border-t p-3 md:rounded-br-xl">
+                  <input
+                    className="w-full bg-transparent py-1 outline-none"
+                    type="text"
+                    placeholder="Add a comment..."
+                    onChange={(e) => setCommentInput(e.target.value)}
+                    value={commentInput}
+                  />
+                  {commentInput.length > 0 && (
                     <button
-                      className="text-accent"
-                      onClick={() => {
-                        props.setFollowingStatus.mutate(props.profile.id);
-                        setFollowStatus(true);
+                      className="text-accent font-semibold hover:underline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        props.comment.mutate(commentInput);
+                        setCommentInput('');
                       }}
                     >
-                      Follow
+                      Post
                     </button>
-                  </>
-                )}
+                  )}
+                </form>
               </div>
             </div>
-            <hr className="text-tertiary w-full self-center" />
-          </div>
+          </>
         )}
-        <div className="my-auto flex aspect-square items-center justify-center md:col-span-2">
-          <img
-            className="w-full self-center md:rounded-l-xl"
-            src={props.post.mediaUrl}
-            alt="post image"
-          />
-        </div>
-        <div className="bg-secondary col-span-1 flex grow flex-col items-start justify-start md:max-h-dvh-95 md:rounded-r-xl">
-          {props.layoutSize !== 'small' && props.layoutSize !== 'xsmall' && (
-            <>
-              <div className="flex items-center p-4">
-                <Link
-                  to={
-                    activeProfile.id === props.profile.id
-                      ? `/profile`
-                      : `/profile/${props.profile.username}`
-                  }
-                  state={props.profile}
-                >
-                  <ProfilePic
-                    image={props.profile.profilePicUrl}
-                    className="mr-4 size-10"
-                  />
-                </Link>
-                <div className="text-primary flex items-center">
-                  <Link
-                    to={
-                      activeProfile.id === props.profile.id
-                        ? `/profile`
-                        : `/profile/${props.profile.username}`
-                    }
-                    state={props.profile}
-                  >
-                    <h3 className="text-lg font-semibold">
-                      {props.profile.username}
-                    </h3>
-                  </Link>
-                  {!followStatus && (
-                    <>
-                      <Icon path={mdiCircleSmall} size={1} />
-                      <button
-                        className="text-accent"
-                        onClick={() => {
-                          props.setFollowingStatus.mutate(props.profile.id);
-                          setFollowStatus(true);
-                        }}
-                      >
-                        Follow
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-              <hr className="text-tertiary w-full self-center" />
-            </>
-          )}
-          <PerfectScrollbar className="flex h-full w-full grow flex-col gap-4 overflow-y-scroll p-4">
-            <Comment
-              profile={props.profile}
-              body={props.post.body}
-              date={props.post.createdAt}
-            />
-            {props.post.comments.map((comment) => {
-              return (
-                <Comment
-                  key={comment.id}
-                  id={comment.id}
-                  likes={comment.likes}
-                  profile={comment.profile}
-                  body={comment.body}
-                  date={comment.createdAt}
-                />
-              );
-            })}
-          </PerfectScrollbar>
-          <div className="bg-secondary sticky bottom-0 w-full md:rounded-br-xl">
-            <hr className="text-tertiary mt-auto w-full self-center" />
-            <div className="w-full p-3">
-              <div className="flex w-full items-center justify-between md:mb-3">
-                <div className="flex items-center justify-start gap-4">
-                  <LikeButton
-                    likedStatus={props.likedStatus}
-                    onClick={() => props.toggleLikedStatus.mutate()}
-                  />
-                  <CommentButton />
-                  <ShareButton />
-                </div>
-                <div className="flex items-center gap-2">
-                  {(props.layoutSize === 'small' ||
-                    props.layoutSize === 'xsmall') && (
-                    <p className="text-primary font-semibold">
-                      {props.post.likes.length +
-                        '  ' +
-                        (props.post.likes.length === 1 ? 'like' : 'likes')}
-                    </p>
-                  )}
-                  <BookmarkButton />
-                </div>
-              </div>
-
-              {props.layoutSize !== 'small' &&
-                props.layoutSize !== 'xsmall' && (
-                  <>
-                    <p className="text-primary font-semibold">
-                      {props.post.likes.length +
-                        '  ' +
-                        (props.post.likes.length === 1 ? 'like' : 'likes')}
-                    </p>
-                    <Timestamp date={props.post.createdAt} />
-                  </>
-                )}
-            </div>
-            <hr className="text-tertiary w-full self-center" />
-            <form className="text-primary flex w-full items-center justify-between p-3 md:rounded-br-xl">
-              <input
-                className="bg-transparent py-1 outline-none"
-                type="text"
-                placeholder="Add a comment..."
-                onChange={(e) => setCommentInput(e.target.value)}
-                value={commentInput}
-              />
-              {commentInput.length > 0 && (
-                <button
-                  className="text-accent font-semibold hover:underline"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    props.comment.mutate(commentInput);
-                    setCommentInput('');
-                  }}
-                >
-                  Post
-                </button>
-              )}
-            </form>
-          </div>
-        </div>
       </div>
     </RootPortal>
   );

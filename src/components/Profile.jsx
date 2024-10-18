@@ -229,7 +229,7 @@ const Profile = (props) => {
         )}
 
         {posts.data.length > 0 ? (
-          <div className="fade-in-bottom grid w-full grid-cols-3 gap-1">
+          <div className="fade-in-bottom bg-secondary grid w-full grid-cols-3 gap-0.5 md:gap-1">
             {posts.data.map((post, index) => (
               <PostCard
                 key={index}

@@ -39,7 +39,7 @@ const Comment = (props) => {
   });
 
   return (
-    <div className="flex w-full items-start">
+    <div className={`${props.className} flex w-full items-start`}>
       <Link
         to={
           activeProfile.id === props.profile.id

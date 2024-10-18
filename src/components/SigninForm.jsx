@@ -63,7 +63,7 @@ const SigninForm = () => {
 
   return (
     <>
-      <div className="logo-load flex items-center justify-center gap-4 md:gap-8">
+      <div className="logo-load flex grow items-center justify-center gap-4 md:grow-0 md:gap-8">
         <Logo textSize="text-5xl md:text-8xl " />
         <PawIcon className="size-16 md:size-32" />
       </div>

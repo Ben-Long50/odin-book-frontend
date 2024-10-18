@@ -51,7 +51,7 @@ const Explore = () => {
             Explore
           </h1>
         </div>
-        <div className="fade-in-bottom grid w-full grid-cols-3 gap-1 md:mt-6">
+        <div className="fade-in-bottom grid w-full grid-cols-3 gap-0.5 md:mt-6 md:gap-1">
           {posts.data.length < 1 ? (
             <h2 className="col-span-3 w-full text-center text-2xl font-semibold">
               Nothing to explore

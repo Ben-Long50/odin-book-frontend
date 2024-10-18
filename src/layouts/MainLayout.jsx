@@ -6,6 +6,7 @@ import NavFooter from '../components/NavFooter';
 import Create from '../components/Create';
 import { ThemeContext } from '../components/ThemeContext';
 import GlobalProvider from '../components/GlobalContext';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const MainLayout = () => {
   const [activeItem, setActiveItem] = useState('home');
@@ -67,7 +68,7 @@ const MainLayout = () => {
     <GlobalProvider>
       <div
         id="portal-root"
-        className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary relative grid h-dvh bg-fixed`}
+        className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid h-dvh bg-fixed`}
       >
         {layoutSize === 'small' || layoutSize === 'xsmall' ? (
           <>
@@ -85,7 +86,10 @@ const MainLayout = () => {
               notificationVisibility={notificationVisibility}
               setNotificationVisibility={setNotificationVisibility}
             />
-            <div onClick={closeNavbar}>
+            <div
+              className="text-primary row-span-1 flex w-full flex-col items-center overflow-y-scroll md:p-6 lg:p-8"
+              onClick={closeNavbar}
+            >
               <Outlet context={[layoutSize, setActiveItem]} />
             </div>
             <NavFooter
@@ -118,12 +122,13 @@ const MainLayout = () => {
               notificationVisibility={notificationVisibility}
               setNotificationVisibility={setNotificationVisibility}
             />
-            <div
-              className="flex h-dvh items-start justify-center"
+            <PerfectScrollbar
+              style={{ backgroundColor: 'transparent' }}
+              className="text-primary row-span-1 flex w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8"
               onClick={closeNavbar}
             >
               <Outlet context={[layoutSize, setActiveItem]} />
-            </div>
+            </PerfectScrollbar>
             <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
           </>
         )}

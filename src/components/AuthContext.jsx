@@ -5,10 +5,11 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const isMobile = window.location.href.includes('192.168.4.94');
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-
-  const authTimer = 1000 * 60 * 60 * 4;
+  const apiUrl = isMobile
+    ? import.meta.env.VITE_LOCAL_BACKEND_URL
+    : import.meta.env.VITE_API_URL;
 
   const signin = (user) => {
     setIsAuthenticated(true);

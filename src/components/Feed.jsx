@@ -51,11 +51,11 @@ const Feed = () => {
   }
 
   return (
-    <PerfectScrollbar className="text-primary flex w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8">
+    <>
       {feedPosts.data?.map((post, index) => {
         return <Post key={index} post={post} layoutSize={layoutSize} />;
       })}
-    </PerfectScrollbar>
+    </>
   );
 };
 
