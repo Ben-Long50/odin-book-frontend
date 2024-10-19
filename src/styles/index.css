@@ -58,7 +58,7 @@
     @apply outline-none ring-emerald-300 focus:border-transparent focus:ring-2;
   }
   .timing {
-    @apply duration-300 ease-in-out;
+    @apply transition-all duration-300 ease-in-out;
   }
   .auth-layout-rows {
     grid-template-rows: 1fr 2fr;
@@ -78,6 +78,14 @@
   }
   .navbar-layout-md {
     grid-template-rows: auto 1fr auto;
+  }
+  .comment-layout {
+    grid-template-columns: 1fr 0%;
+    grid-template-rows: 1fr;
+  }
+  .comment-layout-2 {
+    grid-template-columns: 1fr 15%;
+    grid-template-rows: 1fr;
   }
   dialog::backdrop {
     backdrop-filter: blur(5px) brightness(0.8);

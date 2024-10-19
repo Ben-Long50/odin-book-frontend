@@ -1,12 +1,8 @@
-const deleteComment = async (postId, commentId, apiUrl) => {
+const deleteComment = async (commentId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/comment`, {
+    const response = await fetch(`${apiUrl}/comment/${commentId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       credentials: 'include',
-      body: JSON.stringify({ commentId }),
     });
     const data = await response.json();
     console.log(data.message);

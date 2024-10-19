@@ -1,7 +1,3 @@
-import Icon from '@mdi/react';
-import { mdiCircleSmall } from '@mdi/js';
-import { Link } from 'react-router-dom';
-import ProfilePic from './ProfilePic';
 import LikeButton from './LikeButton';
 import CommentButton from './CommentButton';
 import ShareButton from './ShareButton';
@@ -13,11 +9,31 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
 import RootPortal from '../layouts/RootPortal';
 import PostHeader from './PostHeader';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AuthContext } from './AuthContext';
+import getComments from '../services/getComments';
+import Loading from './Loading';
 
 const PostDetail = (props) => {
   const [followStatus, setFollowStatus] = useState(props.followStatus || false);
   const [commentInput, setCommentInput] = useState('');
+  const { apiUrl } = useContext(AuthContext);
   const { activeProfile, activeFollowing } = useContext(GlobalContext);
+
+  const comments = useQuery({
+    queryKey: ['comments'],
+    queryFn: async () => {
+      console.log('refetch');
+
+      const comments = await getComments(props.post.id, apiUrl);
+      return comments;
+    },
+    enabled: false,
+  });
+
+  const mutatePost = useMutation({
+    mutationFn: () => {},
+  });
 
   useEffect(() => {
     if (
@@ -30,7 +46,17 @@ const PostDetail = (props) => {
     }
   }, [activeFollowing, props.profile.id]);
 
+  useEffect(() => {
+    if (props.postOpen) {
+      comments.refetch();
+    }
+  }, [props.postOpen, comments]);
+
   if (!props.postOpen) return null;
+
+  if (comments.isPending || comments.isLoading) {
+    return <Loading />;
+  }
 
   return (
     <RootPortal
@@ -64,13 +90,13 @@ const PostDetail = (props) => {
                   alt="post image"
                 />
               </div>
-              <div className="bg-secondary flex grow flex-col gap-4 border-t p-4">
+              <div className="bg-secondary flex grow flex-col border-t">
                 <Comment
                   profile={props.profile}
                   body={props.post.body}
                   date={props.post.createdAt}
                 />
-                {props.post.comments.map((comment) => {
+                {comments?.data.map((comment) => {
                   return (
                     <Comment
                       key={comment.id}
@@ -147,13 +173,13 @@ const PostDetail = (props) => {
                 setFollowingStatus={props.setFollowingStatus}
               />
               <PerfectScrollbar className="w-full overflow-y-auto">
-                <div className="flex flex-col gap-4 p-4">
+                <div className="flex flex-col">
                   <Comment
                     profile={props.profile}
                     body={props.post.body}
                     date={props.post.createdAt}
                   />
-                  {props.post.comments.map((comment) => {
+                  {comments?.data.map((comment) => {
                     return (
                       <Comment
                         key={comment.id}

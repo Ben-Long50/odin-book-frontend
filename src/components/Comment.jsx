@@ -8,9 +8,13 @@ import unlikeComment from '../services/unlikeComment.js';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import LikeButton from './LikeButton';
+import Icon from '@mdi/react';
+import { mdiTrashCanOutline } from '@mdi/js';
+import deleteComment from '../services/deleteComment.js';
 
 const Comment = (props) => {
   const [likedStatus, setLikedStatus] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
   const queryClient = useQueryClient();
@@ -25,6 +29,15 @@ const Comment = (props) => {
     setLikedStatus(status);
   }, [props.likes]);
 
+  const mutateComment = useMutation({
+    mutationFn: () => {
+      deleteComment(props.id, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['comments']);
+    },
+  });
+
   const toggleLikedStatus = useMutation({
     mutationFn: async () => {
       if (!likedStatus) {
@@ -38,22 +51,20 @@ const Comment = (props) => {
     },
   });
 
+  const toggleDeleteMode = () => {
+    setDeleteMode(!deleteMode);
+  };
+
   return (
-    <div className={`${props.className} flex w-full items-start`}>
-      <Link
-        to={
-          activeProfile.id === props.profile.id
-            ? `/profile`
-            : `/profile/${props.profile.username}`
-        }
-        state={props.profile.id}
+    <div
+      className={`${deleteMode ? 'comment-layout-2' : 'comment-layout'} timing grid w-full`}
+      onClick={
+        activeProfile.id === props.profile.id ? toggleDeleteMode : undefined
+      }
+    >
+      <div
+        className={`${props.className} ${activeProfile.id === props.profile.id ? 'bg-secondary-2 cursor-pointer' : 'bg-secondary'} z-20 col-start-1 col-end-2 row-start-1 row-end-2 flex items-start p-4`}
       >
-        <ProfilePic
-          image={props.profile.profilePicUrl}
-          className="mr-4 size-10"
-        />
-      </Link>
-      <div className="flex flex-col gap-1">
         <Link
           to={
             activeProfile.id === props.profile.id
@@ -62,26 +73,51 @@ const Comment = (props) => {
           }
           state={props.profile.id}
         >
-          <h3 className="text-primary text-lg font-semibold">
-            {props.profile.username}
-          </h3>
+          <ProfilePic
+            image={props.profile.profilePicUrl}
+            className="mr-4 size-10"
+          />
         </Link>
-        <p className="text-secondary">{props.body}</p>
-        <Timestamp date={props.date} />
-      </div>
-      {props.likes && (
-        <div className="ml-auto flex items-center">
-          {props.likes?.length > 0 && (
-            <p className="text-tertiary text-sm">{props.likes.length}</p>
-          )}
-          <div className="flex size-10 items-center justify-center">
-            <LikeButton
-              size={0.8}
-              likedStatus={likedStatus}
-              onClick={() => toggleLikedStatus.mutate()}
-            />
-          </div>
+        <div className="flex flex-col gap-1">
+          <Link
+            to={
+              activeProfile.id === props.profile.id
+                ? `/profile`
+                : `/profile/${props.profile.username}`
+            }
+            state={props.profile.id}
+          >
+            <h3 className="text-primary text-lg font-semibold">
+              {props.profile.username}
+            </h3>
+          </Link>
+          <p className="text-secondary">{props.body}</p>
+          <Timestamp date={props.date} />
         </div>
+        {props.likes && (
+          <div className="ml-auto flex items-center self-center">
+            {props.likes?.length > 0 && (
+              <p className="text-tertiary text-sm">{props.likes.length}</p>
+            )}
+            <div
+              className="flex size-10 items-center justify-center"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleLikedStatus.mutate();
+              }}
+            >
+              <LikeButton size={0.8} likedStatus={likedStatus} />
+            </div>
+          </div>
+        )}
+      </div>
+      {activeProfile.id === props.profile.id && (
+        <button
+          className="z-10 col-start-2 col-end-3 row-start-1 row-end-2 flex items-center justify-center bg-red-600 text-gray-50"
+          onClick={() => mutateComment.mutate()}
+        >
+          <Icon path={mdiTrashCanOutline} size={1.25} />
+        </button>
       )}
     </div>
   );

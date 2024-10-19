@@ -53,7 +53,7 @@ const Profile = (props) => {
   };
 
   return (
-    <PerfectScrollbar className="text-primary w-full overflow-y-auto md:p-6 lg:p-8">
+    <div className="text-primary w-full md:p-6 lg:p-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col">
         {layoutSize !== 'small' && layoutSize !== 'xsmall' ? (
           <>
@@ -117,7 +117,7 @@ const Profile = (props) => {
                     {props.profile.species && (
                       <>
                         <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-secondary">
+                        <p className="text-secondary text-center">
                           {props.profile.species}
                         </p>
                       </>
@@ -125,7 +125,9 @@ const Profile = (props) => {
                     {props.profile.breed && (
                       <>
                         <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-tertiary">({props.profile.breed})</p>
+                        <p className="text-tertiary text-center">
+                          ({props.profile.breed})
+                        </p>
                       </>
                     )}
                   </div>
@@ -162,7 +164,7 @@ const Profile = (props) => {
                     {props.profile.species && (
                       <>
                         <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-secondary">
+                        <p className="text-secondary text-center">
                           {props.profile.species}
                         </p>
                       </>
@@ -170,13 +172,15 @@ const Profile = (props) => {
                     {props.profile.breed && (
                       <>
                         <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-tertiary">({props.profile.breed})</p>
+                        <p className="text-tertiary text-center">
+                          ({props.profile.breed})
+                        </p>
                       </>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="fade-in-bottom flex w-full flex-col gap-2 px-2 text-lg">
+              <div className="fade-in-bottom mt-3 flex w-full flex-col gap-2 px-2 text-lg">
                 <p className="text-secondary">{props.profile.bio}</p>
               </div>
             </div>
@@ -247,7 +251,7 @@ const Profile = (props) => {
           </h2>
         )}
       </div>
-    </PerfectScrollbar>
+    </div>
   );
 };
 

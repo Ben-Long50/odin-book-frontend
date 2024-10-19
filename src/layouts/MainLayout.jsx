@@ -7,6 +7,7 @@ import Create from '../components/Create';
 import { ThemeContext } from '../components/ThemeContext';
 import GlobalProvider from '../components/GlobalContext';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { Scrollbar } from 'react-scrollbars-custom';
 
 const MainLayout = () => {
   const [activeItem, setActiveItem] = useState('home');
@@ -123,7 +124,6 @@ const MainLayout = () => {
               setNotificationVisibility={setNotificationVisibility}
             />
             <PerfectScrollbar
-              style={{ backgroundColor: 'transparent' }}
               className="text-primary row-span-1 flex w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8"
               onClick={closeNavbar}
             >

@@ -95,7 +95,6 @@ const Post = (props) => {
               <Timestamp date={props.post.createdAt} />
             </div>
           </div>
-          <Icon path={mdiDotsHorizontal} size={1.2} />
         </div>
         <img
           className="-mx-4 cursor-pointer self-center"
