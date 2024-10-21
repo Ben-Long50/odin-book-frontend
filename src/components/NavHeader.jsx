@@ -2,7 +2,7 @@ import ListMenuItem from './ListMenuItem';
 import { mdiHeart, mdiHeartOutline, mdiMagnify, mdiMenu } from '@mdi/js';
 import Logo from './Logo';
 import PawIcon from '../assets/PawIcon';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import Icon from '@mdi/react';
 import { mdiCircleSmall, mdiViewGrid } from '@mdi/js';
 import { useOutletContext } from 'react-router-dom';

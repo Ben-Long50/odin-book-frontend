@@ -2,7 +2,7 @@ import LikeButton from './LikeButton';
 import CommentButton from './CommentButton';
 import ShareButton from './ShareButton';
 import BookmarkButton from './BookmarkButton';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Timestamp from './Timestamp';
 import Comment from './Comment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -13,18 +13,25 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from './AuthContext';
 import getComments from '../services/getComments';
 import Loading from './Loading';
+import deleteComment from '../services/deleteComment';
+import deletePost from '../services/deletePost';
 
 const PostDetail = (props) => {
   const [followStatus, setFollowStatus] = useState(props.followStatus || false);
   const [commentInput, setCommentInput] = useState('');
+  const [imageWidth, setImageWidth] = useState(null);
+  const [imageHeight, setImageHeight] = useState(null);
+  const [imageContainerHeight, setImageContainerHeight] = useState(null);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile, activeFollowing } = useContext(GlobalContext);
+  const queryClient = useQueryClient();
+
+  const imageRef = useRef(null);
+  const imageContainerRef = useRef(null);
 
   const comments = useQuery({
     queryKey: ['comments'],
     queryFn: async () => {
-      console.log('refetch');
-
       const comments = await getComments(props.post.id, apiUrl);
       return comments;
     },
@@ -32,7 +39,22 @@ const PostDetail = (props) => {
   });
 
   const mutatePost = useMutation({
-    mutationFn: () => {},
+    mutationFn: (postId) => {
+      deletePost(postId, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['activeProfile', 'posts']);
+      props.setPostOpen(false);
+    },
+  });
+
+  const mutateComment = useMutation({
+    mutationFn: (commentId) => {
+      deleteComment(commentId, apiUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['comments']);
+    },
   });
 
   useEffect(() => {
@@ -49,6 +71,14 @@ const PostDetail = (props) => {
   useEffect(() => {
     if (props.postOpen) {
       comments.refetch();
+    }
+  }, [props.postOpen, comments]);
+
+  useEffect(() => {
+    if (imageRef.current && props.postOpen) {
+      setImageWidth(imageRef.current.offsetWidth);
+      setImageHeight(imageRef.current.offsetHeight);
+      setImageContainerHeight(imageContainerRef.current.offsetHeight);
     }
   }, [props.postOpen, comments]);
 
@@ -83,8 +113,12 @@ const PostDetail = (props) => {
               onScroll={(e) => e.stopPropagation()}
               onTouchMove={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-center overflow-hidden bg-black">
+              <div
+                ref={imageContainerRef}
+                className={`${imageHeight > imageWidth && 'aspect-square'} flex items-center justify-center overflow-hidden bg-black`}
+              >
                 <img
+                  ref={imageRef}
                   className="w-full self-center"
                   src={props.post.mediaUrl}
                   alt="post image"
@@ -92,9 +126,12 @@ const PostDetail = (props) => {
               </div>
               <div className="bg-secondary flex grow flex-col border-t">
                 <Comment
+                  type="caption"
+                  id={props.post.id}
                   profile={props.profile}
                   body={props.post.body}
                   date={props.post.createdAt}
+                  mutate={mutatePost.mutate}
                 />
                 {comments?.data.map((comment) => {
                   return (
@@ -105,6 +142,7 @@ const PostDetail = (props) => {
                       profile={comment.profile}
                       body={comment.body}
                       date={comment.createdAt}
+                      mutate={mutateComment.mutate}
                     />
                   );
                 })}
@@ -156,9 +194,13 @@ const PostDetail = (props) => {
           </>
         ) : (
           <>
-            <div className="flex h-full items-center justify-center overflow-hidden rounded-l-xl bg-black md:col-span-2 md:my-auto">
+            <div
+              ref={imageContainerRef}
+              className="flex h-full items-center justify-center overflow-hidden rounded-l-xl bg-black md:col-span-2 md:my-auto"
+            >
               <img
-                className="w-full self-center md:rounded-l-xl"
+                ref={imageRef}
+                className={`${imageContainerHeight <= imageHeight && 'md:rounded-l-xl'} w-full self-center`}
                 src={props.post.mediaUrl}
                 alt="post image"
               />
@@ -175,9 +217,12 @@ const PostDetail = (props) => {
               <PerfectScrollbar className="w-full overflow-y-auto">
                 <div className="flex flex-col">
                   <Comment
+                    type="caption"
+                    id={props.post.id}
                     profile={props.profile}
                     body={props.post.body}
                     date={props.post.createdAt}
+                    mutate={mutatePost.mutate}
                   />
                   {comments?.data.map((comment) => {
                     return (
@@ -188,6 +233,7 @@ const PostDetail = (props) => {
                         profile={comment.profile}
                         body={comment.body}
                         date={comment.createdAt}
+                        mutate={mutateComment.mutate}
                       />
                     );
                   })}

@@ -70,7 +70,9 @@ const Post = (props) => {
 
   return (
     <>
-      <div className="bg-secondary flex max-w-xl flex-col border-b">
+      <div
+        className={`${props.className} bg-secondary flex max-w-xl flex-col border-b`}
+      >
         <div className="flex items-center justify-between px-2 py-3 sm:px-0 sm:py-4">
           <div className="flex items-center">
             <Link

@@ -11,12 +11,14 @@ const RootPortal = (props) => {
       onClick={props.onClick}
     >
       {props.children}
-      <button
-        className="text-primary absolute right-0 top-0 z-30 p-2"
-        onClick={props.onClick}
-      >
-        <Icon path={mdiClose} size={1.3} />
-      </button>
+      {!props.create && (
+        <button
+          className="text-primary absolute right-0 top-0 z-30 p-2"
+          onClick={props.onClick}
+        >
+          <Icon path={mdiClose} size={1.3} />
+        </button>
+      )}
     </div>,
     portalRoot,
   );

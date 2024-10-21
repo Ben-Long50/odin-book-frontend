@@ -71,6 +71,7 @@ const PostCard = (props) => {
         toggleLikedStatus={toggleLikedStatus}
         profile={props.profile}
         postOpen={postOpen}
+        setPostOpen={setPostOpen}
         togglePostOpen={togglePostOpen}
         comment={comment}
       />

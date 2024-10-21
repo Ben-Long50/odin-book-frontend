@@ -19,7 +19,7 @@ const Notificationbar = (props) => {
 
   return (
     <PerfectScrollbar
-      className={`${props.className} bg-secondary flex min-w-96 flex-col shadow-md md:h-dvh md:shadow-md-right dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex min-w-96 flex-col overflow-y-auto shadow-md md:h-dvh md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       {props.layoutSize !== 'xsmall' && props.layoutSize !== 'small' && (

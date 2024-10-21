@@ -10,11 +10,11 @@ import { AuthContext } from './AuthContext';
 import LikeButton from './LikeButton';
 import Icon from '@mdi/react';
 import { mdiTrashCanOutline } from '@mdi/js';
-import deleteComment from '../services/deleteComment.js';
 
 const Comment = (props) => {
   const [likedStatus, setLikedStatus] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+  const [confirmDeleteMode, setConfirmDeleteMode] = useState(false);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
   const queryClient = useQueryClient();
@@ -28,15 +28,6 @@ const Comment = (props) => {
     });
     setLikedStatus(status);
   }, [props.likes]);
-
-  const mutateComment = useMutation({
-    mutationFn: () => {
-      deleteComment(props.id, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['comments']);
-    },
-  });
 
   const toggleLikedStatus = useMutation({
     mutationFn: async () => {
@@ -55,15 +46,26 @@ const Comment = (props) => {
     setDeleteMode(!deleteMode);
   };
 
+  const toggleConfirmDeleteMode = () => {
+    setConfirmDeleteMode(!confirmDeleteMode);
+  };
+
   return (
     <div
-      className={`${deleteMode ? 'comment-layout-2' : 'comment-layout'} timing grid w-full`}
-      onClick={
-        activeProfile.id === props.profile.id ? toggleDeleteMode : undefined
-      }
+      className={`${deleteMode ? 'comment-layout-2' : 'comment-layout'} timing grid w-full overflow-hidden`}
     >
       <div
         className={`${props.className} ${activeProfile.id === props.profile.id ? 'bg-secondary-2 cursor-pointer' : 'bg-secondary'} z-20 col-start-1 col-end-2 row-start-1 row-end-2 flex items-start p-4`}
+        onClick={
+          activeProfile.id === props.profile.id
+            ? confirmDeleteMode
+              ? () => {
+                  toggleDeleteMode();
+                  toggleConfirmDeleteMode();
+                }
+              : toggleDeleteMode
+            : undefined
+        }
       >
         <Link
           to={
@@ -113,10 +115,25 @@ const Comment = (props) => {
       </div>
       {activeProfile.id === props.profile.id && (
         <button
-          className="z-10 col-start-2 col-end-3 row-start-1 row-end-2 flex items-center justify-center bg-red-600 text-gray-50"
-          onClick={() => mutateComment.mutate()}
+          className={`${confirmDeleteMode ? 'grid-cols-confirmDelete' : 'grid-cols-delete'} timing z-10 col-start-2 col-end-3 row-start-1 row-end-2 grid grid-rows-1 bg-red-600 text-gray-50`}
+          onClick={
+            props.type === 'caption'
+              ? confirmDeleteMode
+                ? () => props.mutate(props.id)
+                : () => setConfirmDeleteMode(true)
+              : () => props.mutate(props.id)
+          }
         >
-          <Icon path={mdiTrashCanOutline} size={1.25} />
+          <Icon
+            className={`${deleteMode && !confirmDeleteMode ? 'opacity-100' : 'opacity-0'} ${confirmDeleteMode && 'opacity-0'} timing col-start-1 col-end-2 row-start-1 row-end-2 m-auto`}
+            path={mdiTrashCanOutline}
+            size={1.25}
+          />
+          <p
+            className={`${confirmDeleteMode ? 'opacity-100' : 'opacity-0'} timing col-start-2 col-end-3 row-start-1 row-end-2 m-auto`}
+          >
+            Delete post
+          </p>
         </button>
       )}
     </div>

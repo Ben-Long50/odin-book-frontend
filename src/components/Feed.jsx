@@ -1,4 +1,3 @@
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import Post from './Post';
 import { useContext } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -53,7 +52,14 @@ const Feed = () => {
   return (
     <>
       {feedPosts.data?.map((post, index) => {
-        return <Post key={index} post={post} layoutSize={layoutSize} />;
+        return (
+          <Post
+            className="fade-in-bottom"
+            key={index}
+            post={post}
+            layoutSize={layoutSize}
+          />
+        );
       })}
     </>
   );

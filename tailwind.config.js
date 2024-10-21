@@ -48,6 +48,10 @@ export default {
       minHeight: {
         'dvh-75': '75dvh',
       },
+      gridTemplateColumns: {
+        delete: '100% 0%',
+        confirmDelete: '0% 100%',
+      },
     },
   },
   plugins: [],
