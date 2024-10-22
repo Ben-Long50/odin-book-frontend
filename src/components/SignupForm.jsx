@@ -58,55 +58,55 @@ const SignupForm = () => {
         <Logo textSize="text-5xl md:text-8xl " />
         <PawIcon className="size-16 md:size-32" />
       </div>
-      <div className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col items-center gap-10 px-12 py-8 md:rounded-xl">
-        <form
-          className="flex w-full flex-col gap-10"
-          method="post"
-          onSubmit={handleSubmit}
+      <div
+        className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col gap-8 px-12 py-8 md:gap-10 md:rounded-xl"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="text-primary font-mediu text-2xl md:text-4xl">
+          Sign Up
+        </h1>
+        <div className="flex flex-col gap-6">
+          <InputField
+            label="First Name"
+            name="firstName"
+            type="text"
+            minLength={2}
+            onChange={handleChange}
+          />
+          <InputField
+            label="Last Name"
+            name="lastName"
+            type="text"
+            minLength={2}
+            onChange={handleChange}
+          />
+          <InputField
+            label="Email"
+            name="email"
+            type="email"
+            onChange={handleChange}
+          />
+          <InputField
+            label="Password"
+            name="password"
+            type="password"
+            minLength={6}
+            onChange={handleChange}
+          />
+          <InputField
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            minLength={6}
+            onChange={handleChange}
+          />
+        </div>
+        <Button
+          type="submit"
+          className="hover:shadow-hover p-2 text-lg md:text-xl"
         >
-          <h1 className="text-primary font-mediu text-2xl md:text-4xl">
-            Sign Up
-          </h1>
-          <div className="flex flex-col gap-6">
-            <InputField
-              label="First Name"
-              name="firstName"
-              type="text"
-              minLength={2}
-              onChange={handleChange}
-            />
-            <InputField
-              label="Last Name"
-              name="lastName"
-              type="text"
-              minLength={2}
-              onChange={handleChange}
-            />
-            <InputField
-              label="Email"
-              name="email"
-              type="email"
-              onChange={handleChange}
-            />
-            <InputField
-              label="Password"
-              name="password"
-              type="password"
-              minLength={6}
-              onChange={handleChange}
-            />
-            <InputField
-              label="Confirm Password"
-              name="confirmPassword"
-              type="password"
-              minLength={6}
-              onChange={handleChange}
-            />
-          </div>
-          <Button type="submit" className="hover:shadow-hover p-2 text-xl">
-            Sign up
-          </Button>
-        </form>
+          Sign up
+        </Button>
         <p className="text-tertiary">
           Already have an account?
           <Link to="/signin">

@@ -2,7 +2,7 @@ import ListMenuItem from './ListMenuItem';
 import { mdiHeart, mdiHeartOutline, mdiMagnify, mdiMenu } from '@mdi/js';
 import Logo from './Logo';
 import PawIcon from '../assets/PawIcon';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext } from 'react';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';
@@ -15,7 +15,13 @@ const NavHeader = (props) => {
     if (props.searchVisibility) {
       props.setActiveItem(props.prevActiveItem);
     } else if (!props.searchVisibility) {
-      props.setPrevActiveItem(props.activeItem);
+      if (
+        props.activeItem !== 'search' &&
+        props.activeItem !== 'notifications' &&
+        props.activeItem !== 'menu'
+      ) {
+        props.setPrevActiveItem(props.activeItem);
+      }
       props.setActiveItem('search');
     }
     props.setNotificationVisibility(false);
@@ -27,7 +33,13 @@ const NavHeader = (props) => {
     if (props.notificationVisibility) {
       props.setActiveItem(props.prevActiveItem);
     } else if (!props.notificationVisibility) {
-      props.setPrevActiveItem(props.activeItem);
+      if (
+        props.activeItem !== 'search' &&
+        props.activeItem !== 'notifications' &&
+        props.activeItem !== 'menu'
+      ) {
+        props.setPrevActiveItem(props.activeItem);
+      }
       props.setActiveItem('notifications');
     }
     props.setSearchVisibility(false);
@@ -39,7 +51,13 @@ const NavHeader = (props) => {
     if (props.menuVisibility) {
       props.setActiveItem(props.prevActiveItem);
     } else if (!props.menuVisibility) {
-      props.setPrevActiveItem(props.activeItem);
+      if (
+        props.activeItem !== 'search' &&
+        props.activeItem !== 'notifications' &&
+        props.activeItem !== 'menu'
+      ) {
+        props.setPrevActiveItem(props.activeItem);
+      }
       props.setActiveItem('menu');
     }
     props.setSearchVisibility(false);
@@ -77,7 +95,7 @@ const NavHeader = (props) => {
             }}
           />
           <ListMenuItem
-            className={`${props.activeItem === 'menu' && 'rotate-180'}`}
+            className={`${props.activeItem === 'menu' && '-rotate-90'}`}
             activeItem={props.activeItem}
             icon={mdiMenu}
             label="More"
@@ -86,17 +104,17 @@ const NavHeader = (props) => {
         </div>
       </nav>
       <Searchbar
-        className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${props.searchVisibility && 'translate-y-full opacity-100'} `}
+        className={`${props.searchVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing } absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
         layoutSize={props.layoutSize}
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
-        className={`timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0 ${props.notificationVisibility && 'translate-y-full opacity-100'} `}
+        className={`${props.notificationVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
         layoutSize={props.layoutSize}
         toggleNotificationbar={toggleNotificationbar}
       />
       <SettingsMenu
-        className={`${props.menuVisibility && 'translate-y-full opacity-100'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
+        className={`${props.menuVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
         toggleMenuVisibility={toggleMenuVisibility}
       />
     </div>

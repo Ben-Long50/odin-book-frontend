@@ -67,39 +67,39 @@ const SigninForm = () => {
         <Logo textSize="text-5xl md:text-8xl " />
         <PawIcon className="size-16 md:size-32" />
       </div>
-      <div className="form-load bg-secondary shadow-medium flex w-full max-w-lg flex-col items-center gap-10 px-12 py-8 md:rounded-xl">
-        <form
-          className="flex w-full flex-col gap-10"
-          method="post"
-          onSubmit={handleSubmit}
+      <div
+        className="form-load bg-secondary shadow-medium flex w-full max-w-lg flex-col gap-8 px-12 py-8 md:gap-10 md:rounded-xl"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="text-primary text-2xl font-medium md:text-4xl">
+          Sign In
+        </h1>
+        <div className="flex flex-col gap-6">
+          <InputField
+            label="Email"
+            name="email"
+            type="email"
+            onChange={handleChange}
+          />
+          <InputField
+            label="Password"
+            name="password"
+            type="password"
+            minLength={6}
+            onChange={handleChange}
+          />
+        </div>
+        <Button
+          type="submit"
+          className="hover:shadow-hover p-2 text-lg md:text-xl"
         >
-          <h1 className="text-primary text-2xl font-medium md:text-4xl">
-            Sign In
-          </h1>
-          <div className="flex flex-col gap-6">
-            <InputField
-              label="Email"
-              name="email"
-              type="email"
-              onChange={handleChange}
-            />
-            <InputField
-              label="Password"
-              name="password"
-              type="password"
-              minLength={6}
-              onChange={handleChange}
-            />
-          </div>
-          <Button type="submit" className="hover:shadow-hover p-2 md:text-xl">
-            Sign in
-          </Button>
-        </form>
+          Sign in
+        </Button>
         <AuthOptions />
-        <Button className="hover:shadow-hover w-full p-2 text-xl">
+        <Button className="hover:shadow-hover w-full p-2 text-lg">
           Sign in as human (guest)
         </Button>
-        <p className="text-tertiary">
+        <p className="text-tertiary w-full text-center">
           Don't have an account?
           <Link to="/signup">
             <span className="pl-2 hover:underline">Sign up</span>

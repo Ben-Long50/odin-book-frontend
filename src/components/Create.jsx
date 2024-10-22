@@ -100,12 +100,11 @@ const Create = (props) => {
             <div className="flex flex-col items-center justify-center gap-2 pb-6 pt-5">
               <Icon className="text-tertiary" path={mdiImagePlus} size={5} />
               <p className="text-tertiary mb-2 text-sm">
-                <span className="font-semibold">Click to upload</span> or drag
-                and drop
+                <span className="text-xl font-semibold">
+                  Click anywhere to upload
+                </span>
               </p>
-              <p className="text-tertiary text-xs">
-                SVG, PNG, JPG or GIF (MAX. 800x400px)
-              </p>
+              <p className="text-tertiary text-lg">SVG, PNG, JPG or GIF</p>
             </div>
             <input
               id="file"

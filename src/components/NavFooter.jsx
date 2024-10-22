@@ -21,7 +21,10 @@ const NavFooter = (props) => {
   };
 
   return (
-    <nav className="bg-secondary row-span-1 flex w-dvw items-center justify-evenly gap-4 border-t p-1">
+    <nav
+      className="bg-secondary row-span-1 flex w-dvw items-center justify-evenly gap-4 border-t p-1"
+      onClick={props.onClick}
+    >
       <Link className="w-auto" to="/home">
         <ListMenuItem
           activeItem={props.activeItem}

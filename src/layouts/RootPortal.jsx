@@ -7,7 +7,7 @@ const RootPortal = (props) => {
 
   return createPortal(
     <div
-      className={`${props.className} absolute inset-0 z-20 flex h-dvh items-center overflow-auto bg-black bg-opacity-75 sm:p-4 md:p-8`}
+      className={`${props.className} backdrop-fade absolute inset-0 z-20 flex h-dvh items-center overflow-auto bg-black bg-opacity-75 sm:p-4 md:p-8`}
       onClick={props.onClick}
     >
       {props.children}
@@ -16,7 +16,7 @@ const RootPortal = (props) => {
           className="text-primary absolute right-0 top-0 z-30 p-2"
           onClick={props.onClick}
         >
-          <Icon path={mdiClose} size={1.3} />
+          <Icon className={props.className} path={mdiClose} size={1.3} />
         </button>
       )}
     </div>,

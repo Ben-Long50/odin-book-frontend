@@ -5,8 +5,12 @@ const getProfile = async (profileId, apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
-
-    return data.profile;
+    if (response.ok) {
+      console.log(data.message);
+      return data.profile;
+    } else {
+      console.error(data.message);
+    }
   } catch (error) {
     console.error(error.message);
   }

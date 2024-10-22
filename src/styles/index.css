@@ -31,7 +31,7 @@
     @apply border-gray-500 text-gray-500 dark:border-gray-400 dark:text-gray-400;
   }
   .text-accent {
-    @apply text-emerald-300 hover:text-emerald-400;
+    @apply text-emerald-400 md:hover:text-emerald-500 dark:text-emerald-300 md:dark:hover:text-emerald-400;
   }
   .text-error {
     @apply text-red-600 dark:text-red-500;
@@ -43,7 +43,7 @@
     @apply text-secondary block w-full cursor-pointer rounded pr-2 text-left text-base font-medium transition duration-300;
   }
   .accent-primary {
-    @apply bg-emerald-300 text-gray-900 hover:bg-emerald-400 dark:border-none dark:shadow-gray-950;
+    @apply bg-emerald-400 text-gray-900 md:hover:bg-emerald-500 dark:border-none dark:bg-emerald-300 dark:shadow-gray-950 md:dark:hover:bg-emerald-400;
   }
   .shadow-normal {
     @apply shadow shadow-gray-300 dark:shadow dark:shadow-gray-950;
@@ -58,7 +58,7 @@
     @apply outline-none ring-emerald-300 focus:border-transparent focus:ring-2;
   }
   .timing {
-    @apply transition-all duration-300 ease-in-out;
+    @apply transition-all duration-500 ease-in-out md:duration-300;
   }
   .auth-layout-rows {
     grid-template-rows: 1fr 2fr;
@@ -104,7 +104,7 @@
 @keyframes form-load {
   0% {
     opacity: 0;
-    transform: translateY(30%);
+    transform: translateY(50px);
   }
   100% {
     opacity: 1;
@@ -113,13 +113,13 @@
 }
 
 .form-load {
-  animation: form-load 1s forwards;
+  animation: form-load 0.75s forwards;
 }
 
 @keyframes logo-load {
   0% {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-50px);
   }
   100% {
     opacity: 1;
@@ -128,7 +128,7 @@
 }
 
 .logo-load {
-  animation: logo-load 1s forwards;
+  animation: logo-load 0.75s forwards;
 }
 
 @keyframes spin {
@@ -182,6 +182,19 @@
   100% {
     opacity: 1;
     transform: translateY(0%);
+  }
+}
+
+.backdrop-fade {
+  animation: backdrop-fade 0.5s forwards;
+}
+
+@keyframes backdrop-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

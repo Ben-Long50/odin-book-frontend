@@ -11,6 +11,7 @@ import Loading from './Loading';
 import deleteSearchEntry from '../services/deleteSearchEntry';
 import deleteSearchHistory from '../services/deleteSearchHistory';
 import ProfileCard from './ProfileCard';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const Searchbar = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -62,11 +63,11 @@ const Searchbar = (props) => {
   });
 
   return (
-    <search
-      className={`${props.className} bg-secondary flex w-full flex-col shadow-md md:h-dvh md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+    <PerfectScrollbar
+      className={`${props.className} bg-secondary flex max-h-dvh-50 w-full flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
-      <div className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
+      <search className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
         {props.layoutSize !== 'xsmall' && props.layoutSize !== 'small' && (
           <h1 className="text-primary text-3xl font-semibold">Search</h1>
         )}
@@ -92,7 +93,7 @@ const Searchbar = (props) => {
             <Icon path={mdiCloseCircle} size={1} />
           </button>
         </div>
-      </div>
+      </search>
       <div className="flex flex-col gap-2 p-4">
         {results.length < 1 ? (
           <>
@@ -157,7 +158,7 @@ const Searchbar = (props) => {
           })
         )}
       </div>
-    </search>
+    </PerfectScrollbar>
   );
 };
 

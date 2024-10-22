@@ -5,6 +5,7 @@ const ProfilePic = (props) => {
   return (
     <div
       className={`${props.className} flex items-center justify-center overflow-hidden rounded-full ${!props.image && 'bg-emerald-300'} text-5xl`}
+      onClick={props.onClick}
     >
       {props.image ? (
         <img

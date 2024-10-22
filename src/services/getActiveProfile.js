@@ -5,9 +5,12 @@ const getActiveProfile = async (apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
-    console.log(data.message);
-
-    return data.activeProfile;
+    if (response.ok) {
+      console.log(data.message);
+      return data.activeProfile;
+    } else {
+      console.error(data.message);
+    }
   } catch (error) {
     console.error(error.message);
   }

@@ -60,6 +60,7 @@ const MainLayout = () => {
     setMenuVisibility(false);
     setSearchVisibility(false);
     setNotificationVisibility(false);
+    setActiveItem(prevActiveItem);
     if (layoutSize !== 'xsmall' && layoutSize !== 'small') {
       setNavbarSize('large');
     }
@@ -101,6 +102,7 @@ const MainLayout = () => {
               layoutSize={layoutSize}
               setLayoutSize={setLayoutSize}
               setCreateOpen={setCreateOpen}
+              onClick={closeNavbar}
             />
             <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
           </>

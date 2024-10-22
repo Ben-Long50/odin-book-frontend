@@ -5,8 +5,12 @@ const getSearchMatch = async (searchQuery, apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
-
-    return data.profiles;
+    if (response.ok) {
+      console.log(data.message);
+      return data.profiles;
+    } else {
+      console.error(data.message);
+    }
   } catch (error) {
     console.error(error.message);
   }

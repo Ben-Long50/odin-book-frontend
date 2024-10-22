@@ -38,12 +38,12 @@ const Explore = () => {
     },
   });
 
-  if (posts.isLoading) {
+  if (posts.isPending || posts.isLoading) {
     return <Loading />;
   }
 
   return (
-    <PerfectScrollbar className="text-primary w-full overflow-y-auto md:p-6 lg:p-8">
+    <div className="text-primary w-full">
       <div className="mx-auto flex w-full max-w-6xl flex-col">
         <div className="fade-in-bottom flex items-center justify-center gap-4">
           <Icon path={mdiCompassOutline} size={1.75} />
@@ -70,7 +70,7 @@ const Explore = () => {
           )}
         </div>
       </div>
-    </PerfectScrollbar>
+    </div>
   );
 };
 

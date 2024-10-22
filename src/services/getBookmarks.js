@@ -1,13 +1,13 @@
-const getComments = async (postId, apiUrl) => {
+const getBookmarks = async (activeId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/post/${postId}/comments`, {
+    const response = await fetch(`${apiUrl}/profiles/${activeId}/bookmarks`, {
       method: 'GET',
       credentials: 'include',
     });
     const data = await response.json();
     if (response.ok) {
       console.log(data.message);
-      return data.comments;
+      return data.bookmarks;
     } else {
       console.error(data.message);
     }
@@ -16,4 +16,4 @@ const getComments = async (postId, apiUrl) => {
   }
 };
 
-export default getComments;
+export default getBookmarks;

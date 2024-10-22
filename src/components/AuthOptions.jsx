@@ -15,7 +15,7 @@ const AuthOptions = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-10">
+    <div className="flex w-full flex-col gap-8 md:gap-10">
       <div className="text-tertiary -my-2 flex items-center">
         <hr className="grow border-gray-400" />
         <p className="mx-4 text-gray-400">or</p>

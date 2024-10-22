@@ -9,6 +9,7 @@ import getPosts from '../services/getPosts';
 import PostCard from './PostCard';
 import Loading from './Loading';
 import ProfileList from './ProfileList';
+import ProfilePicDetail from './ProfilePicDetail';
 
 const Profile = (props) => {
   const { apiUrl } = useContext(AuthContext);
@@ -17,12 +18,13 @@ const Profile = (props) => {
   const [followedProfiles, setFollowedProfiles] = useState([]);
   const [followersOpen, setFollowersOpen] = useState(false);
   const [followingOpen, setFollowingOpen] = useState(false);
+  const [profilePicDetailOpen, setProfilePicDetailOpen] = useState(false);
 
   const posts = useQuery({
     queryKey: ['posts'],
     queryFn: async () => {
       const result = await getPosts(props.profile.id, apiUrl);
-      return result ? result.posts : [];
+      return result ? result : [];
     },
   });
 
@@ -39,10 +41,6 @@ const Profile = (props) => {
     });
   }, [props.profile, posts.refetch]);
 
-  if (posts.isLoading) {
-    return <Loading />;
-  }
-
   const toggleFollowersOpen = () => {
     setFollowersOpen(!followersOpen);
   };
@@ -50,6 +48,14 @@ const Profile = (props) => {
   const toggleFollowingOpen = () => {
     setFollowingOpen(!followingOpen);
   };
+
+  const toggleProfilePicDetailOpen = () => {
+    setProfilePicDetailOpen(!profilePicDetailOpen);
+  };
+
+  if (posts.isPending || posts.isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="text-primary w-full md:p-6 lg:p-8">
@@ -60,6 +66,13 @@ const Profile = (props) => {
               <ProfilePic
                 image={props.profile.profilePicUrl}
                 className="fade-in-left mr-12 size-40"
+                onClick={toggleProfilePicDetailOpen}
+              />
+              <ProfilePicDetail
+                profile={props.profile}
+                modalOpen={profilePicDetailOpen}
+                toggleProfilePicDetailOpen={toggleProfilePicDetailOpen}
+                className="text-gray-50"
               />
               <div className="fade-in-right flex h-full flex-col items-start justify-between gap-4">
                 <div className="flex items-center justify-start gap-2">
@@ -148,6 +161,13 @@ const Profile = (props) => {
                 <ProfilePic
                   image={props.profile.profilePicUrl}
                   className="fade-in-left mr-8 w-[clamp(125px,25vw,200px)] shrink-0"
+                  onClick={toggleProfilePicDetailOpen}
+                />
+                <ProfilePicDetail
+                  profile={props.profile}
+                  modalOpen={profilePicDetailOpen}
+                  toggleProfilePicDetailOpen={toggleProfilePicDetailOpen}
+                  className="text-gray-50"
                 />
                 <div className="fade-in-right flex h-full flex-col items-start justify-center gap-3 sm:gap-4">
                   <div className="flex items-center justify-start gap-2">
@@ -171,7 +191,7 @@ const Profile = (props) => {
                     {props.profile.breed && (
                       <>
                         <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-tertiary text-center">
+                        <p className="text-tertiary text-left">
                           ({props.profile.breed})
                         </p>
                       </>

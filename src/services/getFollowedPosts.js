@@ -5,7 +5,12 @@ const getFollowedPosts = async (activeId, apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
-    return data;
+    if (response.ok) {
+      console.log(data.message);
+      return data.posts;
+    } else {
+      console.error(data.message);
+    }
   } catch (error) {
     console.error(error.message);
   }

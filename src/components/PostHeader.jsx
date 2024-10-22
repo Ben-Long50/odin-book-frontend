@@ -36,7 +36,7 @@ const PostHeader = (props) => {
           <>
             <Icon path={mdiCircleSmall} size={1} />
             <button
-              className="text-accent"
+              className="text-accent font-semibold"
               onClick={() => {
                 props.setFollowingStatus.mutate(props.profile.id);
                 props.setFollowStatus(true);

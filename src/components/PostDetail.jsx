@@ -28,6 +28,7 @@ const PostDetail = (props) => {
 
   const imageRef = useRef(null);
   const imageContainerRef = useRef(null);
+  const inputRef = useRef(null);
 
   const comments = useQuery({
     queryKey: ['comments'],
@@ -156,7 +157,7 @@ const PostDetail = (props) => {
                       likedStatus={props.likedStatus}
                       onClick={() => props.toggleLikedStatus.mutate()}
                     />
-                    <CommentButton />
+                    <CommentButton onClick={() => inputRef.current.focus()} />
                     <ShareButton />
                   </div>
                   <div className="flex items-center gap-2">
@@ -165,12 +166,13 @@ const PostDetail = (props) => {
                         '  ' +
                         (props.post.likes.length === 1 ? 'like' : 'likes')}
                     </p>
-                    <BookmarkButton />
+                    <BookmarkButton post={props.post} />
                   </div>
                 </div>
               </div>
               <form className="text-primary bg-secondary flex w-full items-center justify-between border-t p-3 md:rounded-br-xl">
                 <input
+                  ref={inputRef}
                   className="w-full bg-transparent py-1 outline-none"
                   type="text"
                   placeholder="Add a comment..."
@@ -247,11 +249,11 @@ const PostDetail = (props) => {
                         likedStatus={props.likedStatus}
                         onClick={() => props.toggleLikedStatus.mutate()}
                       />
-                      <CommentButton />
+                      <CommentButton onClick={() => inputRef.current.focus()} />
                       <ShareButton />
                     </div>
                     <div className="flex items-center gap-2">
-                      <BookmarkButton />
+                      <BookmarkButton post={props.post} />
                     </div>
                   </div>
 
@@ -264,6 +266,7 @@ const PostDetail = (props) => {
                 </div>
                 <form className="text-primary bg-secondary flex w-full items-center justify-between border-t p-3 md:rounded-br-xl">
                   <input
+                    ref={inputRef}
                     className="w-full bg-transparent py-1 outline-none"
                     type="text"
                     placeholder="Add a comment..."

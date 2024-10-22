@@ -1,16 +1,15 @@
-const getExplorePosts = async (activeId, apiUrl) => {
+const deleteBookmark = async (activeId, postId, apiUrl) => {
   try {
     const response = await fetch(
-      `${apiUrl}/explore/posts?activeId=${activeId}`,
+      `${apiUrl}/profiles/${activeId}/bookmarks/${postId}`,
       {
-        method: 'GET',
+        method: 'DELETE',
         credentials: 'include',
       },
     );
     const data = await response.json();
     if (response.ok) {
       console.log(data.message);
-      return data.posts;
     } else {
       console.error(data.message);
     }
@@ -19,4 +18,4 @@ const getExplorePosts = async (activeId, apiUrl) => {
   }
 };
 
-export default getExplorePosts;
+export default deleteBookmark;

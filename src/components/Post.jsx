@@ -71,7 +71,7 @@ const Post = (props) => {
   return (
     <>
       <div
-        className={`${props.className} bg-secondary flex max-w-xl flex-col border-b`}
+        className={`${props.className} bg-secondary flex w-full max-w-xl flex-col border-b`}
       >
         <div className="flex items-center justify-between px-2 py-3 sm:px-0 sm:py-4">
           <div className="flex items-center">
@@ -99,7 +99,7 @@ const Post = (props) => {
           </div>
         </div>
         <img
-          className="-mx-4 cursor-pointer self-center"
+          className="-mx-4 w-full cursor-pointer self-center"
           src={props.post.mediaUrl}
           onClick={togglePostOpen}
         />
@@ -114,12 +114,12 @@ const Post = (props) => {
                 <p className="text-primary">{props.post.likes.length}</p>
               </div>
               <div className="flex items-center gap-2">
-                <CommentButton togglePostOpen={togglePostOpen} />
+                <CommentButton onClick={togglePostOpen} />
                 <p>{props.post.comments.length}</p>
               </div>
               <ShareButton />
             </div>
-            <BookmarkButton />
+            <BookmarkButton post={props.post} />
           </div>
           <p>{props.post.body}</p>
           <form className="flex items-center justify-between">
