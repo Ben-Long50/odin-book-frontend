@@ -13,8 +13,7 @@ const SigninForm = () => {
     password: '',
   });
   const [errors, setErrors] = useState([]);
-  const { signin, apiUrl } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { apiUrl, setIsAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -46,12 +45,12 @@ const SigninForm = () => {
         credentials: 'include',
         body: JSON.stringify(formData),
       });
-      const result = await response.json();
+      const data = await response.json();
       if (response.ok) {
-        console.log(result.message);
-        navigate('/home');
+        console.log(data.message);
+        setIsAuthenticated(true);
       } else {
-        const errorArray = result.map((error) => {
+        const errorArray = data.map((error) => {
           return error.msg;
         });
         setErrors(errorArray);
@@ -67,8 +66,8 @@ const SigninForm = () => {
         <Logo textSize="text-5xl md:text-8xl " />
         <PawIcon className="size-16 md:size-32" />
       </div>
-      <div
-        className="form-load bg-secondary shadow-medium flex w-full max-w-lg flex-col gap-8 px-12 py-8 md:gap-10 md:rounded-xl"
+      <form
+        className="form-load bg-secondary shadow-medium flex w-full max-w-lg flex-col gap-8 px-10 py-6 md:gap-10 md:rounded-xl md:px-12 md:py-8"
         onSubmit={handleSubmit}
       >
         <h1 className="text-primary text-2xl font-medium md:text-4xl">
@@ -115,7 +114,7 @@ const SigninForm = () => {
             ))}
           </div>
         )}
-      </div>
+      </form>
     </>
   );
 };

@@ -15,10 +15,9 @@ import { GlobalContext } from './GlobalContext';
 import { useQueryClient } from '@tanstack/react-query';
 
 const SettingsMenu = (props) => {
-  const { apiUrl } = useContext(AuthContext);
+  const { apiUrl, setIsAuthenticated } = useContext(AuthContext);
   const { theme, changeTheme } = useContext(ThemeContext);
   const { activeProfile } = useContext(GlobalContext);
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const logout = async () => {
@@ -31,7 +30,7 @@ const SettingsMenu = (props) => {
       if (response.ok) {
         queryClient.clear();
         console.log(result.message);
-        navigate('/signin');
+        setIsAuthenticated(false);
       } else {
         console.error(result.message);
       }

@@ -32,7 +32,7 @@ const Notificationbar = (props) => {
         <div className="flex items-center justify-between">
           <h3 className="text-primary text-xl font-semibold">Recent</h3>
           <p
-            className="hover:text-primary cursor-pointer text-lg text-blue-500"
+            className="md:hover:text-primary cursor-pointer text-lg text-blue-500"
             onClick={() => {
               mutateNotifications.mutate();
               props.toggleNotificationbar();

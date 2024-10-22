@@ -59,7 +59,7 @@ const SignupForm = () => {
         <PawIcon className="size-16 md:size-32" />
       </div>
       <div
-        className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col gap-8 px-12 py-8 md:gap-10 md:rounded-xl"
+        className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col gap-8 px-10 py-6 md:gap-10 md:rounded-xl md:px-12 md:py-8"
         onSubmit={handleSubmit}
       >
         <h1 className="text-primary font-mediu text-2xl md:text-4xl">

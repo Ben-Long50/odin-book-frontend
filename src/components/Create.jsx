@@ -72,22 +72,30 @@ const Create = (props) => {
         onClick={(e) => e.stopPropagation()}
       >
         {!imagePreview ? (
-          <h2 className="text-primary py-2 text-center text-lg font-semibold">
-            Create new post
-          </h2>
-        ) : (
-          <div className="flex items-center justify-between px-2">
+          <div className="px-2">
+            <h2 className="text-primary w-full py-2 text-center text-lg font-semibold">
+              Create new post
+            </h2>
             <button
-              className="fade-in-left"
+              className="text-primary absolute right-0 top-0 m-2"
+              onClick={() => props.setCreateOpen(false)}
+            >
+              <Icon path={mdiClose} size={1.3} />
+            </button>
+          </div>
+        ) : (
+          <div className="px-2">
+            <button
+              className="left-0-0 absolute top-0 m-2"
               onClick={() => setImagePreview(null)}
             >
               <Icon className="text-primary" path={mdiArrowLeft} size={1.25} />
             </button>
-            <h2 className="text-primary py-2 text-center text-lg font-semibold">
+            <h2 className="text-primary w-full py-2 text-center text-lg font-semibold">
               Post details
             </h2>
             <button
-              className="fade-in-right text-primary"
+              className="text-primary absolute right-0 top-0 m-2"
               onClick={() => props.setCreateOpen(false)}
             >
               <Icon path={mdiClose} size={1.3} />

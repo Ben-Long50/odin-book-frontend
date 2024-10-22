@@ -1,33 +1,41 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import getAuthStatus from '../services/getAuthStatus';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const navigate = useNavigate();
   const isMobile = window.location.href.includes('192.168.4.94');
 
   const apiUrl = isMobile
     ? import.meta.env.VITE_LOCAL_BACKEND_URL
     : import.meta.env.VITE_API_URL;
 
-  const signin = (user) => {
-    setIsAuthenticated(true);
-  };
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const status = await getAuthStatus(apiUrl);
+      status ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    };
+    checkAuthStatus();
+  }, []);
 
-  const signout = () => {
-    setIsAuthenticated(false);
-  };
+  useEffect(() => {
+    console.log(isAuthenticated, window.history);
+
+    if (isAuthenticated === true) {
+      navigate('/home');
+    } else if (isAuthenticated === false) {
+      navigate('/signin');
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
-        signin,
-        signout,
         apiUrl,
-        currentUser,
-        setCurrentUser,
+        setIsAuthenticated,
       }}
     >
       {children}
