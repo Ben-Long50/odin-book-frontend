@@ -1,12 +1,13 @@
 import { createContext, useEffect, useState } from 'react';
 import getAuthStatus from '../services/getAuthStatus';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const isMobile = window.location.href.includes('192.168.4.94');
 
   const apiUrl = isMobile
@@ -22,9 +23,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log(isAuthenticated, window.history);
-
-    if (isAuthenticated === true) {
+    if (isAuthenticated === true && location.pathname !== '/signin') {
+      navigate(location.pathname);
+    } else if (isAuthenticated === true) {
       navigate('/home');
     } else if (isAuthenticated === false) {
       navigate('/signin');

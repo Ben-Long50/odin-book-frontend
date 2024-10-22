@@ -22,7 +22,6 @@ const Bookmarks = () => {
       return bookmarks ? bookmarks : [];
     },
   });
-  console.log(bookmarks.data);
 
   if (bookmarks.isPending || bookmarks.isLoading) {
     return <Loading />;
