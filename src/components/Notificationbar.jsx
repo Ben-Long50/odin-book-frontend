@@ -50,6 +50,7 @@ const Notificationbar = (props) => {
                 profile={notification.profile}
                 date={notification.createdAt}
                 toggleNotificationbar={props.toggleNotificationbar}
+                layoutSize={props.layoutSize}
               />
             );
           })}

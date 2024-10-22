@@ -4,12 +4,12 @@ import { mdiAccount } from '@mdi/js';
 const ProfilePic = (props) => {
   return (
     <div
-      className={`${props.className} flex items-center justify-center overflow-hidden rounded-full ${!props.image && 'bg-emerald-300'} text-5xl`}
+      className={`${props.className} flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full ${!props.image && 'bg-emerald-300'} text-5xl`}
       onClick={props.onClick}
     >
       {props.image ? (
         <img
-          className="aspect-square min-h-full min-w-full object-cover"
+          className="min-h-full min-w-full object-cover"
           src={props.image}
           alt="Profile picture"
         />

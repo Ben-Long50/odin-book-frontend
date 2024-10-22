@@ -11,7 +11,7 @@ const ProfileList = (props) => {
         className={`${props.className} fade-in-bottom bg-secondary mx-auto my-auto max-h-dvh-50 max-w-xl md:rounded-xl`}
         onClick={(e) => e.stopPropagation()}
       >
-        <h1 className="text-primary sticky top-0 border-b p-4 text-2xl font-semibold">
+        <h1 className="text-primary bg-secondary sticky top-0 border-b p-4 text-2xl font-semibold md:rounded-t-xl">
           {props.title}
         </h1>
         <PerfectScrollbar className="p-3">

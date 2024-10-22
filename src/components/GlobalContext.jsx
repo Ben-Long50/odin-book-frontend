@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { createContext, useContext, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import getUserProfiles from '../services/getUserProfiles.js';
@@ -34,6 +34,7 @@ const GlobalProvider = ({ children }) => {
       const following = profile.following.map(
         (following) => following.profileId,
       );
+      console.log(profile.notified);
 
       setActiveFollowers(followers);
       setActiveFollowing(following);

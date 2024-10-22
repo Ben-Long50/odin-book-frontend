@@ -65,7 +65,7 @@ const Profile = (props) => {
             <div className="flex items-center justify-center">
               <ProfilePic
                 image={props.profile.profilePicUrl}
-                className="fade-in-left mr-12 size-40"
+                className="fade-in-left mr-12 size-48"
                 onClick={toggleProfilePicDetailOpen}
               />
               <ProfilePicDetail
@@ -121,30 +121,28 @@ const Profile = (props) => {
                     />
                   </div>
                 </div>
-                <div className="flex w-full flex-col gap-2 text-lg">
-                  <div className="flex w-full items-center justify-start">
-                    <p className="text-primary text-xl font-semibold">
-                      {props.profile.petName}
-                    </p>
-                    {props.profile.species && (
-                      <>
-                        <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-secondary text-center">
-                          {props.profile.species}
-                        </p>
-                      </>
-                    )}
-                    {props.profile.breed && (
-                      <>
-                        <Icon path={mdiCircleSmall} size={1} />
-                        <p className="text-tertiary text-center">
-                          ({props.profile.breed})
-                        </p>
-                      </>
-                    )}
-                  </div>
-                  <p className="text-secondary">{props.profile.bio}</p>
+                <div className="flex w-full items-center justify-start">
+                  <p className="text-primary text-xl font-semibold">
+                    {props.profile.petName}
+                  </p>
+                  {props.profile.species && (
+                    <>
+                      <Icon path={mdiCircleSmall} size={1} />
+                      <p className="text-secondary text-center">
+                        {props.profile.species}
+                      </p>
+                    </>
+                  )}
+                  {props.profile.breed && (
+                    <>
+                      <Icon path={mdiCircleSmall} size={1} />
+                      <p className="text-tertiary text-center">
+                        ({props.profile.breed})
+                      </p>
+                    </>
+                  )}
                 </div>
+                <p className="text-secondary text-lg">{props.profile.bio}</p>
               </div>
             </div>
             <hr className="fade-in-bottom bg-secondary col-start-2 col-end-3 mt-12 w-full" />

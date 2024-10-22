@@ -58,7 +58,7 @@ const PostCard = (props) => {
 
   return (
     <div
-      className="timing flex aspect-square cursor-pointer items-center overflow-hidden bg-black object-cover hover:opacity-60"
+      className={`${props.className} timing flex aspect-square cursor-pointer items-center overflow-hidden bg-black object-cover md:hover:opacity-60`}
       onClick={togglePostOpen}
     >
       <img src={props.post.mediaUrl} alt="Post" />
