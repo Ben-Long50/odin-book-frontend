@@ -65,8 +65,6 @@ const PostCard = (props) => {
       <PostDetail
         post={props.post}
         layoutSize={props.layoutSize}
-        followStatus={props.followStatus}
-        setFollowingStatus={props.setFollowingStatus}
         likedStatus={likedStatus}
         toggleLikedStatus={toggleLikedStatus}
         profile={props.profile}

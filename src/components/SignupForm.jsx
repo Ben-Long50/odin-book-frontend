@@ -58,7 +58,7 @@ const SignupForm = () => {
         <Logo textSize="text-5xl md:text-8xl " />
         <PawIcon className="size-16 md:size-32" />
       </div>
-      <div
+      <form
         className="form-load bg-secondary shadow-color flex w-full max-w-lg flex-col gap-8 px-10 py-6 md:gap-10 md:rounded-xl md:px-12 md:py-8"
         onSubmit={handleSubmit}
       >
@@ -123,7 +123,7 @@ const SignupForm = () => {
             ))}
           </div>
         )}
-      </div>
+      </form>
     </>
   );
 };

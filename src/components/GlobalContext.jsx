@@ -34,8 +34,6 @@ const GlobalProvider = ({ children }) => {
       const following = profile.following.map(
         (following) => following.profileId,
       );
-      console.log(profile.notified);
-
       setActiveFollowers(followers);
       setActiveFollowing(following);
       return profile;

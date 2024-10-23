@@ -257,8 +257,6 @@ const Profile = (props) => {
                 post={post}
                 layoutSize={layoutSize}
                 profile={props.profile}
-                followStatus={props.followStatus}
-                setFollowingStatus={props.setFollowingStatus}
               />
             ))}
           </div>

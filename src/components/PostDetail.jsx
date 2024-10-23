@@ -15,20 +15,27 @@ import getComments from '../services/getComments';
 import Loading from './Loading';
 import deleteComment from '../services/deleteComment';
 import deletePost from '../services/deletePost';
+import useFollowStatusQuery from '../hooks/useFollowStatusQuery';
 
 const PostDetail = (props) => {
-  const [followStatus, setFollowStatus] = useState(props.followStatus || false);
   const [commentInput, setCommentInput] = useState('');
   const [imageWidth, setImageWidth] = useState(null);
   const [imageHeight, setImageHeight] = useState(null);
   const [imageContainerHeight, setImageContainerHeight] = useState(null);
   const { apiUrl } = useContext(AuthContext);
-  const { activeProfile, activeFollowing } = useContext(GlobalContext);
+  const { activeProfile } = useContext(GlobalContext);
   const queryClient = useQueryClient();
 
   const imageRef = useRef(null);
   const imageContainerRef = useRef(null);
   const inputRef = useRef(null);
+
+  const followStatus = useFollowStatusQuery(
+    activeProfile.id,
+    props.profile.id,
+    apiUrl,
+    props.postOpen,
+  );
 
   const comments = useQuery({
     queryKey: ['comments'],
@@ -57,17 +64,6 @@ const PostDetail = (props) => {
       queryClient.invalidateQueries(['comments']);
     },
   });
-
-  useEffect(() => {
-    if (
-      activeFollowing.includes(props.profile.id) ||
-      activeProfile.id === props.profile.id
-    ) {
-      setFollowStatus(true);
-    } else {
-      setFollowStatus(false);
-    }
-  }, [activeFollowing, props.profile.id]);
 
   useEffect(() => {
     if (props.postOpen) {
@@ -104,9 +100,7 @@ const PostDetail = (props) => {
               <PostHeader
                 activeProfile={activeProfile}
                 profile={props.profile}
-                followStatus={followStatus}
-                setFollowStatus={setFollowStatus}
-                setFollowingStatus={props.setFollowingStatus}
+                followStatus={followStatus.data}
               />
             </div>
             <div
@@ -133,6 +127,7 @@ const PostDetail = (props) => {
                   body={props.post.body}
                   date={props.post.createdAt}
                   mutate={mutatePost.mutate}
+                  togglePostOpen={props.togglePostOpen}
                 />
                 {comments?.data.map((comment) => {
                   return (
@@ -144,6 +139,7 @@ const PostDetail = (props) => {
                       body={comment.body}
                       date={comment.createdAt}
                       mutate={mutateComment.mutate}
+                      togglePostOpen={props.togglePostOpen}
                     />
                   );
                 })}
@@ -212,9 +208,7 @@ const PostDetail = (props) => {
                 className="rounded-tr-xl border-b"
                 activeProfile={activeProfile}
                 profile={props.profile}
-                followStatus={followStatus}
-                setFollowStatus={setFollowStatus}
-                setFollowingStatus={props.setFollowingStatus}
+                followStatus={followStatus.data}
               />
               <PerfectScrollbar className="w-full overflow-y-auto">
                 <div className="flex flex-col">

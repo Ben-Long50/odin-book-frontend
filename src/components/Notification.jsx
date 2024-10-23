@@ -8,14 +8,12 @@ import { mdiClose } from '@mdi/js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import deleteNotification from '../services/deleteNotification';
 import { AuthContext } from './AuthContext';
-import PostDetail from './PostDetail';
 import PostCard from './PostCard';
 
 const Notification = (props) => {
   const [message, setMessage] = useState('');
   const [post, setPost] = useState(null);
   const [postPicUrl, setPostPicUrl] = useState('');
-  const [postOpen, setPostOpen] = useState(false);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
   const queryClient = useQueryClient();
@@ -25,10 +23,6 @@ const Notification = (props) => {
       await deleteNotification(props.notification.id, apiUrl),
     onSuccess: () => queryClient.invalidateQueries(['activeProfile']),
   });
-
-  const togglePostOpen = () => {
-    setPostOpen(!postOpen);
-  };
 
   useEffect(() => {
     switch (true) {

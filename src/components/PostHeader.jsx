@@ -2,8 +2,22 @@ import { Link } from 'react-router-dom';
 import ProfilePic from './ProfilePic';
 import Icon from '@mdi/react';
 import { mdiCircleSmall } from '@mdi/js';
+import useFollowStatusMutation from '../hooks/useFollowingStatusMutation';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+import { GlobalContext } from './GlobalContext';
 
 const PostHeader = (props) => {
+  const { apiUrl } = useContext(AuthContext);
+  const { activeProfile } = useContext(GlobalContext);
+
+  const setFollowStatus = useFollowStatusMutation(
+    activeProfile.id,
+    props.profile.id,
+    props.followStatus,
+    apiUrl,
+  );
+
   return (
     <div
       className={`${props.className} bg-secondary flex w-full items-center p-4`}
@@ -38,8 +52,7 @@ const PostHeader = (props) => {
             <button
               className="text-accent font-semibold"
               onClick={() => {
-                props.setFollowingStatus.mutate(props.profile.id);
-                props.setFollowStatus(true);
+                setFollowStatus.mutate();
               }}
             >
               Follow
