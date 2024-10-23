@@ -6,8 +6,6 @@ const useFollowStatusQuery = (activeId, profileId, apiUrl, postOpen) => {
     queryKey: ['followStatus', activeId, profileId],
     queryFn: async () => {
       const status = await getFollowStatus(activeId, profileId, apiUrl);
-      console.log(status);
-
       return status;
     },
     enabled: postOpen === true,

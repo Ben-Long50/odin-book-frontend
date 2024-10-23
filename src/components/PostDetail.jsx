@@ -9,13 +9,12 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
 import RootPortal from '../layouts/RootPortal';
 import PostHeader from './PostHeader';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from './AuthContext';
-import getComments from '../services/getComments';
 import Loading from './Loading';
-import deleteComment from '../services/deleteComment';
-import deletePost from '../services/deletePost';
 import useFollowStatusQuery from '../hooks/useFollowStatusQuery';
+import useCommentsQuery from '../hooks/useCommentsQuery';
+import useDeletePostMutation from '../hooks/useDeletePostMutation';
+import useDeleteCommentMutation from '../hooks/useDeleteCommentMutation';
 
 const PostDetail = (props) => {
   const [commentInput, setCommentInput] = useState('');
@@ -24,7 +23,6 @@ const PostDetail = (props) => {
   const [imageContainerHeight, setImageContainerHeight] = useState(null);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
 
   const imageRef = useRef(null);
   const imageContainerRef = useRef(null);
@@ -37,39 +35,19 @@ const PostDetail = (props) => {
     props.postOpen,
   );
 
-  const comments = useQuery({
-    queryKey: ['comments'],
-    queryFn: async () => {
-      const comments = await getComments(props.post.id, apiUrl);
-      return comments;
-    },
-    enabled: false,
-  });
+  const comments = useCommentsQuery(props.post.id, apiUrl, props.postOpen);
 
-  const mutatePost = useMutation({
-    mutationFn: (postId) => {
-      deletePost(postId, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['activeProfile', 'posts']);
-      props.setPostOpen(false);
-    },
-  });
+  const deletePost = useDeletePostMutation(apiUrl, props.togglePostOpen);
 
-  const mutateComment = useMutation({
-    mutationFn: (commentId) => {
-      deleteComment(commentId, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['comments']);
-    },
-  });
+  const deleteComment = useDeleteCommentMutation(apiUrl);
 
-  useEffect(() => {
-    if (props.postOpen) {
-      comments.refetch();
-    }
-  }, [props.postOpen, comments]);
+  const handleDeletePost = (postId) => {
+    deletePost.mutate(postId);
+  };
+
+  const handleDeleteComment = (commentId) => {
+    deleteComment.mutate(commentId);
+  };
 
   useEffect(() => {
     if (imageRef.current && props.postOpen) {
@@ -126,7 +104,7 @@ const PostDetail = (props) => {
                   profile={props.profile}
                   body={props.post.body}
                   date={props.post.createdAt}
-                  mutate={mutatePost.mutate}
+                  mutate={handleDeletePost}
                   togglePostOpen={props.togglePostOpen}
                 />
                 {comments?.data.map((comment) => {
@@ -138,7 +116,7 @@ const PostDetail = (props) => {
                       profile={comment.profile}
                       body={comment.body}
                       date={comment.createdAt}
-                      mutate={mutateComment.mutate}
+                      mutate={handleDeleteComment}
                       togglePostOpen={props.togglePostOpen}
                     />
                   );
@@ -218,7 +196,7 @@ const PostDetail = (props) => {
                     profile={props.profile}
                     body={props.post.body}
                     date={props.post.createdAt}
-                    mutate={mutatePost.mutate}
+                    mutate={handleDeletePost}
                   />
                   {comments?.data.map((comment) => {
                     return (
@@ -229,7 +207,7 @@ const PostDetail = (props) => {
                         profile={comment.profile}
                         body={comment.body}
                         date={comment.createdAt}
-                        mutate={mutateComment.mutate}
+                        mutate={handleDeleteComment}
                       />
                     );
                   })}

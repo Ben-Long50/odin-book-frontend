@@ -1,7 +1,5 @@
 const createPost = async (postData, activeId, apiUrl) => {
   try {
-    console.log(postData, activeId);
-
     const response = await fetch(`${apiUrl}/profile/${activeId}/post`, {
       method: 'POST',
       credentials: 'include',

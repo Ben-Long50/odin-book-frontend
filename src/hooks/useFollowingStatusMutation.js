@@ -6,11 +6,11 @@ const useFollowStatusMutation = (activeId, profileId, followStatus, apiUrl) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: () => {
       if (!followStatus) {
-        await followProfile(activeId, profileId, apiUrl);
+        return followProfile(activeId, profileId, apiUrl);
       } else {
-        await unfollowProfile(activeId, profileId, apiUrl);
+        return unfollowProfile(activeId, profileId, apiUrl);
       }
     },
     onSuccess: () => {

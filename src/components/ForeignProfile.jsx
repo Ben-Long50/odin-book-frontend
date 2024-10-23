@@ -15,7 +15,6 @@ const ForeignProfile = () => {
   const [following, setFollowing] = useState([]);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile, activeFollowing } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
   const location = useLocation();
   const profileId = location.state;
 
@@ -47,16 +46,6 @@ const ForeignProfile = () => {
     followStatus.data,
     apiUrl,
   );
-
-  useEffect(() => {
-    if (profile.refetch) {
-      profile.refetch();
-    }
-  }, [location, profileId]);
-
-  useEffect(() => {
-    queryClient.invalidateQueries('foreignProfile');
-  }, [location.pathname]);
 
   if (profile.isLoading) {
     return <Loading />;

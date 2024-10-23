@@ -3,13 +3,12 @@ import Icon from '@mdi/react';
 import { mdiCircleSmall, mdiViewGrid } from '@mdi/js';
 import { useOutletContext } from 'react-router-dom';
 import ProfilePic from './ProfilePic';
-import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from './AuthContext';
-import getPosts from '../services/getPosts';
 import PostCard from './PostCard';
 import Loading from './Loading';
 import ProfileList from './ProfileList';
 import ProfilePicDetail from './ProfilePicDetail';
+import usePostQuery from '../hooks/usePostQuery';
 
 const Profile = (props) => {
   const { apiUrl } = useContext(AuthContext);
@@ -20,26 +19,16 @@ const Profile = (props) => {
   const [followingOpen, setFollowingOpen] = useState(false);
   const [profilePicDetailOpen, setProfilePicDetailOpen] = useState(false);
 
-  const posts = useQuery({
-    queryKey: ['posts'],
-    queryFn: async () => {
-      const result = await getPosts(props.profile.id, apiUrl);
-      return result ? result : [];
-    },
-  });
+  const posts = usePostQuery(props.profile.id, apiUrl);
 
   useEffect(() => {
-    if (posts.refetch) {
-      posts.refetch();
-    }
-
     setFollowingProfiles(() => {
       return props.profile.followers.map((follower) => follower.following);
     });
     setFollowedProfiles(() => {
       return props.profile.following.map((following) => following.follower);
     });
-  }, [props.profile, posts.refetch]);
+  }, [props.profile]);
 
   const toggleFollowersOpen = () => {
     setFollowersOpen(!followersOpen);
