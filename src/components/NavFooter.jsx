@@ -17,12 +17,14 @@ const NavFooter = (props) => {
   const { activeProfile } = useContext(GlobalContext);
 
   const changeActiveItem = (item) => {
+    console.log(props.activeItem);
+
     props.setActiveItem(item);
   };
 
   return (
     <nav
-      className="bg-secondary row-span-1 flex w-dvw items-center justify-evenly gap-4 border-t p-1"
+      className="bg-secondary row-span-1 flex w-full items-center justify-evenly gap-4 border-t p-1"
       onClick={props.onClick}
     >
       <Link className="w-auto" to="/home">
@@ -32,7 +34,7 @@ const NavFooter = (props) => {
             props.activeItem === 'home' ? mdiHomeVariant : mdiHomeVariantOutline
           }
           label="Home"
-          onClick={() => changeActiveItem('home')}
+          onClick={() => props.setActiveItem('home')}
         />
       </Link>
       <Link className="w-auto" to="/explore">

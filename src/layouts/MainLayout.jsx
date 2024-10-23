@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import Navbar from '../components/Navbar';
 import NavHeader from '../components/NavHeader';
 import NavFooter from '../components/NavFooter';
@@ -8,21 +8,12 @@ import { ThemeContext } from '../components/ThemeContext';
 import GlobalProvider from '../components/GlobalContext';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Scrollbar } from 'react-scrollbars-custom';
+import { LayoutContext } from '../components/LayoutContext';
 
 const MainLayout = () => {
+  const { layoutSize } = useContext(LayoutContext);
   const [activeItem, setActiveItem] = useState('home');
   const [prevActiveItem, setPrevActiveItem] = useState('');
-  const [layoutSize, setLayoutSize] = useState(() => {
-    if (window.innerWidth >= 1280) {
-      return 'large';
-    } else if (window.innerWidth > 500 && window.innerWidth < 768) {
-      return 'small';
-    } else if (window.innerWidth <= 500) {
-      return 'xsmall';
-    } else {
-      return 'medium';
-    }
-  });
   const [navbarSize, setNavbarSize] = useState(() => {
     if (layoutSize === 'large') {
       return 'large';
@@ -35,26 +26,6 @@ const MainLayout = () => {
   const [searchVisibility, setSearchVisibility] = useState(false);
   const [notificationVisibility, setNotificationVisibility] = useState(false);
   const { theme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1280) {
-        setLayoutSize('large');
-      } else if (window.innerWidth > 500 && window.innerWidth < 768) {
-        setLayoutSize('small');
-      } else if (window.innerWidth <= 500) {
-        setLayoutSize('xsmall');
-      } else {
-        setLayoutSize('medium');
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [layoutSize]);
 
   const closeNavbar = () => {
     setMenuVisibility(false);
@@ -102,7 +73,15 @@ const MainLayout = () => {
               layoutSize={layoutSize}
               setLayoutSize={setLayoutSize}
               setCreateOpen={setCreateOpen}
-              onClick={closeNavbar}
+              onClick={() => {
+                if (
+                  menuVisibility ||
+                  searchVisibility ||
+                  notificationVisibility
+                ) {
+                  closeNavbar();
+                }
+              }}
             />
             <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
           </>

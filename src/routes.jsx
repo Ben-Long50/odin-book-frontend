@@ -22,12 +22,18 @@ import ProfileCreate from './components/ProfileCreate';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route element={<AuthLayout />} errorElement={<ErrorPage />}>
+      <Route
+        element={<AuthLayout />}
+        errorElement={<Navigate to="error" replace />}
+      >
         <Route index element={<Navigate to="signin" replace />} />
         <Route path="signup" element={<SignupForm />} />
         <Route index path="signin" element={<SigninForm />} />
       </Route>
-      <Route element={<MainLayout />} errorElement={<ErrorPage />}>
+      <Route
+        element={<MainLayout />}
+        errorElement={<Navigate to="error" replace />}
+      >
         <Route path="home" element={<Feed />}></Route>
         <Route path="explore" element={<Explore />}></Route>
         <Route path="profile" element={<PersonalProfile />}></Route>
@@ -37,6 +43,7 @@ const router = createBrowserRouter(
         <Route path="profile/edit" element={<ProfileEdit />}></Route>
         <Route path="manage/create" element={<ProfileCreate />}></Route>
       </Route>
+      <Route path="error" element={<ErrorPage />} />
     </Route>,
   ),
 );
