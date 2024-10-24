@@ -1,17 +1,16 @@
 import Profile from './Profile';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 import { useContext } from 'react';
 import { GlobalContext } from './GlobalContext';
-import { AuthContext } from './AuthContext';
-import { useQuery } from '@tanstack/react-query';
 import { mdiBookmarkOutline, mdiSquareEditOutline } from '@mdi/js';
 import Icon from '@mdi/react';
+import { LayoutContext } from './LayoutContext';
 
 const PersonalProfile = () => {
   const { activeProfile, activeFollowers, activeFollowing } =
     useContext(GlobalContext);
-  const [layoutSize] = useOutletContext();
+  const { layoutSize } = useContext(LayoutContext);
 
   return (
     <Profile

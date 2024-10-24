@@ -1,40 +1,20 @@
-import {
-  mdiArrowLeft,
-  mdiClose,
-  mdiCropLandscape,
-  mdiCropPortrait,
-  mdiCropSquare,
-  mdiImage,
-  mdiImageOutline,
-  mdiImagePlus,
-} from '@mdi/js';
+import { mdiArrowLeft, mdiClose, mdiImagePlus } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
-import createPost from '../services/createPost';
 import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
 import RootPortal from '../layouts/RootPortal';
 import Button from './Button';
+import useCreatePostMutation from '../hooks/useCreatePostMutation';
 
 const Create = (props) => {
   const [file, setFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [imageAr, setImageAr] = useState('square');
-  const [imageFit, setImageFit] = useState('contain');
   const [captionInput, setCaptionInput] = useState('');
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
 
-  const newPost = useMutation({
-    mutationFn: (formData) => {
-      return createPost(formData, activeProfile.id, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
-    },
-  });
+  const post = useCreatePostMutation(activeProfile.id, apiUrl);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]; // Get the selected file
@@ -56,7 +36,7 @@ const Create = (props) => {
       formData.append('image', file);
     }
     formData.append('caption', captionInput);
-    newPost.mutate(formData);
+    post.mutate(formData);
     setFile(null);
     setImagePreview(null);
     setCaptionInput('');
@@ -125,93 +105,12 @@ const Create = (props) => {
           <div className="flex h-full flex-col justify-between">
             <div className="flex aspect-square max-w-4xl items-center justify-center overflow-hidden bg-black">
               <img
-                className={`fade-in-bottom ${imageAr === 'portrait' && 'h-full'} ${imageAr === 'landscape' && 'w-full'} ${'object-' + imageFit}`}
+                className="fade-in-bottom"
                 src={imagePreview}
                 alt="Preview"
               />
             </div>
-            {/* <div className="mt-4 flex items-center justify-center gap-8">
-                <div className="fade-in-left flex flex-col items-center gap-2">
-                  <h3 className="text-primary">Aspect ratio</h3>
-                  <div className="flex gap-2">
-                    <button
-                      className={`${imageAr === 'square' ? 'text-secondary bg-gray-700' : 'text-tertiary'} timing flex flex-col items-center justify-center rounded-md p-2 text-sm`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setImageAr('square');
-                      }}
-                    >
-                      <Icon
-                        className="text-inherit"
-                        path={mdiCropSquare}
-                        size={1.75}
-                      />
-                      <p className="text-inherit">Square</p>
-                    </button>
-                    <button
-                      className={`${imageAr === 'portrait' ? 'text-secondary bg-gray-700' : 'text-tertiary'} timing flex flex-col items-center justify-center rounded-md p-2 text-sm`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setImageAr('portrait');
-                      }}
-                    >
-                      <Icon
-                        className="text-inherit"
-                        path={mdiCropPortrait}
-                        size={1.75}
-                      />
-                      <p className="text-inherit">Portrait</p>
-                    </button>
-                    <button
-                      className={`${imageAr === 'landscape' ? 'text-secondary bg-gray-700' : 'text-tertiary'} timing flex flex-col items-center justify-center rounded-md p-2 text-sm`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setImageAr('landscape');
-                      }}
-                    >
-                      <Icon
-                        className="text-inherit"
-                        path={mdiCropLandscape}
-                        size={1.75}
-                      />
-                      <p className="text-inherit">Landscape</p>
-                    </button>
-                  </div>
-                </div>
-                <div className="fade-in-right flex flex-col items-center gap-2">
-                  <h3 className="text-primary">Image fit</h3>
-                  <div className="flex gap-2">
-                    <button
-                      className={`${imageFit === 'contain' ? 'text-secondary bg-gray-700' : 'text-tertiary'} timing flex flex-col items-center justify-center rounded-md p-2 text-sm`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setImageFit('contain');
-                      }}
-                    >
-                      <Icon
-                        className="text-inherit"
-                        path={mdiImageOutline}
-                        size={1.75}
-                      />
-                      <p className="text-inherit">Contain</p>
-                    </button>
-                    <button
-                      className={`${imageFit === 'cover' ? 'text-secondary bg-gray-700' : 'text-tertiary'} timing flex flex-col items-center justify-center rounded-md p-2 text-sm`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setImageFit('cover');
-                      }}
-                    >
-                      <Icon
-                        className="text-inherit"
-                        path={mdiImage}
-                        size={1.75}
-                      />
-                      <p className="text-inherit">Cover</p>
-                    </button>
-                  </div>
-                </div>
-              </div> */}
+
             <div className="m-4 flex flex-col items-start gap-4 md:m-6">
               <h3 className="fade-in-left text-primary text-xl font-semibold">
                 Caption

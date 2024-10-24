@@ -3,7 +3,10 @@ import { mdiHeart, mdiHeartOutline } from '@mdi/js';
 
 const LikeButton = (props) => {
   return (
-    <button className="text-primary" onClick={props.onClick}>
+    <button
+      className={`${props.className} text-primary flex items-center justify-center`}
+      onClick={props.onClick}
+    >
       <Icon
         className={`${props.likeStatus && 'text-pink-600'}`}
         path={props.likeStatus ? mdiHeart : mdiHeartOutline}

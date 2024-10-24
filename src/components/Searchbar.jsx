@@ -48,7 +48,7 @@ const Searchbar = (props) => {
 
   return (
     <PerfectScrollbar
-      className={`${props.className} bg-secondary flex max-h-dvh-50 w-full flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary max-h-dvh-65 flex w-full flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       <search className="bg-secondary flex flex-col items-start gap-10 border-b p-6">

@@ -1,23 +1,20 @@
 import { Link } from 'react-router-dom';
 import ProfilePic from './ProfilePic';
 import Timestamp from './Timestamp';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import likeComment from '../services/likeComment.js';
 import { useContext, useEffect, useState } from 'react';
-import unlikeComment from '../services/unlikeComment.js';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import LikeButton from './LikeButton';
 import Icon from '@mdi/react';
 import { mdiTrashCanOutline } from '@mdi/js';
+import useCommentLikeMutation from '../hooks/useCommentLikeMutation.js';
 
 const Comment = (props) => {
-  const [likedStatus, setLikedStatus] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [confirmDeleteMode, setConfirmDeleteMode] = useState(false);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     let status = false;
@@ -26,21 +23,15 @@ const Comment = (props) => {
         status = true;
       }
     });
-    setLikedStatus(status);
+    setLikeStatus(status);
   }, [props.likes]);
 
-  const toggleLikedStatus = useMutation({
-    mutationFn: async () => {
-      if (!likedStatus) {
-        await likeComment(props.id, activeProfile.id, apiUrl);
-      } else {
-        await unlikeComment(props.id, activeProfile.id, apiUrl);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
-    },
-  });
+  const toggleLikeStatus = useCommentLikeMutation(
+    props.id,
+    activeProfile.id,
+    apiUrl,
+    likeStatus,
+  );
 
   const toggleDeleteMode = () => {
     setDeleteMode(!deleteMode);
@@ -109,15 +100,16 @@ const Comment = (props) => {
             {props.likes?.length > 0 && (
               <p className="text-tertiary text-sm">{props.likes.length}</p>
             )}
-            <div
-              className="flex size-10 items-center justify-center"
+            <LikeButton
+              className="size-10"
+              size={0.8}
+              likeStatus={likeStatus}
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
-                toggleLikedStatus.mutate();
+                toggleLikeStatus.mutate();
               }}
-            >
-              <LikeButton size={0.8} likedStatus={likedStatus} />
-            </div>
+            />
           </div>
         )}
       </div>

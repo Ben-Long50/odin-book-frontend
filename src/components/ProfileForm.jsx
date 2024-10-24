@@ -2,34 +2,19 @@ import { useContext, useRef, useState } from 'react';
 import ProfilePic from './ProfilePic';
 import Button from './Button';
 import Icon from '@mdi/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import createProfile from '../services/createProfile';
 import { AuthContext } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { mdiTrashCanOutline } from '@mdi/js';
-import deleteProfile from '../services/deleteProfile';
+import useDeleteProfileMutation from '../hooks/useDeleteProfileMutation';
+import useCreateProfileMutation from '../hooks/useCreateProfileMutation';
 
 const ProfileForm = (props) => {
   const { apiUrl } = useContext(AuthContext);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const newProfile = useMutation({
-    mutationFn: (formData) => {
-      return createProfile(formData, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['profiles']);
-    },
-  });
-  const oldProfile = useMutation({
-    mutationFn: (profileId) => {
-      return deleteProfile(profileId, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['profiles']);
-      navigate('/manage');
-    },
-  });
+
+  const createProfile = useCreateProfileMutation(apiUrl);
+
+  const deleteProfile = useDeleteProfileMutation(props.profile?.id, apiUrl);
 
   const [file, setFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(
@@ -73,11 +58,11 @@ const ProfileForm = (props) => {
     formData.append('species', speciesInput);
     formData.append('breed', breedInput);
 
-    newProfile.mutate(formData);
+    createProfile.mutate(formData);
   };
 
   const handleDelete = () => {
-    oldProfile.mutate(props.profile?.id);
+    deleteProfile.mutate();
   };
 
   const inputRef = useRef(null);

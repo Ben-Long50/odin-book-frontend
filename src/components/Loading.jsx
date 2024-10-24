@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
 
 const Loading = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <div className={`${theme} grid h-full w-full place-content-center`}>
       <Icon className="text-primary spin" path={mdiLoading} size={5} />
