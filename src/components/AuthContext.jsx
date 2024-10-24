@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = window.location.href.includes('192.168.4.94');
@@ -16,19 +16,18 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const status = await getAuthStatus(apiUrl);
-      status ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      const response = await getAuthStatus(apiUrl);
+      response ? setIsAuthenticated(true) : setIsAuthenticated(false);
     };
+
     checkAuthStatus();
   }, []);
 
   useEffect(() => {
     if (isAuthenticated === true && location.pathname !== '/signin') {
       navigate(location.pathname);
-    } else if (isAuthenticated === true) {
-      navigate('/home');
-    } else if (isAuthenticated === false) {
-      navigate('/signin');
+    } else {
+      isAuthenticated ? navigate('/home') : navigate('/signin');
     }
   }, [isAuthenticated, navigate]);
 

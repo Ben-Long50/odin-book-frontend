@@ -2,32 +2,18 @@ import Post from './Post';
 import { useContext } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/custom-scrollbar.css';
-import { useOutletContext } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { GlobalContext } from './GlobalContext';
-import getFollowedPosts from '../services/getFollowedPosts';
 import { AuthContext } from './AuthContext';
 import Loading from './Loading';
 import Button from './Button';
 import { Link } from 'react-router-dom';
+import useFeedPostQuery from '../hooks/useFeedPostQuery';
 
 const Feed = () => {
   const { activeProfile } = useContext(GlobalContext);
   const { apiUrl } = useContext(AuthContext);
-  const [layoutSize] = useOutletContext();
 
-  const feedPosts = useQuery({
-    queryKey: ['feedPosts'],
-    queryFn: async () => {
-      const posts = await getFollowedPosts(activeProfile.id, apiUrl);
-
-      if (posts.length > 0) {
-        return posts;
-      } else {
-        return [];
-      }
-    },
-  });
+  const feedPosts = useFeedPostQuery(activeProfile.id, apiUrl);
 
   if (feedPosts.isLoading) {
     return <Loading />;
@@ -52,14 +38,7 @@ const Feed = () => {
   return (
     <>
       {feedPosts.data?.map((post, index) => {
-        return (
-          <Post
-            className="fade-in-bottom"
-            key={index}
-            post={post}
-            layoutSize={layoutSize}
-          />
-        );
+        return <Post className="fade-in-bottom" key={index} post={post} />;
       })}
     </>
   );

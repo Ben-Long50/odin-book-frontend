@@ -1,30 +1,19 @@
 import { useContext } from 'react';
 import Icon from '@mdi/react';
 import { mdiCompassOutline } from '@mdi/js';
-import { useQuery } from '@tanstack/react-query';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import Loading from './Loading';
-import getExplorePosts from '../services/getExplorePosts';
 import PostCard from './PostCard';
 import { useOutletContext } from 'react-router-dom';
+import useExplorePostQuery from '../hooks/useExplorePostQuery';
 
 const Explore = () => {
   const { activeProfile } = useContext(GlobalContext);
   const { apiUrl } = useContext(AuthContext);
   const [layoutSize] = useOutletContext();
 
-  const posts = useQuery({
-    queryKey: ['explorePosts'],
-    queryFn: async () => {
-      const posts = await getExplorePosts(activeProfile.id, apiUrl);
-      if (posts) {
-        return posts;
-      } else {
-        return [];
-      }
-    },
-  });
+  const posts = useExplorePostQuery(activeProfile.id, apiUrl);
 
   if (posts.isPending || posts.isLoading) {
     return <Loading />;

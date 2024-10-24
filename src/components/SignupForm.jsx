@@ -2,9 +2,7 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import InputField from './InputField';
 import Button from './Button';
-import Logo from './Logo';
 import { AuthContext } from './AuthContext';
-import PawIcon from '../assets/PawIcon';
 import AuthFormLayout from '../layouts/AuthFormLayout';
 
 const SignupForm = () => {

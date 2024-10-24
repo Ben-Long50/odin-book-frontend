@@ -46,8 +46,6 @@ const MainLayout = () => {
         {layoutSize === 'small' || layoutSize === 'xsmall' ? (
           <>
             <NavHeader
-              layoutSize={layoutSize}
-              setLayoutSize={setLayoutSize}
               activeItem={activeItem}
               setActiveItem={setActiveItem}
               prevActiveItem={prevActiveItem}
@@ -70,8 +68,6 @@ const MainLayout = () => {
               setActiveItem={setActiveItem}
               prevActiveItem={prevActiveItem}
               setPrevActiveItem={setPrevActiveItem}
-              layoutSize={layoutSize}
-              setLayoutSize={setLayoutSize}
               setCreateOpen={setCreateOpen}
               onClick={() => {
                 if (
@@ -93,7 +89,6 @@ const MainLayout = () => {
               prevActiveItem={prevActiveItem}
               setPrevActiveItem={setPrevActiveItem}
               layoutSize={layoutSize}
-              setLayoutSize={setLayoutSize}
               navbarSize={navbarSize}
               setNavbarSize={setNavbarSize}
               setCreateOpen={setCreateOpen}

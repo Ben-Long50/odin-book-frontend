@@ -15,6 +15,8 @@ import useFollowStatusQuery from '../hooks/useFollowStatusQuery';
 import useCommentsQuery from '../hooks/useCommentsQuery';
 import useDeletePostMutation from '../hooks/useDeletePostMutation';
 import useDeleteCommentMutation from '../hooks/useDeleteCommentMutation';
+import { LayoutContext } from './LayoutContext';
+import useCommentMutation from '../hooks/useCommentMutation';
 
 const PostDetail = (props) => {
   const [commentInput, setCommentInput] = useState('');
@@ -23,6 +25,7 @@ const PostDetail = (props) => {
   const [imageContainerHeight, setImageContainerHeight] = useState(null);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
+  const { layoutSize } = useContext(LayoutContext);
 
   const imageRef = useRef(null);
   const imageContainerRef = useRef(null);
@@ -40,6 +43,17 @@ const PostDetail = (props) => {
   const deletePost = useDeletePostMutation(apiUrl, props.togglePostOpen);
 
   const deleteComment = useDeleteCommentMutation(apiUrl);
+
+  const createComment = useCommentMutation(
+    props.post.id,
+    props.post.profileId,
+    activeProfile.id,
+    apiUrl,
+  );
+
+  const handleCreateComment = (comment) => {
+    createComment.mutate(comment);
+  };
 
   const handleDeletePost = (postId) => {
     deletePost.mutate(postId);
@@ -72,13 +86,15 @@ const PostDetail = (props) => {
         className="fade-in-bottom bg-secondary main-layout z-30 grid h-dvh w-full md:m-auto md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:max-w-7xl md:grid-cols-3 md:grid-rows-1 md:rounded-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {props.layoutSize === 'small' || props.layoutSize === 'xsmall' ? (
+        {layoutSize === 'small' || layoutSize === 'xsmall' ? (
           <>
             <div className="bg-secondary sticky top-0 z-30 row-span-1 w-full border-b">
               <PostHeader
                 activeProfile={activeProfile}
                 profile={props.profile}
                 followStatus={followStatus.data}
+                togglePostOpen={props.togglePostOpen}
+                toggleNotificationbar={props.toggleNotificationbar}
               />
             </div>
             <div
@@ -106,6 +122,7 @@ const PostDetail = (props) => {
                   date={props.post.createdAt}
                   mutate={handleDeletePost}
                   togglePostOpen={props.togglePostOpen}
+                  toggleNotificationbar={props.toggleNotificationbar}
                 />
                 {comments?.data.map((comment) => {
                   return (
@@ -118,6 +135,7 @@ const PostDetail = (props) => {
                       date={comment.createdAt}
                       mutate={handleDeleteComment}
                       togglePostOpen={props.togglePostOpen}
+                      toggleNotificationbar={props.toggleNotificationbar}
                     />
                   );
                 })}
@@ -128,8 +146,8 @@ const PostDetail = (props) => {
                 <div className="flex w-full items-center justify-between md:mb-3">
                   <div className="flex items-center justify-start gap-4">
                     <LikeButton
-                      likedStatus={props.likedStatus}
-                      onClick={() => props.toggleLikedStatus.mutate()}
+                      likeStatus={props.likeStatus}
+                      onClick={() => props.toggleLikeStatus.mutate()}
                     />
                     <CommentButton onClick={() => inputRef.current.focus()} />
                     <ShareButton />
@@ -158,7 +176,7 @@ const PostDetail = (props) => {
                     className="text-accent font-semibold hover:underline"
                     onClick={(e) => {
                       e.preventDefault();
-                      props.comment.mutate(commentInput);
+                      handleCreateComment(commentInput);
                       setCommentInput('');
                     }}
                   >
@@ -218,8 +236,8 @@ const PostDetail = (props) => {
                   <div className="flex w-full items-center justify-between md:mb-3">
                     <div className="flex items-center justify-start gap-4">
                       <LikeButton
-                        likedStatus={props.likedStatus}
-                        onClick={() => props.toggleLikedStatus.mutate()}
+                        likeStatus={props.likeStatus}
+                        onClick={() => props.toggleLikeStatus.mutate()}
                       />
                       <CommentButton onClick={() => inputRef.current.focus()} />
                       <ShareButton />
@@ -250,7 +268,7 @@ const PostDetail = (props) => {
                       className="text-accent font-semibold hover:underline"
                       onClick={(e) => {
                         e.preventDefault();
-                        props.comment.mutate(commentInput);
+                        handleCreateComment(commentInput);
                         setCommentInput('');
                       }}
                     >

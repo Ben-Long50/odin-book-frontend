@@ -2,14 +2,21 @@ import ListMenuItem from './ListMenuItem';
 import { mdiHeart, mdiHeartOutline, mdiMagnify, mdiMenu } from '@mdi/js';
 import Logo from './Logo';
 import PawIcon from '../assets/PawIcon';
-import { useContext } from 'react';
 import Searchbar from './Searchbar';
 import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';
+import { useContext } from 'react';
 import { GlobalContext } from './GlobalContext';
+import { AuthContext } from './AuthContext';
+import useNotificationQuery from '../hooks/useNotificationQuery';
+import { LayoutContext } from './LayoutContext';
 
 const NavHeader = (props) => {
-  const { notifications } = useContext(GlobalContext);
+  const { apiUrl } = useContext(AuthContext);
+  const { activeProfile } = useContext(GlobalContext);
+  const { layoutSize } = useContext(LayoutContext);
+
+  const notifications = useNotificationQuery(activeProfile.id, apiUrl);
 
   const toggleSearchbar = () => {
     if (props.searchVisibility) {
@@ -65,6 +72,10 @@ const NavHeader = (props) => {
     props.setMenuVisibility(!props.menuVisibility);
   };
 
+  if (notifications.isPending || notifications.isLoading) {
+    return <span></span>;
+  }
+
   return (
     <div className="sticky top-0 z-20">
       <nav className="bg-secondary sticky top-0 z-20 row-span-1 flex w-dvw items-center justify-between border-b px-3 py-2">
@@ -89,7 +100,7 @@ const NavHeader = (props) => {
               props.activeItem === 'notifications' ? mdiHeart : mdiHeartOutline
             }
             label="Notifications"
-            notifications={notifications}
+            notifications={notifications.data.length}
             onClick={() => {
               toggleNotificationbar();
             }}
@@ -105,13 +116,14 @@ const NavHeader = (props) => {
       </nav>
       <Searchbar
         className={`${props.searchVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing } absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
-        layoutSize={props.layoutSize}
+        layoutSize={layoutSize}
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
         className={`${props.notificationVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
-        layoutSize={props.layoutSize}
+        layoutSize={layoutSize}
         toggleNotificationbar={toggleNotificationbar}
+        notifications={notifications.data}
       />
       <SettingsMenu
         className={`${props.menuVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}

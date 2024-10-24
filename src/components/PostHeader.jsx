@@ -29,6 +29,10 @@ const PostHeader = (props) => {
             : `/profile/${props.profile.username}`
         }
         state={props.profile.id}
+        onClick={() => {
+          props.togglePostOpen();
+          props.toggleNotificationbar();
+        }}
       >
         <ProfilePic
           image={props.profile.profilePicUrl}
@@ -43,6 +47,10 @@ const PostHeader = (props) => {
               : `/profile/${props.profile.username}`
           }
           state={props.profile.id}
+          onClick={() => {
+            props.togglePostOpen();
+            props.toggleNotificationbar();
+          }}
         >
           <h3 className="text-lg font-semibold">{props.profile.username}</h3>
         </Link>

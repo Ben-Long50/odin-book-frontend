@@ -4,7 +4,6 @@ import Button from './Button';
 import { useLocation } from 'react-router-dom';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
-import { useQueryClient } from '@tanstack/react-query';
 import Loading from './Loading';
 import useForeignProfileQuery from '../hooks/useForeignProfileQuery';
 import useFollowStatusMutation from '../hooks/useFollowingStatusMutation';
@@ -47,7 +46,7 @@ const ForeignProfile = () => {
     apiUrl,
   );
 
-  if (profile.isLoading) {
+  if (profile.isPending || profile.isLoading) {
     return <Loading />;
   }
 

@@ -4,9 +4,8 @@ import getProfile from '../services/getProfile';
 const useForeignProfileQuery = (profileId, apiUrl) => {
   return useQuery({
     queryKey: ['foreignProfile', profileId],
-    queryFn: async () => {
-      const profile = await getProfile(profileId, apiUrl);
-      return profile;
+    queryFn: () => {
+      return getProfile(profileId, apiUrl);
     },
   });
 };

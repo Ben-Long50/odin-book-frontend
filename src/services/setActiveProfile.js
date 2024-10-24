@@ -1,12 +1,8 @@
-const setActiveProfile = async (profileData, apiUrl) => {
+const setActiveProfile = async (profileId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/profile`, {
+    const response = await fetch(`${apiUrl}/profiles/${profileId}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       credentials: 'include',
-      body: JSON.stringify(profileData),
     });
     const data = await response.json();
     console.log(data.message);

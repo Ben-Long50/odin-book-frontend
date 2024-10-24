@@ -1,66 +1,50 @@
 import { mdiClose, mdiCloseCircle } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import getSearchMatch from '../services/getSearchMatch';
 import { GlobalContext } from './GlobalContext';
-import getSearchHistory from '../services/getSearchHistory';
-import createSearchEntry from '../services/createSearchEntry';
 import Loading from './Loading';
-import deleteSearchEntry from '../services/deleteSearchEntry';
-import deleteSearchHistory from '../services/deleteSearchHistory';
 import ProfileCard from './ProfileCard';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import useSearchHistoryQuery from '../hooks/useSearchHistoryQuery';
+import useSearchResultsMutation from '../hooks/useSearchResultsMutation';
+import useCreateSearchMutation from '../hooks/useCreateSearchMutation';
+import useDeleteSearchMutation from '../hooks/useDeleteSearchMutation';
+import useDeleteSearchHistory from '../hooks/useDeleteSearchHistory';
 
 const Searchbar = (props) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchString, setSearchString] = useState('');
   const [results, setResults] = useState([]);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
 
-  const searchHistory = useQuery({
-    queryKey: ['searchHistory'],
-    queryFn: async () => {
-      const searches = await getSearchHistory(activeProfile.id, apiUrl);
-      return searches;
-    },
-  });
+  const searchHistory = useSearchHistoryQuery(activeProfile.id, apiUrl);
 
-  const searchResults = useMutation({
-    mutationFn: async () => {
-      const result = await getSearchMatch(searchQuery, apiUrl);
-      result ? setResults(result) : setResults([]);
-    },
-  });
+  const searchResults = useSearchResultsMutation(apiUrl);
 
-  const createSearch = useMutation({
-    mutationFn: async (searchedId) => {
-      return await createSearchEntry(searchedId, activeProfile.id, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['searchHistory']);
-    },
-  });
+  const handleSearch = async (searchQuery) => {
+    const result = await searchResults.mutateAsync(searchQuery);
+    setSearchString(searchQuery);
+    setResults(result || []);
+  };
 
-  const deleteSearch = useMutation({
-    mutationFn: async (searchedId) => {
-      return await deleteSearchEntry(searchedId, activeProfile.id, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['searchHistory']);
-    },
-  });
+  const createSearch = useCreateSearchMutation(activeProfile.id, apiUrl);
 
-  const deleteSearches = useMutation({
-    mutationFn: async () => {
-      await deleteSearchHistory(activeProfile.id, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['searchHistory']);
-    },
-  });
+  const handleCreateSearch = (searchedId) => {
+    createSearch.mutate(searchedId);
+  };
+
+  const deleteSearch = useDeleteSearchMutation(activeProfile.id, apiUrl);
+
+  const handleDeleteSearch = (searchedId) => {
+    deleteSearch.mutate(searchedId);
+  };
+
+  const deleteSearchHistory = useDeleteSearchHistory(activeProfile.id, apiUrl);
+
+  if (searchHistory.isPending || searchHistory.isLoading) {
+    return <span></span>;
+  }
 
   return (
     <PerfectScrollbar
@@ -77,16 +61,15 @@ const Searchbar = (props) => {
             type="text"
             placeholder="Search"
             onChange={(e) => {
-              setSearchQuery(e.target.value);
-              searchResults.mutate();
+              handleSearch(e.target.value);
             }}
-            value={searchQuery}
+            value={searchString}
           />
           <button
             className="text-tertiary cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
-              setSearchQuery('');
+              setSearchString('');
               setResults([]);
             }}
           >
@@ -101,7 +84,7 @@ const Searchbar = (props) => {
               <h3 className="text-primary text-xl font-semibold">Recent</h3>
               <p
                 className="timing md:hover:text-primary cursor-pointer text-lg text-blue-500"
-                onClick={() => deleteSearches.mutate()}
+                onClick={() => deleteSearchHistory.mutate()}
               >
                 Clear all
               </p>
@@ -125,7 +108,7 @@ const Searchbar = (props) => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        deleteSearch.mutate(profile.id);
+                        handleDeleteSearch(profile.id);
                       }}
                     >
                       <Icon
@@ -148,9 +131,9 @@ const Searchbar = (props) => {
                   profile={profile}
                   onClick={() => {
                     props.toggleSearchbar();
-                    setSearchQuery('');
+                    setSearchString('');
                     setResults([]);
-                    createSearch.mutate(profile.id);
+                    handleCreateSearch(profile.id);
                   }}
                 />
               );

@@ -3,28 +3,22 @@ import { mdiBookmark, mdiBookmarkOutline } from '@mdi/js';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import createBookmark from '../services/createBookmark';
-import deleteBookmark from '../services/deleteBookmark';
+import useBookmarkMutation from '../hooks/useBookmarkMutation';
 
 const BookmarkButton = (props) => {
   const [bookmarkedStatus, setBookmarkedStatus] = useState(false);
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
 
-  const toggleBookmarkedStatus = useMutation({
-    mutationFn: async () => {
-      if (!bookmarkedStatus) {
-        await createBookmark(activeProfile.id, props.post.id, apiUrl);
-      } else {
-        await deleteBookmark(activeProfile.id, props.post.id, apiUrl);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['bookmarks', 'activeProfile']);
-    },
-  });
+  const toggleBookmarkStatus = useBookmarkMutation(
+    activeProfile.id,
+    props.post.id,
+    apiUrl,
+  );
+
+  const handleBookmarkStatus = () => {
+    toggleBookmarkStatus.mutate(bookmarkedStatus);
+  };
 
   useEffect(() => {
     let status = false;
@@ -40,7 +34,7 @@ const BookmarkButton = (props) => {
     <button
       className="text-primary"
       onClick={() => {
-        toggleBookmarkedStatus.mutate();
+        handleBookmarkStatus();
       }}
     >
       <Icon

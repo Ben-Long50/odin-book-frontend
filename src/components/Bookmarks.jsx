@@ -1,27 +1,17 @@
 import Icon from '@mdi/react';
 import { mdiBookmarkOutline } from '@mdi/js';
-import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
-import getBookmarks from '../services/getBookmarks';
 import PostCard from './PostCard';
-import { useOutletContext } from 'react-router-dom';
 import Loading from './Loading';
+import useBookmarkQuery from '../hooks/useBookmarkQuery';
 
 const Bookmarks = () => {
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const [layoutSize] = useOutletContext();
 
-  const bookmarks = useQuery({
-    queryKey: ['bookmarks'],
-    queryFn: async () => {
-      const bookmarks = await getBookmarks(activeProfile.id, apiUrl);
-
-      return bookmarks ? bookmarks : [];
-    },
-  });
+  const bookmarks = useBookmarkQuery(activeProfile.id, apiUrl);
 
   if (bookmarks.isPending || bookmarks.isLoading) {
     return <Loading />;
@@ -46,10 +36,7 @@ const Bookmarks = () => {
               <PostCard
                 key={index}
                 post={bookmark.post}
-                layoutSize={layoutSize}
                 profile={bookmark.post.profile}
-                followStatus={true}
-                // setFollowingStatus={setFollowingStatus}
               />
             ))}
           </div>

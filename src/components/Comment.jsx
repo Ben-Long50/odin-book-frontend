@@ -74,7 +74,10 @@ const Comment = (props) => {
               : `/profile/${props.profile.username}`
           }
           state={props.profile.id}
-          // onClick={() => props.togglePostOpen()}
+          onClick={() => {
+            props.togglePostOpen();
+            props.toggleNotificationbar();
+          }}
         >
           <ProfilePic
             image={props.profile.profilePicUrl}
@@ -89,7 +92,10 @@ const Comment = (props) => {
                 : `/profile/${props.profile.username}`
             }
             state={props.profile.id}
-            // onClick={() => props.togglePostOpen()}
+            onClick={() => {
+              props.togglePostOpen();
+              props.toggleNotificationbar();
+            }}
           >
             <h3 className="text-primary text-lg font-semibold">
               {props.profile.username}

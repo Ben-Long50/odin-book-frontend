@@ -5,13 +5,13 @@ const getAuthStatus = async (apiUrl) => {
       credentials: 'include',
     });
     const data = await response.json();
-
     if (response.ok) {
       console.log(data.message);
+      return true;
     } else {
       console.error(data.message);
+      return false;
     }
-    return data.status;
   } catch (error) {
     console.error(error.message);
   }

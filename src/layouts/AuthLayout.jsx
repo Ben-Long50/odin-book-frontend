@@ -3,18 +3,16 @@ import { ThemeContext } from '../components/ThemeContext';
 import { useContext } from 'react';
 import Icon from '@mdi/react';
 import { mdiWeatherSunny, mdiWeatherNight } from '@mdi/js';
-import { LayoutContext } from '../components/LayoutContext';
 
 const AuthLayout = () => {
   const { theme, changeTheme } = useContext(ThemeContext);
-  const { layoutSize } = useContext(LayoutContext);
 
   return (
     <div
-      className={`${theme} bg-secondary-2 flex h-dvh flex-col items-center justify-center gap-4 overflow-y-hidden p-4 md:gap-16`}
+      className={`${theme} bg-secondary-2 flex min-h-dvh flex-col items-center justify-center gap-4 overflow-y-hidden px-4 py-6 md:gap-16`}
     >
       <button
-        className="text-tertiary hover-primary absolute left-0 top-0 m-2 flex items-center gap-4 rounded p-2 text-xl transition duration-300 md:m-4"
+        className="hover-primary absolute left-0 top-0 z-10 m-2 flex items-center gap-4 rounded bg-emerald-400 p-2 text-xl text-gray-800 shadow-md shadow-gray-300 transition duration-300 md:m-4 dark:bg-emerald-300 dark:shadow-gray-950"
         onClick={changeTheme}
       >
         <Icon

@@ -1,34 +1,29 @@
 import ProfilePic from './ProfilePic';
 import Button from './Button';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   mdiCheckboxBlankOutline,
   mdiCheckboxMarkedOutline,
   mdiSquareEditOutline,
 } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import setActiveProfile from '../services/setActiveProfile';
 import { GlobalContext } from './GlobalContext';
-import { input } from '@testing-library/user-event/dist/cjs/event/input.js';
+import { LayoutContext } from './LayoutContext';
+import useActiveProfileMutation from '../hooks/useActiveProfileMutation';
 
 const ManageProfiles = () => {
   const { apiUrl } = useContext(AuthContext);
   const { profiles } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
-  const [layoutSize] = useOutletContext();
+  const { layoutSize } = useContext(LayoutContext);
 
-  const changeActiveProfile = useMutation({
-    mutationFn: (profileData) => {
-      return setActiveProfile(profileData, apiUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['profiles', 'activeProfile']);
-    },
-  });
+  const changeActiveProfile = useActiveProfileMutation(apiUrl);
+
+  const handleChangeActive = (profileId) => {
+    changeActiveProfile.mutate(profileId);
+  };
 
   return (
     <PerfectScrollbar className="text-primary flex w-full flex-col items-center overflow-y-auto p-4 md:p-6 lg:p-8">
@@ -36,7 +31,7 @@ const ManageProfiles = () => {
         Manage Profiles
       </h1>
       <div className="flex w-full max-w-6xl flex-col gap-4 md:gap-6">
-        {profiles.data.map((profile, index) => {
+        {profiles.map((profile, index) => {
           return (
             <div
               key={index}
@@ -78,7 +73,7 @@ const ManageProfiles = () => {
                       <Icon
                         path={mdiCheckboxBlankOutline}
                         size={1.25}
-                        onClick={() => changeActiveProfile.mutate(profile)}
+                        onClick={() => handleChangeActive(profile.id)}
                       />
                     </button>
                   )
@@ -89,7 +84,7 @@ const ManageProfiles = () => {
                 ) : (
                   <Button
                     className="px-3 py-2 text-sm font-semibold opacity-50"
-                    onClick={() => changeActiveProfile.mutate(profile)}
+                    onClick={() => handleChangeActive(profile.id)}
                   >
                     Switch profile
                   </Button>

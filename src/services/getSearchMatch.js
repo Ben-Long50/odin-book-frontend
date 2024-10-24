@@ -6,7 +6,6 @@ const getSearchMatch = async (searchQuery, apiUrl) => {
     });
     const data = await response.json();
     if (response.ok) {
-      console.log(data.message);
       return data.profiles;
     } else {
       console.error(data.message);

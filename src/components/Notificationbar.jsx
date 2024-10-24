@@ -3,19 +3,16 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { GlobalContext } from './GlobalContext';
 import Notification from './Notification';
 import { AuthContext } from './AuthContext';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import deleteAllNotifications from '../services/deleteAllNotifications';
+import useDeleteAllNotificationsMutation from '../hooks/useDeleteAllNotificationsMutation';
 
 const Notificationbar = (props) => {
   const { apiUrl } = useContext(AuthContext);
-  const { activeProfile, notifications } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
+  const { activeProfile } = useContext(GlobalContext);
 
-  const mutateNotifications = useMutation({
-    mutationFn: async () =>
-      await deleteAllNotifications(activeProfile.id, apiUrl),
-    onSuccess: () => queryClient.invalidateQueries(['activeProfile']),
-  });
+  const deleteAllNotifications = useDeleteAllNotificationsMutation(
+    activeProfile.id,
+    apiUrl,
+  );
 
   return (
     <PerfectScrollbar
@@ -34,15 +31,15 @@ const Notificationbar = (props) => {
           <p
             className="md:hover:text-primary cursor-pointer text-lg text-blue-500"
             onClick={() => {
-              mutateNotifications.mutate();
+              deleteAllNotifications.mutate();
               props.toggleNotificationbar();
             }}
           >
             Clear all
           </p>
         </div>
-        {notifications?.length > 0 &&
-          notifications.map((notification) => {
+        {props.notifications.length > 0 &&
+          props.notifications.map((notification) => {
             return (
               <Notification
                 key={notification.id}
@@ -50,7 +47,6 @@ const Notificationbar = (props) => {
                 profile={notification.profile}
                 date={notification.createdAt}
                 toggleNotificationbar={props.toggleNotificationbar}
-                layoutSize={props.layoutSize}
               />
             );
           })}

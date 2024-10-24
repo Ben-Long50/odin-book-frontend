@@ -1,18 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import PostDetail from './PostDetail';
 import { GlobalContext } from './GlobalContext';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import likePost from '../services/likePost';
 import { AuthContext } from './AuthContext';
-import unlikePost from '../services/unlikePost';
-import createComment from '../services/createComment';
+import useLikeStatusMutation from '../hooks/useLikeStatusMutation';
 
 const PostCard = (props) => {
-  const [likedStatus, setLikedStatus] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(false);
   const { activeProfile } = useContext(GlobalContext);
   const { apiUrl } = useContext(AuthContext);
   const [postOpen, setPostOpen] = useState(false);
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     let status = false;
@@ -21,36 +17,15 @@ const PostCard = (props) => {
         status = true;
       }
     });
-    setLikedStatus(status);
+    setLikeStatus(status);
   }, [props.post]);
 
-  const toggleLikedStatus = useMutation({
-    mutationFn: async () => {
-      if (!likedStatus) {
-        await likePost(props.post.id, activeProfile.id, apiUrl);
-      } else {
-        await unlikePost(props.post.id, activeProfile.id, apiUrl);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
-    },
-  });
-
-  const comment = useMutation({
-    mutationFn: async (comment) => {
-      await createComment(
-        props.post.id,
-        props.post.profileId,
-        activeProfile.id,
-        comment,
-        apiUrl,
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
-    },
-  });
+  const toggleLikeStatus = useLikeStatusMutation(
+    props.post.id,
+    activeProfile.id,
+    apiUrl,
+    likeStatus,
+  );
 
   const togglePostOpen = () => {
     setPostOpen(!postOpen);
@@ -64,14 +39,13 @@ const PostCard = (props) => {
       <img src={props.post.mediaUrl} alt="Post" />
       <PostDetail
         post={props.post}
-        layoutSize={props.layoutSize}
-        likedStatus={likedStatus}
-        toggleLikedStatus={toggleLikedStatus}
+        likeStatus={likeStatus}
+        toggleLikeStatus={toggleLikeStatus}
         profile={props.profile}
         postOpen={postOpen}
         setPostOpen={setPostOpen}
         togglePostOpen={togglePostOpen}
-        comment={comment}
+        toggleNotificationbar={props.toggleNotificationbar}
       />
     </div>
   );

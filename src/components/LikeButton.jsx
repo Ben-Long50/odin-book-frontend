@@ -5,8 +5,8 @@ const LikeButton = (props) => {
   return (
     <button className="text-primary" onClick={props.onClick}>
       <Icon
-        className={`${props.likedStatus && 'text-pink-600'}`}
-        path={props.likedStatus ? mdiHeart : mdiHeartOutline}
+        className={`${props.likeStatus && 'text-pink-600'}`}
+        path={props.likeStatus ? mdiHeart : mdiHeartOutline}
         size={props.size || 1.25}
       />
     </button>

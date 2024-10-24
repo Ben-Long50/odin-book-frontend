@@ -5,24 +5,20 @@ import ProfilePic from './ProfilePic';
 import Timestamp from './Timestamp';
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import deleteNotification from '../services/deleteNotification';
 import { AuthContext } from './AuthContext';
 import PostCard from './PostCard';
+import useDeleteNotificationsMutation from '../hooks/useDeleteNotificationMutation';
 
 const Notification = (props) => {
   const [message, setMessage] = useState('');
   const [post, setPost] = useState(null);
-  const [postPicUrl, setPostPicUrl] = useState('');
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
 
-  const mutateNotification = useMutation({
-    mutationFn: async () =>
-      await deleteNotification(props.notification.id, apiUrl),
-    onSuccess: () => queryClient.invalidateQueries(['activeProfile']),
-  });
+  const deleteNotification = useDeleteNotificationsMutation(
+    props.notification.id,
+    apiUrl,
+  );
 
   useEffect(() => {
     switch (true) {
@@ -32,17 +28,14 @@ const Notification = (props) => {
       case !!props.notification.commentId:
         setMessage('commented on your post');
         setPost(props.notification.newComment.post);
-        setPostPicUrl(props.notification.newComment.post.mediaUrl);
         break;
       case !!props.notification.postLikeId:
         setMessage('liked your post');
         setPost(props.notification.newPostLike.post);
-        setPostPicUrl(props.notification.newPostLike.post.mediaUrl);
         break;
       case !!props.notification.commentLikeId:
         setMessage('liked your comment');
         setPost(props.notification.newCommentLike.comment.post);
-        setPostPicUrl(props.notification.newCommentLike.comment.post.mediaUrl);
         break;
       default:
         setMessage('');
@@ -87,14 +80,12 @@ const Notification = (props) => {
       </div>
 
       <div className="flex grow items-center justify-end">
-        {postPicUrl && (
+        {post?.mediaUrl && (
           <PostCard
             className="size-16 rounded-sm"
             post={post}
-            profile={props.notification.profile}
-            layoutSize={props.layoutSize}
-            // followStatus={props.followStatus}
-            // setFollowingStatus={props.setFollowingStatus}
+            profile={post.profile}
+            toggleNotificationbar={props.toggleNotificationbar}
           />
         )}
         <button
@@ -102,7 +93,7 @@ const Notification = (props) => {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            mutateNotification.mutate();
+            deleteNotification.mutate();
           }}
         >
           <Icon className="text-tertiary" path={mdiClose} size={0.9} />

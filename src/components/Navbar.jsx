@@ -21,12 +21,17 @@ import Notificationbar from './Notificationbar';
 import SettingsMenu from './SettingsMenu';
 import { GlobalContext } from './GlobalContext';
 import ProfilePic from './ProfilePic';
+import useNotificationQuery from '../hooks/useNotificationQuery';
+import { AuthContext } from './AuthContext';
 
 const Navbar = (props) => {
   const [navWidth, setNavWidth] = useState(85);
 
   const navRef = useRef(null);
-  const { activeProfile, notifications } = useContext(GlobalContext);
+  const { apiUrl } = useContext(AuthContext);
+  const { activeProfile } = useContext(GlobalContext);
+
+  const notifications = useNotificationQuery(activeProfile.id, apiUrl);
 
   useEffect(() => {
     const handleResize = () => {
@@ -99,6 +104,10 @@ const Navbar = (props) => {
     props.setNotificationVisibility(!props.notificationVisibility);
   };
 
+  if (notifications.isPending || notifications.isLoading) {
+    return <span></span>;
+  }
+
   return (
     <div className="relative flex w-full">
       <div
@@ -160,7 +169,7 @@ const Navbar = (props) => {
               props.activeItem === 'notifications' ? mdiHeart : mdiHeartOutline
             }
             label="Notifications"
-            notifications={notifications}
+            notifications={notifications.data.length}
             onClick={() => {
               changeActiveItem('notifications');
               toggleNotificationbar();
@@ -224,6 +233,7 @@ const Navbar = (props) => {
             props.notificationVisibility &&
             `translateX(${navRef.current ? navWidth + 'px' : '0px'})`,
         }}
+        notifications={notifications.data}
         toggleNotificationbar={toggleNotificationbar}
       />
     </div>
