@@ -19,6 +19,7 @@ const SettingsMenu = (props) => {
   const { theme, changeTheme } = useContext(ThemeContext);
   const { activeProfile } = useContext(GlobalContext);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const logout = async () => {
     try {
@@ -28,9 +29,10 @@ const SettingsMenu = (props) => {
       });
       const result = await response.json();
       if (response.ok) {
+        queryClient.invalidateQueries(['authStatus']);
         queryClient.clear();
+
         console.log(result.message);
-        setIsAuthenticated(false);
       } else {
         console.error(result.message);
       }

@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const getFollowStatus = async (activeId, profileId, apiUrl) => {
   try {
     if (Number(activeId) === Number(profileId)) {
@@ -10,16 +12,12 @@ const getFollowStatus = async (activeId, profileId, apiUrl) => {
           credentials: 'include',
         },
       );
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data.message);
-        return data.status;
-      } else {
-        console.error(data.message);
-      }
+      const data = await handleResponse(response);
+      return data.status;
     }
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

@@ -3,10 +3,13 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import ProfileCard from './ProfileCard';
 
 const ProfileList = (props) => {
-  if (!props.modalOpen) return null;
+  if (!props.profileListOpen) return null;
 
   return (
-    <RootPortal onClick={() => props.toggleModal()}>
+    <RootPortal
+      modalOpen={props.profileListOpen}
+      onClick={() => props.toggleProfileList()}
+    >
       <div
         className={`${props.className} fade-in-bottom bg-secondary mx-auto my-auto max-h-dvh-50 max-w-xl md:rounded-xl`}
         onClick={(e) => e.stopPropagation()}

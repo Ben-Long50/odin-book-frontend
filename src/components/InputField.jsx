@@ -14,7 +14,6 @@ const InputField = (props) => {
         value={props.value}
         onChange={props.onChange}
         minLength={props.minLength}
-        required
       />
       <label
         className={`${inputRef.current?.value.length > 0 && 'text-transparent'} timing peer-focus:bg-secondary absolute left-3 top-3 transform cursor-text bg-transparent px-1 text-gray-400 transition-all peer-focus:-translate-y-7 peer-focus:text-emerald-400 peer-focus:peer-invalid:text-red-400 peer-focus:dark:text-emerald-400`}

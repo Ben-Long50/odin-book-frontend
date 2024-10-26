@@ -23,9 +23,14 @@ const Searchbar = (props) => {
   const searchResults = useSearchResultsMutation(apiUrl);
 
   const handleSearch = async (searchQuery) => {
-    const result = await searchResults.mutateAsync(searchQuery);
-    setSearchString(searchQuery);
-    setResults(result || []);
+    if (searchQuery.length > 0) {
+      const result = await searchResults.mutateAsync(searchQuery);
+      setSearchString(searchQuery);
+      setResults(result || []);
+    } else {
+      setSearchString('');
+      setResults([]);
+    }
   };
 
   const createSearch = useCreateSearchMutation(activeProfile.id, apiUrl);
@@ -48,7 +53,7 @@ const Searchbar = (props) => {
 
   return (
     <PerfectScrollbar
-      className={`${props.className} bg-secondary max-h-dvh-65 flex w-full flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex max-h-dvh-65 w-full flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       <search className="bg-secondary flex flex-col items-start gap-10 border-b p-6">

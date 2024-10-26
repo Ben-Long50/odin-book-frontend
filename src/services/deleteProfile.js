@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const deleteProfile = async (profileId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profile/${profileId}`, {
@@ -7,15 +9,11 @@ const deleteProfile = async (profileId, apiUrl) => {
       },
       credentials: 'include',
     });
-    const data = await response.json();
-    if (!response.ok) {
-      console.error(data.message);
-    } else {
-      console.log(data.message);
-      return data;
-    }
+    const data = handleResponse(response);
+    return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

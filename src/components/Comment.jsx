@@ -67,7 +67,9 @@ const Comment = (props) => {
           state={props.profile.id}
           onClick={() => {
             props.togglePostOpen();
-            props.toggleNotificationbar();
+            if (props.toggleNotificationbar) {
+              props.toggleNotificationbar();
+            }
           }}
         >
           <ProfilePic
@@ -85,7 +87,9 @@ const Comment = (props) => {
             state={props.profile.id}
             onClick={() => {
               props.togglePostOpen();
-              props.toggleNotificationbar();
+              if (props.toggleNotificationbar) {
+                props.toggleNotificationbar();
+              }
             }}
           >
             <h3 className="text-primary text-lg font-semibold">

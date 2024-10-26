@@ -136,7 +136,6 @@ const Post = (props) => {
         likeStatus={likeStatus}
         toggleLikeStatus={toggleLikeStatus}
         postOpen={postOpen}
-        followStatus={true}
         togglePostOpen={togglePostOpen}
       />
     </>

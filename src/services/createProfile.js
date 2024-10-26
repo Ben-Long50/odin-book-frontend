@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const createProfile = async (profileData, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profile`, {
@@ -5,11 +7,11 @@ const createProfile = async (profileData, apiUrl) => {
       credentials: 'include',
       body: profileData,
     });
-    const data = await response.json();
-    console.log(data.message);
+    const data = await handleResponse(response);
     return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

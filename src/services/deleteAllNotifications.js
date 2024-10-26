@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const deleteAllNotifications = async (activeId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/notifications`, {
@@ -8,11 +10,11 @@ const deleteAllNotifications = async (activeId, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ activeId }),
     });
-    const data = await response.json();
-    console.log(data.message);
+    const data = await handleResponse(response);
     return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useState, useContext, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import NavHeader from '../components/NavHeader';
 import NavFooter from '../components/NavFooter';
@@ -9,8 +9,12 @@ import GlobalProvider from '../components/GlobalContext';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Scrollbar } from 'react-scrollbars-custom';
 import { LayoutContext } from '../components/LayoutContext';
+import useAuthenticationQuery from '../hooks/useAuthenticationQuery';
+import { AuthContext } from '../components/AuthContext';
+import Loading from '../components/Loading';
 
 const MainLayout = () => {
+  const { apiUrl } = useContext(AuthContext);
   const { layoutSize } = useContext(LayoutContext);
   const [activeItem, setActiveItem] = useState('home');
   const [prevActiveItem, setPrevActiveItem] = useState('');
@@ -26,6 +30,14 @@ const MainLayout = () => {
   const [searchVisibility, setSearchVisibility] = useState(false);
   const [notificationVisibility, setNotificationVisibility] = useState(false);
   const { theme } = useContext(ThemeContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    const container = document.getElementById('scrollContainer');
+    if (container) {
+      container.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   const closeNavbar = () => {
     setMenuVisibility(false);
@@ -37,11 +49,15 @@ const MainLayout = () => {
     }
   };
 
+  const toggleCreateOpen = () => {
+    setCreateOpen(!createOpen);
+  };
+
   return (
     <GlobalProvider>
       <div
         id="portal-root"
-        className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid h-dvh bg-fixed`}
+        className={`${theme} xl:main-layout-xl md:main-layout-md main-layout bg-secondary grid min-h-dvh bg-fixed`}
       >
         {layoutSize === 'small' || layoutSize === 'xsmall' ? (
           <>
@@ -58,6 +74,7 @@ const MainLayout = () => {
               setNotificationVisibility={setNotificationVisibility}
             />
             <div
+              id="scrollContainer"
               className="text-primary row-span-1 flex w-full flex-col items-center overflow-y-scroll md:p-6 lg:p-8"
               onClick={closeNavbar}
             >
@@ -79,7 +96,10 @@ const MainLayout = () => {
                 }
               }}
             />
-            <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
+            <Create
+              createOpen={createOpen}
+              toggleCreateOpen={toggleCreateOpen}
+            />
           </>
         ) : (
           <>
@@ -100,12 +120,16 @@ const MainLayout = () => {
               setNotificationVisibility={setNotificationVisibility}
             />
             <PerfectScrollbar
+              id="scrollContainer"
               className="text-primary row-span-1 flex w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8"
               onClick={closeNavbar}
             >
               <Outlet context={[layoutSize, setActiveItem]} />
             </PerfectScrollbar>
-            <Create createOpen={createOpen} setCreateOpen={setCreateOpen} />
+            <Create
+              createOpen={createOpen}
+              toggleCreateOpen={toggleCreateOpen}
+            />
           </>
         )}
       </div>

@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const createSearchEntry = async (searchedId, activeId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/search/${searchedId}`, {
@@ -8,11 +10,11 @@ const createSearchEntry = async (searchedId, activeId, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ activeId }),
     });
-    const data = await response.json();
-    console.log(data.message);
+    const data = handleResponse(response);
     return data.search;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

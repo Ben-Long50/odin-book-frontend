@@ -1,18 +1,16 @@
+import handleResponse from './handleResponse';
+
 const getUserProfiles = async (apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profiles`, {
       method: 'GET',
       credentials: 'include',
     });
-    const data = await response.json();
-    if (response.ok) {
-      console.log(data.message);
-      return data.profiles;
-    } else {
-      console.error(data.message);
-    }
+    const data = await handleResponse(response);
+    return data.profiles;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const createBookmark = async (activeId, postId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profiles/${activeId}/bookmarks`, {
@@ -8,14 +10,11 @@ const createBookmark = async (activeId, postId, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ postId }),
     });
-    const data = await response.json();
-    if (response.ok) {
-      console.log(data.message);
-    } else {
-      console.error(data.message);
-    }
+    const data = await handleResponse(response);
+    return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

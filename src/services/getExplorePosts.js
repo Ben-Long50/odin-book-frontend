@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const getExplorePosts = async (activeId, apiUrl) => {
   try {
     const response = await fetch(
@@ -7,15 +9,11 @@ const getExplorePosts = async (activeId, apiUrl) => {
         credentials: 'include',
       },
     );
-    const data = await response.json();
-    if (response.ok) {
-      console.log(data.message);
-      return data.posts;
-    } else {
-      console.error(data.message);
-    }
+    const data = await handleResponse(response);
+    return data.posts;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

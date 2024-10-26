@@ -6,6 +6,7 @@ const useSearchResultsMutation = (apiUrl) => {
     mutationFn: (searchQuery) => {
       return getSearchMatch(searchQuery, apiUrl);
     },
+    throwOnError: false,
   });
 };
 

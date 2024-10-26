@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const followProfile = async (activeId, profileId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/profile/${profileId}/follow`, {
@@ -8,10 +10,11 @@ const followProfile = async (activeId, profileId, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ activeId }),
     });
-    const data = await response.json();
-    console.log(data.message);
+    const data = handleResponse(response);
+    return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

@@ -80,10 +80,10 @@ const PostDetail = (props) => {
   return (
     <RootPortal
       onClick={() => props.togglePostOpen()}
-      postOpen={props.postOpen}
+      modalOpen={props.postOpen}
     >
       <div
-        className="fade-in-bottom bg-secondary main-layout z-30 grid h-dvh w-full md:m-auto md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:max-w-7xl md:grid-cols-3 md:grid-rows-1 md:rounded-xl"
+        className="fade-in-bottom bg-secondary main-layout sticky top-0 z-30 grid h-dvh w-full md:m-auto md:grid md:h-auto md:max-h-dvh-95 md:min-h-dvh-75 md:max-w-7xl md:grid-cols-3 md:grid-rows-1 md:rounded-xl"
         onClick={(e) => e.stopPropagation()}
       >
         {layoutSize === 'small' || layoutSize === 'xsmall' ? (
@@ -205,6 +205,8 @@ const PostDetail = (props) => {
                 activeProfile={activeProfile}
                 profile={props.profile}
                 followStatus={followStatus.data}
+                togglePostOpen={props.togglePostOpen}
+                toggleNotificationbar={props.toggleNotificationbar}
               />
               <PerfectScrollbar className="w-full overflow-y-auto">
                 <div className="flex flex-col">
@@ -215,6 +217,8 @@ const PostDetail = (props) => {
                     body={props.post.body}
                     date={props.post.createdAt}
                     mutate={handleDeletePost}
+                    togglePostOpen={props.togglePostOpen}
+                    toggleNotificationbar={props.toggleNotificationbar}
                   />
                   {comments?.data.map((comment) => {
                     return (
@@ -226,6 +230,8 @@ const PostDetail = (props) => {
                         body={comment.body}
                         date={comment.createdAt}
                         mutate={handleDeleteComment}
+                        togglePostOpen={props.togglePostOpen}
+                        toggleNotificationbar={props.toggleNotificationbar}
                       />
                     );
                   })}

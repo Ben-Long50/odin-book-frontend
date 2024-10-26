@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import InputField from './InputField';
 import Button from './Button';
 import { AuthContext } from './AuthContext';
 import AuthOptions from './AuthOptions';
 import AuthFormLayout from '../layouts/AuthFormLayout';
+import { useQueryClient } from '@tanstack/react-query';
 
 const SigninForm = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const SigninForm = () => {
   });
   const [errors, setErrors] = useState([]);
   const { apiUrl, setIsAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -34,6 +37,7 @@ const SigninForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setErrors([]);
     try {
       const response = await fetch(`${apiUrl}/signin`, {
@@ -47,7 +51,29 @@ const SigninForm = () => {
       const data = await response.json();
       if (response.ok) {
         console.log(data.message);
-        setIsAuthenticated(true);
+        navigate('/home');
+      } else {
+        const errorArray = data.map((error) => {
+          return error.msg;
+        });
+        setErrors(errorArray);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
+  const handleGuest = async () => {
+    setErrors([]);
+    try {
+      const response = await fetch(`${apiUrl}/signin/guest`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data.message);
+        navigate('/home');
       } else {
         const errorArray = data.map((error) => {
           return error.msg;
@@ -83,7 +109,13 @@ const SigninForm = () => {
         Sign in
       </Button>
       <AuthOptions />
-      <Button className="hover:shadow-hover w-full p-2 text-lg">
+      <Button
+        className="hover:shadow-hover w-full p-2 text-lg"
+        onClick={(e) => {
+          e.preventDefault();
+          handleGuest();
+        }}
+      >
         Sign in as human (guest)
       </Button>
       <p className="text-tertiary w-full text-center">

@@ -1,18 +1,16 @@
+import handleResponse from './handleResponse';
+
 const getComments = async (postId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/post/${postId}/comments`, {
       method: 'GET',
       credentials: 'include',
     });
-    const data = await response.json();
-    if (response.ok) {
-      console.log(data.message);
-      return data.comments;
-    } else {
-      console.error(data.message);
-    }
+    const data = await handleResponse(response);
+    return data.comments;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

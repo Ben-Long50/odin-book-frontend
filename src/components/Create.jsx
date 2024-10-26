@@ -40,13 +40,17 @@ const Create = (props) => {
     setFile(null);
     setImagePreview(null);
     setCaptionInput('');
-    props.setCreateOpen(false);
+    props.toggleCreateOpen();
   };
 
   if (!props.createOpen) return null;
 
   return (
-    <RootPortal create={true} onClick={() => props.setCreateOpen(false)}>
+    <RootPortal
+      create={true}
+      modalOpen={props.createOpen}
+      onClick={() => props.toggleCreateOpen()}
+    >
       <div
         className="fade-in-bottom bg-secondary-2 z-30 mx-auto h-auto max-h-dvh w-full max-w-4xl self-center md:max-h-dvh-95 md:rounded-xl"
         onClick={(e) => e.stopPropagation()}
@@ -58,7 +62,7 @@ const Create = (props) => {
             </h2>
             <button
               className="text-primary absolute right-0 top-0 m-2"
-              onClick={() => props.setCreateOpen(false)}
+              onClick={() => props.toggleCreateOpen()}
             >
               <Icon path={mdiClose} size={1.3} />
             </button>
@@ -76,7 +80,7 @@ const Create = (props) => {
             </h2>
             <button
               className="text-primary absolute right-0 top-0 m-2"
-              onClick={() => props.setCreateOpen(false)}
+              onClick={() => props.toggleCreateOpen()}
             >
               <Icon path={mdiClose} size={1.3} />
             </button>

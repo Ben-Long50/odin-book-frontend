@@ -24,7 +24,7 @@ const NavFooter = (props) => {
 
   return (
     <nav
-      className="bg-secondary row-span-1 flex w-full items-center justify-evenly gap-4 border-t p-1"
+      className="bg-secondary sticky bottom-0 row-span-1 flex w-full items-center justify-evenly gap-4 border-t"
       onClick={props.onClick}
     >
       <Link className="w-auto" to="/home">

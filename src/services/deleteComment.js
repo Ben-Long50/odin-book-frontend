@@ -1,14 +1,16 @@
+import handleResponse from './handleResponse';
+
 const deleteComment = async (commentId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/comment/${commentId}`, {
       method: 'DELETE',
       credentials: 'include',
     });
-    const data = await response.json();
-    console.log(data.message);
+    const data = await handleResponse(response);
     return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

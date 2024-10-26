@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const createComment = async (postId, profileId, activeId, comment, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/posts/${postId}/comment`, {
@@ -8,11 +10,11 @@ const createComment = async (postId, profileId, activeId, comment, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ activeId, profileId, comment }),
     });
-    const data = await response.json();
-    console.log(data.message);
+    const data = await handleResponse(response);
     return data;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

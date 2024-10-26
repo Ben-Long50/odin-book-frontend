@@ -1,3 +1,5 @@
+import handleResponse from './handleResponse';
+
 const getNotifications = async (activeId, apiUrl) => {
   try {
     const response = await fetch(
@@ -7,15 +9,11 @@ const getNotifications = async (activeId, apiUrl) => {
         credentials: 'include',
       },
     );
-    const data = await response.json();
-    if (response.ok) {
-      console.log(data.message);
-      return data.notifications;
-    } else {
-      console.error(data.message);
-    }
+    const data = await handleResponse(response);
+    return data.notifications;
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 };
 

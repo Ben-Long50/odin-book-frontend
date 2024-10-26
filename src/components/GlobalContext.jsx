@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import Loading from './Loading.jsx';
 import useProfileQuery from '../hooks/useProfileQuery.js';
 import useActiveProfileQuery from '../hooks/useActiveProfileQuery.js';
 
@@ -34,7 +33,7 @@ const GlobalProvider = ({ children }) => {
     activeProfile.isPending ||
     activeProfile.isLoading
   ) {
-    return <Loading />;
+    return <span></span>;
   }
 
   return (

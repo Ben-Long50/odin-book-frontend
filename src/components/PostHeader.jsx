@@ -31,7 +31,9 @@ const PostHeader = (props) => {
         state={props.profile.id}
         onClick={() => {
           props.togglePostOpen();
-          props.toggleNotificationbar();
+          if (props.toggleNotificationbar) {
+            props.toggleNotificationbar();
+          }
         }}
       >
         <ProfilePic
@@ -49,7 +51,9 @@ const PostHeader = (props) => {
           state={props.profile.id}
           onClick={() => {
             props.togglePostOpen();
-            props.toggleNotificationbar();
+            if (props.toggleNotificationbar) {
+              props.toggleNotificationbar();
+            }
           }}
         >
           <h3 className="text-lg font-semibold">{props.profile.username}</h3>

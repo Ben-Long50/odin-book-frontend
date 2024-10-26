@@ -78,7 +78,7 @@ const NavHeader = (props) => {
 
   return (
     <div className="sticky top-0 z-20">
-      <nav className="bg-secondary sticky top-0 z-20 row-span-1 flex w-dvw items-center justify-between border-b px-3 py-2">
+      <nav className="bg-secondary sticky top-0 z-20 row-span-1 flex w-dvw items-center justify-between border-b px-3 py-1">
         {props.layoutSize === 'small' ? (
           <Logo className="absolute left-3" textSize="text-3xl" />
         ) : (
