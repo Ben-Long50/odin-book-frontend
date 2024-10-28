@@ -8,7 +8,6 @@ import { ThemeContext } from './ThemeContext';
 const ErrorPage = () => {
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
-  const message = location.state?.message;
   const error = useRouteError();
 
   return (
@@ -29,7 +28,7 @@ const ErrorPage = () => {
       <div className="fade-in-bottom bg-secondary grid grid-cols-2 gap-4 md:gap-8">
         <Button
           className="w-full px-3 py-2 text-lg md:text-xl"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(0)}
         >
           Refresh page
         </Button>

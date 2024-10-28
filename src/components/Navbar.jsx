@@ -218,7 +218,7 @@ const Navbar = (props) => {
         </div>
       </div>
       <Searchbar
-        className={`${props.searchVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
+        className={`${props.searchVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing fixed left-0 top-0 z-10`}
         style={{
           transform:
             props.searchVisibility &&
@@ -227,7 +227,7 @@ const Navbar = (props) => {
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
-        className={`${props.notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing absolute left-0 top-0 z-10`}
+        className={`${props.notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing fixed left-0 top-0 z-10`}
         style={{
           transform:
             props.notificationVisibility &&

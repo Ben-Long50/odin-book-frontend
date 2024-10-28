@@ -10,7 +10,7 @@ const followProfile = async (activeId, profileId, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ activeId }),
     });
-    const data = handleResponse(response);
+    const data = await handleResponse(response);
     return data;
   } catch (error) {
     console.error(error.message);

@@ -5,7 +5,7 @@ import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
 import Loading from './Loading';
 import ProfileCard from './ProfileCard';
-import PerfectScrollbar from 'react-perfect-scrollbar';
+import ScrollBar from 'react-perfect-scrollbar';
 import useSearchHistoryQuery from '../hooks/useSearchHistoryQuery';
 import useSearchResultsMutation from '../hooks/useSearchResultsMutation';
 import useCreateSearchMutation from '../hooks/useCreateSearchMutation';
@@ -51,15 +51,12 @@ const Searchbar = (props) => {
     return <span></span>;
   }
 
-  return (
-    <PerfectScrollbar
-      className={`${props.className} bg-secondary flex max-h-dvh-65 w-full flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+  return props.layoutSize === 'xsmall' || props.layoutSize === 'small' ? (
+    <div
+      className={`${props.className} bg-secondary flex max-h-dvh-65 flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
-      <search className="bg-secondary flex flex-col items-start gap-10 border-b p-6">
-        {props.layoutSize !== 'xsmall' && props.layoutSize !== 'small' && (
-          <h1 className="text-primary text-3xl font-semibold">Search</h1>
-        )}
+      <search className="bg-secondary border-b p-6">
         <div className="bg-secondary-2 flex w-full items-center justify-between rounded-lg p-2">
           <input
             className="text-secondary grow border-none bg-transparent text-lg outline-none"
@@ -146,7 +143,101 @@ const Searchbar = (props) => {
           })
         )}
       </div>
-    </PerfectScrollbar>
+    </div>
+  ) : (
+    <ScrollBar
+      className={`${props.className} bg-secondary flex max-h-dvh-65 flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+      style={props.style}
+    >
+      <search className="bg-secondary flex flex-col items-start gap-6 border-b p-6">
+        <h1 className="text-primary text-3xl font-semibold">Search</h1>
+        <div className="bg-secondary-2 flex w-full items-center justify-between rounded-lg p-2">
+          <input
+            className="text-secondary grow border-none bg-transparent text-lg outline-none"
+            type="text"
+            placeholder="Search"
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+            value={searchString}
+          />
+          <button
+            className="text-tertiary cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              setSearchString('');
+              setResults([]);
+            }}
+          >
+            <Icon path={mdiCloseCircle} size={1} />
+          </button>
+        </div>
+      </search>
+      <div className="flex flex-col gap-2 p-4">
+        {results.length < 1 ? (
+          <>
+            <div className="flex items-center justify-between p-2">
+              <h3 className="text-primary text-xl font-semibold">Recent</h3>
+              <p
+                className="timing md:hover:text-primary cursor-pointer text-lg text-blue-500"
+                onClick={() => deleteSearchHistory.mutate()}
+              >
+                Clear all
+              </p>
+            </div>
+            {searchHistory.isLoading ? (
+              <Loading />
+            ) : (
+              searchHistory.data?.length > 0 &&
+              searchHistory.data.map((search) => {
+                const profile = search.searchedProfile;
+                return (
+                  <ProfileCard
+                    key={profile.id}
+                    profile={profile}
+                    onClick={() => {
+                      props.toggleSearchbar();
+                    }}
+                  >
+                    <button
+                      className="ml-auto p-2"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleDeleteSearch(profile.id);
+                      }}
+                    >
+                      <Icon
+                        className="text-tertiary"
+                        path={mdiClose}
+                        size={0.9}
+                      />
+                    </button>
+                  </ProfileCard>
+                );
+              })
+            )}
+          </>
+        ) : (
+          results.map((profile) => {
+            if (profile.id !== activeProfile?.id) {
+              return (
+                <ProfileCard
+                  key={profile.id}
+                  profile={profile}
+                  onClick={() => {
+                    props.toggleSearchbar();
+                    setSearchString('');
+                    setResults([]);
+                    handleCreateSearch(profile.id);
+                  }}
+                />
+              );
+            }
+          })
+        )}
+      </div>
+    </ScrollBar>
   );
 };
 

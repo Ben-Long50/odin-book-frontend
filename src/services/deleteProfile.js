@@ -9,7 +9,7 @@ const deleteProfile = async (profileId, apiUrl) => {
       },
       credentials: 'include',
     });
-    const data = handleResponse(response);
+    const data = await handleResponse(response);
     return data;
   } catch (error) {
     console.error(error.message);

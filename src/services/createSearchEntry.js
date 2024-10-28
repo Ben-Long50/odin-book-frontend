@@ -10,7 +10,7 @@ const createSearchEntry = async (searchedId, activeId, apiUrl) => {
       credentials: 'include',
       body: JSON.stringify({ activeId }),
     });
-    const data = handleResponse(response);
+    const data = await handleResponse(response);
     return data.search;
   } catch (error) {
     console.error(error.message);
