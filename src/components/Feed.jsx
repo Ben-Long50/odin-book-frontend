@@ -52,7 +52,11 @@ const Feed = () => {
             }
           }}
         >
-          {feedPosts.isFetchingNextPage && <Loading />}
+          {feedPosts.isFetchingNextPage ? (
+            <Loading />
+          ) : (
+            <p className="my-2"></p>
+          )}
         </InView>
       )}
       {!feedPosts.hasNextPage && (

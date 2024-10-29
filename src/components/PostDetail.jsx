@@ -150,7 +150,7 @@ const PostDetail = (props) => {
                       onClick={() => props.toggleLikeStatus.mutate()}
                     />
                     <CommentButton onClick={() => inputRef.current.focus()} />
-                    <ShareButton />
+                    <ShareButton post={props.post} />
                   </div>
                   <div className="flex items-center gap-2">
                     <p className="text-primary font-semibold">
@@ -246,7 +246,7 @@ const PostDetail = (props) => {
                         onClick={() => props.toggleLikeStatus.mutate()}
                       />
                       <CommentButton onClick={() => inputRef.current.focus()} />
-                      <ShareButton />
+                      <ShareButton post={props.post} />
                     </div>
                     <div className="flex items-center gap-2">
                       <BookmarkButton post={props.post} />

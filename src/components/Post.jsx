@@ -102,7 +102,7 @@ const Post = (props) => {
                 <CommentButton onClick={togglePostOpen} />
                 <p>{props.post.comments.length}</p>
               </div>
-              <ShareButton />
+              <ShareButton post={props.post} />
             </div>
             <BookmarkButton post={props.post} />
           </div>

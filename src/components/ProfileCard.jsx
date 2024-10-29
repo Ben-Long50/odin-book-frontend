@@ -6,7 +6,7 @@ const ProfileCard = (props) => {
     <Link
       to={`/profile/${props.profile.username}`}
       key={props.profile.id}
-      className="timing md:hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2"
+      className={`${props.className} timing md:hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2`}
       state={props.profile.id}
       onClick={props.onClick}
     >

@@ -59,7 +59,11 @@ const Explore = () => {
                     }
                   }}
                 >
-                  {posts.isFetchingNextPage && <Loading />}
+                  {posts.isFetchingNextPage ? (
+                    <Loading />
+                  ) : (
+                    <p className="my-2"></p>
+                  )}
                 </InView>
               )}
               {!posts.hasNextPage && (

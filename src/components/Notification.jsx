@@ -37,6 +37,10 @@ const Notification = (props) => {
         setMessage('liked your comment');
         setPost(props.notification.newCommentLike.comment.post);
         break;
+      case !!props.notification.postId:
+        setMessage('shared a post with you');
+        setPost(props.notification.newPostShare);
+        break;
       default:
         setMessage('');
         break;

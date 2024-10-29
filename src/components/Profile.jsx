@@ -89,8 +89,8 @@ const Profile = (props) => {
                       className="min-w-96"
                       title="Followers"
                       profiles={followingProfiles}
-                      profileListOpen={followersOpen}
-                      toggleProfileList={toggleFollowersOpen}
+                      modalOpen={followersOpen}
+                      toggleModal={toggleFollowersOpen}
                     />
                   </div>
                   <div
@@ -105,8 +105,8 @@ const Profile = (props) => {
                       className="min-w-96"
                       title="Following"
                       profiles={followedProfiles}
-                      profileListOpen={followingOpen}
-                      toggleProfileList={toggleFollowingOpen}
+                      modalOpen={followingOpen}
+                      toggleModal={toggleFollowingOpen}
                     />
                   </div>
                 </div>

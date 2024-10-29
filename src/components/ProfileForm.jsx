@@ -218,7 +218,7 @@ const ProfileForm = (props) => {
           )}
         </div>
         <Button
-          className="fade-in-left w-1/2 self-end py-2 font-semibold"
+          className="fade-in-left w-1/2 self-end py-2"
           onClick={(e) => {
             handleSubmit(e);
           }}

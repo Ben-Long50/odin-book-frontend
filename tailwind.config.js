@@ -40,11 +40,13 @@ export default {
       },
       height: {
         'dvh-95': '95dvh',
+        'dvh-50': '50dvh',
       },
       maxHeight: {
         'dvh-95': '95dvh',
         'dvh-50': '50dvh',
         'dvh-65': '65dvh',
+        'dvh-75': '75dvh',
       },
       minHeight: {
         'dvh-75': '75dvh',
