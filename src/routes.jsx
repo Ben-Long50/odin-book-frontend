@@ -18,6 +18,7 @@ import Bookmarks from './components/Bookmarks';
 import ManageProfiles from './components/ManageProfiles';
 import ProfileEdit from './components/ProfileEdit';
 import ProfileCreate from './components/ProfileCreate';
+import AccountEdit from './components/AccountEdit';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
         <Route path="profile/:username" element={<ForeignProfile />}></Route>
         <Route path="profile/bookmarks" element={<Bookmarks />}></Route>
         <Route path="profile/edit" element={<ProfileEdit />}></Route>
+        <Route path="account/edit" element={<AccountEdit />}></Route>
         <Route path="manage/create" element={<ProfileCreate />}></Route>
       </Route>
       <Route path="error" element={<ErrorPage />} />

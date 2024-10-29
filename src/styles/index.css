@@ -13,7 +13,7 @@
     @apply hover:bg-emerald-300 hover:dark:text-gray-900;
   }
   .bg-secondary {
-    @apply border-gray-300 bg-zinc-100 dark:border-gray-600 dark:bg-zinc-900;
+    @apply border-gray-400 bg-zinc-100 dark:border-gray-600 dark:bg-zinc-900;
   }
   .bg-secondary-2 {
     @apply bg-zinc-200 dark:bg-zinc-800;

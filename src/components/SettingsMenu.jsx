@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Icon from '@mdi/react';
 import {
   mdiAccountCog,
+  mdiAccountSettings,
   mdiBookmarkOutline,
   mdiCogOutline,
   mdiLogout,
@@ -50,7 +51,7 @@ const SettingsMenu = (props) => {
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}
         >
-          <Icon path={mdiAccountCog} size={1.2} />
+          <Icon path={mdiAccountSettings} size={1.2} />
           Manage profiles
         </button>
       </Link>
@@ -61,6 +62,15 @@ const SettingsMenu = (props) => {
         >
           <Icon path={mdiCogOutline} size={1.2} />
           Profile settings
+        </button>
+      </Link>
+      <Link className="w-full" to="account/edit" state={activeProfile}>
+        <button
+          className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
+          onClick={props.toggleMenuVisibility}
+        >
+          <Icon path={mdiAccountCog} size={1.2} />
+          Account settings
         </button>
       </Link>
       <Link className="w-full" to="profile/bookmarks">
