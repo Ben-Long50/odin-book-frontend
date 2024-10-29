@@ -8,6 +8,8 @@ const createProfile = async (profileData, apiUrl) => {
       body: profileData,
     });
     const data = await handleResponse(response);
+    console.log(data);
+
     return data;
   } catch (error) {
     console.error(error.message);

@@ -36,33 +36,34 @@ const AccountEdit = () => {
   }, [account.data]);
 
   const handleSubmit = async (e) => {
+    setErrors([]);
     e.preventDefault();
     const formData = new FormData();
 
-    formData.append('email', emailInput.length > 0 ? emailInput : undefined);
-    formData.append(
-      'firstName',
-      firstNameInput.length > 0 ? firstNameInput : undefined,
-    );
-    formData.append(
-      'lastName',
-      lastNameInput.length > 0 ? lastNameInput : undefined,
-    );
-    formData.append(
-      'password',
-      passwordInput.length > 0 ? passwordInput : undefined,
-    );
-    formData.append(
-      'confirmPassword',
-      confirmPasswordInput.length > 0 ? confirmPasswordInput : undefined,
-    );
+    if (emailInput.length > 0 && emailInput !== account.data.email) {
+      formData.append('email', emailInput);
+    }
+    if (
+      firstNameInput.length > 0 &&
+      firstNameInput !== account.data.firstName
+    ) {
+      formData.append('firstName', firstNameInput);
+    }
+    if (lastNameInput.length > 0 && lastNameInput !== account.data.lastName) {
+      formData.append('lastName', lastNameInput);
+    }
+    if (passwordInput.length > 0) {
+      formData.append('password', passwordInput);
+    }
+    if (confirmPasswordInput.length > 0) {
+      formData.append('confirmPassword', confirmPasswordInput);
+    }
 
     if (passwordInput !== confirmPasswordInput) {
       throw new Error('Password fields must match to edit account info');
     }
 
     const result = await editAccount.mutateAsync(formData);
-    console.log(result);
 
     if (result.errors) {
       setErrors(result.errors);
@@ -159,7 +160,7 @@ const AccountEdit = () => {
         </div>
         {errors.length > 0 && (
           <div className="flex flex-col gap-3 self-start">
-            <span className="text-primary">Error signing in</span>
+            <span className="text-primary">Error updating account info</span>
             {errors.map((error, index) => (
               <p key={index} className="text-error">
                 {error.msg}
@@ -188,7 +189,6 @@ const AccountEdit = () => {
             className="fade-in-left w-1/2 self-end py-2 font-semibold"
             onClick={(e) => {
               handleSubmit(e);
-              //   navigate('/manage');
             }}
           >
             Save account settings

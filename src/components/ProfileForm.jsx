@@ -9,6 +9,7 @@ import useDeleteProfileMutation from '../hooks/useDeleteProfileMutation';
 import useCreateProfileMutation from '../hooks/useCreateProfileMutation';
 
 const ProfileForm = (props) => {
+  const [errors, setErrors] = useState([]);
   const { apiUrl } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -44,7 +45,8 @@ const ProfileForm = (props) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setErrors([]);
     e.preventDefault();
     const formData = new FormData();
 
@@ -58,7 +60,16 @@ const ProfileForm = (props) => {
     formData.append('species', speciesInput);
     formData.append('breed', breedInput);
 
-    createProfile.mutate(formData);
+    const result = await createProfile.mutateAsync(formData);
+
+    if (result.errors) {
+      setErrors(result.errors);
+      setUsernameInput(props.profile?.username);
+      setPetNameInput(props.profile?.petName);
+      setBioInput(props.profile?.bio);
+      setSpeciesInput(props.profile?.species);
+      setBreedInput(props.profile?.breed);
+    }
   };
 
   const handleDelete = () => {
@@ -145,7 +156,7 @@ const ProfileForm = (props) => {
             placeholder="Bio"
           />
           <p className="text-tertiary self-end text-nowrap text-sm">
-            {bioInput.length} / 150
+            {bioInput?.length} / 150
           </p>
         </div>
       </div>
@@ -177,6 +188,16 @@ const ProfileForm = (props) => {
           />
         </div>
       </div>
+      {errors.length > 0 && (
+        <div className="flex flex-col gap-3 self-start">
+          <span className="text-primary">Error updating profile info</span>
+          {errors.map((error, index) => (
+            <p key={index} className="text-error">
+              {error.msg}
+            </p>
+          ))}
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <div className="flex gap-4">
           {props.formType === 'edit' && (
@@ -200,7 +221,6 @@ const ProfileForm = (props) => {
           className="fade-in-left w-1/2 self-end py-2 font-semibold"
           onClick={(e) => {
             handleSubmit(e);
-            navigate('/manage');
           }}
         >
           {props.submitText}

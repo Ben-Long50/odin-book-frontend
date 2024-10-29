@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import createProfile from '../services/createProfile';
+import { useNavigate } from 'react-router-dom';
 
 const useCreateProfileMutation = (apiUrl) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (formData) => {
@@ -10,6 +12,7 @@ const useCreateProfileMutation = (apiUrl) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['profiles']);
+      navigate('/manage');
     },
   });
 };

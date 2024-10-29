@@ -14,7 +14,7 @@ const ProfileCreate = () => {
           <h1 className="fade-in-left text-primary text-2xl font-semibold">
             Create Profile
           </h1>
-          <ProfileForm profile={profile} submitText="Create" />
+          <ProfileForm profile={profile} submitText="Create profile" />
         </div>
       </div>
     </PerfectScrollbar>

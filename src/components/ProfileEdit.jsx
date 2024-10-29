@@ -23,7 +23,7 @@ const ProfileEdit = () => {
           deleteMode={deleteMode}
           toggleDeleteMode={toggleDeleteMode}
           profile={profile}
-          submitText="Save"
+          submitText="Save profile settings"
         />
       </div>
     </div>
