@@ -1,16 +1,16 @@
 import handleResponse from './handleResponse';
 
-const getExplorePosts = async (activeId, apiUrl) => {
+const getExplorePosts = async (activeId, apiUrl, pageParam) => {
   try {
     const response = await fetch(
-      `${apiUrl}/explore/posts?activeId=${activeId}`,
+      `${apiUrl}/explore/posts?activeId=${activeId}&page=${pageParam}`,
       {
         method: 'GET',
         credentials: 'include',
       },
     );
     const data = await handleResponse(response);
-    return data.posts;
+    return data;
   } catch (error) {
     console.error(error.message);
     throw error;

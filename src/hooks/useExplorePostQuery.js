@@ -1,16 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import getExplorePosts from '../services/getExplorePosts';
 
 const useExplorePostQuery = (activeId, apiUrl) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['explorePosts', activeId],
-    queryFn: async () => {
-      const posts = await getExplorePosts(activeId, apiUrl);
-      if (posts) {
-        return posts;
-      } else {
-        return [];
-      }
+    queryFn: ({ pageParam }) => {
+      const result = getExplorePosts(activeId, apiUrl, pageParam);
+      return result ? result : { posts: [], hasMore: false, totalPosts: 0 };
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.hasMore ? pages.length + 1 : undefined;
     },
   });
 };

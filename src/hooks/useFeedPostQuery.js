@@ -1,12 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import getFollowedPosts from '../services/getFollowedPosts';
 
 const useFeedPostQuery = (activeId, apiUrl) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['feedPosts'],
-    queryFn: async () => {
-      const posts = await getFollowedPosts(activeId, apiUrl);
-      return posts || [];
+    queryFn: ({ pageParam }) => {
+      const result = getFollowedPosts(activeId, apiUrl, pageParam);
+      return result ? result : { posts: [], hasMore: false, totalPosts: 0 };
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.hasMore ? pages.length + 1 : undefined;
     },
   });
 };

@@ -4,8 +4,8 @@ import getPosts from '../services/getPosts';
 const usePostQuery = (profileId, apiUrl) => {
   return useQuery({
     queryKey: ['posts', profileId],
-    queryFn: async () => {
-      const result = await getPosts(profileId, apiUrl);
+    queryFn: () => {
+      const result = getPosts(profileId, apiUrl);
       return result ? result : [];
     },
   });

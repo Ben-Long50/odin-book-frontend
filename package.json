@@ -27,6 +27,7 @@
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.13.1",
     "react-perfect-scrollbar": "^1.5.8",
     "react-router-dom": "^6.23.1"
   },

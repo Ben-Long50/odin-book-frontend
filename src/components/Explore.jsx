@@ -7,6 +7,7 @@ import Loading from './Loading';
 import PostCard from './PostCard';
 import { useOutletContext } from 'react-router-dom';
 import useExplorePostQuery from '../hooks/useExplorePostQuery';
+import { InView } from 'react-intersection-observer';
 
 const Explore = () => {
   const { activeProfile } = useContext(GlobalContext);
@@ -29,20 +30,44 @@ const Explore = () => {
           </h1>
         </div>
         <div className="fade-in-bottom grid w-full grid-cols-3 gap-0.5 md:mt-6 md:gap-1">
-          {posts.data.length < 1 ? (
+          {posts.data.pages[0].totalPosts === 0 ? (
             <h2 className="col-span-3 w-full text-center text-2xl font-semibold">
               Nothing to explore
             </h2>
           ) : (
-            posts.data.map((post, index) => (
-              <PostCard
-                key={index}
-                post={post}
-                layoutSize={layoutSize}
-                profile={post.profile}
-                followStatus={false}
-              />
-            ))
+            <>
+              {posts.data.pages?.map((page) =>
+                page.posts?.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    layoutSize={layoutSize}
+                    profile={post.profile}
+                    followStatus={false}
+                  />
+                )),
+              )}
+              {posts.hasNextPage && (
+                <InView
+                  className="col-span-3 w-full"
+                  as="div"
+                  onChange={(inView) => {
+                    if (inView) {
+                      console.log('fetching');
+
+                      posts.fetchNextPage();
+                    }
+                  }}
+                >
+                  {posts.isFetchingNextPage && <Loading />}
+                </InView>
+              )}
+              {!posts.hasNextPage && (
+                <h2 className="text-tertiary col-span-3 my-4 w-full text-center text-2xl">
+                  End of explore
+                </h2>
+              )}
+            </>
           )}
         </div>
       </div>

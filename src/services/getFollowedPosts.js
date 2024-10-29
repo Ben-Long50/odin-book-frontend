@@ -1,13 +1,16 @@
 import handleResponse from './handleResponse';
 
-const getFollowedPosts = async (activeId, apiUrl) => {
+const getFollowedPosts = async (activeId, apiUrl, pageParam) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${activeId}`, {
-      method: 'GET',
-      credentials: 'include',
-    });
+    const response = await fetch(
+      `${apiUrl}/posts/${activeId}?page=${pageParam}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+      },
+    );
     const data = await handleResponse(response);
-    return data.posts;
+    return data;
   } catch (error) {
     console.error(error.message);
     throw error;

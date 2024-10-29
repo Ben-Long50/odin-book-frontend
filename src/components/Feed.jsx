@@ -1,5 +1,5 @@
 import Post from './Post';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/custom-scrollbar.css';
 import { GlobalContext } from './GlobalContext';
@@ -8,6 +8,7 @@ import Loading from './Loading';
 import Button from './Button';
 import { Link } from 'react-router-dom';
 import useFeedPostQuery from '../hooks/useFeedPostQuery';
+import { InView } from 'react-intersection-observer';
 
 const Feed = () => {
   const { activeProfile } = useContext(GlobalContext);
@@ -15,11 +16,11 @@ const Feed = () => {
 
   const feedPosts = useFeedPostQuery(activeProfile.id, apiUrl);
 
-  if (feedPosts.isLoading) {
+  if (feedPosts.isPending || feedPosts.isLoading) {
     return <Loading />;
   }
 
-  if (feedPosts.data?.length < 1) {
+  if (feedPosts.data.pages[0].totalPosts === 0) {
     return (
       <div className="fade-in-bottom mt-4 flex flex-col items-center gap-4 px-2 md:mt-8">
         <h2 className="text-primary text-center text-2xl font-semibold">
@@ -37,9 +38,26 @@ const Feed = () => {
 
   return (
     <>
-      {feedPosts.data?.map((post, index) => {
-        return <Post className="fade-in-bottom" key={index} post={post} />;
-      })}
+      {feedPosts.data.pages?.map((page) =>
+        page.posts?.map((post) => (
+          <Post className="fade-in-bottom" key={post.id} post={post} />
+        )),
+      )}
+      {feedPosts.hasNextPage && (
+        <InView
+          as="div"
+          onChange={(inView) => {
+            if (inView) {
+              feedPosts.fetchNextPage();
+            }
+          }}
+        >
+          {feedPosts.isFetchingNextPage && <Loading />}
+        </InView>
+      )}
+      {!feedPosts.hasNextPage && (
+        <h2 className="text-tertiary my-4 text-2xl">End of feed</h2>
+      )}
     </>
   );
 };
