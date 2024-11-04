@@ -7,8 +7,8 @@ const ProfileCard = (props) => {
       to={`/profile/${props.profile.username}`}
       key={props.profile.id}
       className={`${props.className} timing md:hover:bg-secondary-2 flex cursor-pointer items-center gap-6 rounded-lg p-2`}
-      state={props.profile.id}
-      onClick={props.onClick}
+      state={{ id: props.profile.id }}
+      onClick={props.shareList && props.onClick}
     >
       <ProfilePic
         image={props.profile.profilePicUrl}

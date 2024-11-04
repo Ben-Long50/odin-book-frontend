@@ -15,9 +15,10 @@ const ForeignProfile = () => {
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile, activeFollowing } = useContext(GlobalContext);
   const location = useLocation();
-  const state = location.state;
+  const state = location.state?.id;
+
   const [profileId, setProfileId] = useState(
-    JSON.parse(localStorage.getItem('profileId')) || state,
+    state || JSON.parse(localStorage.getItem('profileId')),
   );
 
   const profile = useForeignProfileQuery(profileId, apiUrl);

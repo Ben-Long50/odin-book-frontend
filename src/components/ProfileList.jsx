@@ -32,7 +32,7 @@ const ProfileList = (props) => {
   return (
     <RootPortal modalOpen={props.modalOpen} onClick={() => props.toggleModal()}>
       <div
-        className={`${props.className} fade-in-bottom bg-secondary max-h-dvh-75 mx-auto my-auto flex max-w-xl flex-col md:rounded-xl`}
+        className={`${props.className} fade-in-bottom bg-secondary mx-auto my-auto flex max-h-dvh-75 max-w-xl flex-col md:rounded-xl`}
         onClick={(e) => e.stopPropagation()}
       >
         <h1 className="text-primary bg-secondary sticky top-0 border-b p-4 text-2xl font-semibold md:rounded-t-xl">
@@ -67,9 +67,10 @@ const ProfileList = (props) => {
             filteredProfiles.map((profile) => {
               return (
                 <ProfileCard
-                  className={`${props.shareList.includes(profile.id) && 'ring-2 ring-inset ring-emerald-400'}`}
+                  className={`${props.shareList && props.shareList.includes(profile.id) && 'ring-2 ring-inset ring-emerald-400'}`}
                   key={profile.id}
                   profile={profile}
+                  shareList={props.shareList}
                   onClick={(e) => {
                     props.onClick(e);
                     props.setShareList((prevShareList) => [
