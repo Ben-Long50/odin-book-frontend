@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
       }
       navigate(location.pathname);
     } else if (isAuthenticated === false) {
-      navigate('/signin');
+      navigate('/overview');
     }
   }, [isAuthenticated]);
 

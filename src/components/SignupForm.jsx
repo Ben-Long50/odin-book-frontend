@@ -95,7 +95,7 @@ const SignupForm = () => {
       >
         Sign up
       </Button>
-      <p className="text-tertiary">
+      <p className="text-tertiary text-center">
         Already have an account?
         <Link to="/signin">
           <span className="pl-2 hover:underline">Sign in</span>

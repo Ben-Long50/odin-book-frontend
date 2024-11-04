@@ -202,29 +202,34 @@
   animation: spin 0.5s linear infinite;
 }
 
-/* ::-webkit-scrollbar {
-  width: 8px;
-  transition: all;
-  transition-duration: 300ms;
-  padding: 5px;
+.fade-in-scroll {
+  animation: bounce 1.5s infinite 3s;
 }
 
-::-webkit-scrollbar:hover {
-  width: 12px;
+.fade-in-button {
+  animation: fade-in-bottom 1s forwards 2s;
 }
 
-::-webkit-scrollbar-track {
-  background-color: rgb(48, 48, 48);
-  width: 12px;
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+.fade-in-ref1 {
+  animation: fade-in-right 1.5s forwards;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.fade-in-welcome {
+  animation: fade-in-bottom 1s forwards;
+}
 
-  border-radius: 6px;
-} */
+.fade-in-logo {
+  animation: fade-in-bottom 1s forwards 1s;
+}

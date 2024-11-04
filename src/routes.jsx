@@ -19,12 +19,14 @@ import ManageProfiles from './components/ManageProfiles';
 import ProfileEdit from './components/ProfileEdit';
 import ProfileCreate from './components/ProfileCreate';
 import AccountEdit from './components/AccountEdit';
+import LandingPage from './components/LandingPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route element={<AuthLayout />}>
         <Route index element={<Navigate to="signin" replace />} />
+        <Route path="overview" element={<LandingPage />} />
         <Route path="signup" element={<SignupForm />} />
         <Route index path="signin" element={<SigninForm />} />
       </Route>

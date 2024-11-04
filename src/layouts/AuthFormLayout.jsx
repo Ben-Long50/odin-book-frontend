@@ -7,7 +7,7 @@ const AuthFormLayout = (props) => {
   const { layoutSize } = useContext(LayoutContext);
 
   return (
-    <>
+    <div className="flex h-full w-full flex-col items-center justify-center gap-16 p-4">
       {layoutSize !== 'xsmall' && layoutSize !== 'small' && (
         <div className="logo-load flex grow-0 items-center justify-center gap-8">
           <Logo textSize="text-5xl md:text-8xl " />
@@ -15,7 +15,7 @@ const AuthFormLayout = (props) => {
         </div>
       )}
       <form
-        className="form-load bg-secondary shadow-medium flex w-full max-w-lg flex-col gap-8 rounded-xl px-10 py-6 md:gap-10 md:px-12 md:py-8"
+        className="form-load bg-secondary shadow-medium box-border flex w-full max-w-lg flex-col gap-8 rounded-xl px-10 py-6 md:gap-10 md:px-12 md:py-8"
         onSubmit={props.handleSubmit}
       >
         {(layoutSize === 'xsmall' || layoutSize === 'small') && (
@@ -39,7 +39,7 @@ const AuthFormLayout = (props) => {
           </div>
         )}
       </form>
-    </>
+    </div>
   );
 };
 
