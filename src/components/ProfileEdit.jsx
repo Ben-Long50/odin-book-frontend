@@ -6,14 +6,14 @@ const ProfileEdit = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const location = useLocation();
   const { state } = location;
-  const [profile, setProfileId] = useState(
+  const [profile, setProfile] = useState(
     state || JSON.parse(localStorage.getItem('profile')),
   );
 
   useEffect(() => {
     if (state) {
       localStorage.setItem('profile', JSON.stringify(state));
-      setProfileId(state);
+      setProfile(state);
     }
   }, [state]);
 
