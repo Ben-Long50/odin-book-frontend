@@ -45,6 +45,7 @@ const SettingsMenu = (props) => {
   return (
     <div
       className={`${props.className} timing bg-secondary text-secondary flex min-w-72 flex-col items-start justify-center p-2 text-lg shadow-md md:rounded-xl dark:shadow-gray-950`}
+      onClick={props.onClick}
     >
       <Link className="w-full" to="manage">
         <button

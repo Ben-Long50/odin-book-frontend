@@ -138,7 +138,6 @@ const Navbar = (props) => {
                   : mdiHomeVariantOutline
               }
               label="Home"
-              onClick={() => changeActiveItem('home')}
               navbarSize={props.navbarSize}
             />
           </Link>
@@ -159,7 +158,6 @@ const Navbar = (props) => {
                 props.activeItem === 'explore' ? mdiCompass : mdiCompassOutline
               }
               label="Explore"
-              onClick={() => changeActiveItem('explore')}
               navbarSize={props.navbarSize}
             />
           </Link>
@@ -193,7 +191,6 @@ const Navbar = (props) => {
               activeItem={props.activeItem}
               icon={mdiAccount}
               label="Profile"
-              onClick={() => changeActiveItem('profile')}
               navbarSize={props.navbarSize}
             >
               <ProfilePic
@@ -214,6 +211,7 @@ const Navbar = (props) => {
           <SettingsMenu
             className={`${props.menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} absolute bottom-115 left-0`}
             toggleMenuVisibility={toggleMenuVisibility}
+            onClick={() => changeActiveItem('')}
           />
         </div>
       </div>

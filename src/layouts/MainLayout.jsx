@@ -34,6 +34,23 @@ const MainLayout = () => {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    switch (location.pathname) {
+      case '/home':
+        setActiveItem('home');
+        break;
+      case '/explore':
+        setActiveItem('explore');
+        break;
+      case '/profile':
+        setActiveItem('profile');
+        break;
+      default:
+        setActiveItem('');
+        break;
+    }
+  }, [location.pathname]);
+
   const closeNavbar = () => {
     setMenuVisibility(false);
     setSearchVisibility(false);
@@ -45,6 +62,9 @@ const MainLayout = () => {
   };
 
   const toggleCreateOpen = () => {
+    if (createOpen) {
+      setActiveItem(prevActiveItem);
+    }
     setCreateOpen(!createOpen);
   };
 
