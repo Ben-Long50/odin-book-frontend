@@ -54,6 +54,8 @@ export default {
       gridTemplateColumns: {
         delete: '100% 0%',
         confirmDelete: '0% 100%',
+        '1/3': '1fr 3fr',
+        '3/1': '3fr 1fr',
       },
     },
   },

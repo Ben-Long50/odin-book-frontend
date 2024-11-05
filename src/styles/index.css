@@ -222,8 +222,12 @@
   }
 }
 
-.fade-in-ref1 {
+.fade-in-infoRight {
   animation: fade-in-right 1.5s forwards;
+}
+
+.fade-in-infoLeft {
+  animation: fade-in-left 1.5s forwards;
 }
 
 .fade-in-welcome {
