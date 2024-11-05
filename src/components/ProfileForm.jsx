@@ -13,6 +13,7 @@ const ProfileForm = (props) => {
   const [errors, setErrors] = useState([]);
   const { layoutSize } = useContext(LayoutContext);
   const { apiUrl } = useContext(AuthContext);
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   const createProfile = useCreateProfileMutation(apiUrl);
@@ -131,9 +132,21 @@ const ProfileForm = (props) => {
         </label>
       </div>
       <div className="flex flex-col items-start gap-4">
-        <h3 className="fade-in-left text-primary text-xl font-semibold">
-          Username
-        </h3>
+        <div className="flex w-full items-end justify-between gap-4">
+          <h3 className="fade-in-left text-primary text-xl font-semibold">
+            Username <span className="text-tertiary text-sm">(required)</span>
+          </h3>
+          {errors.map((error, index) => {
+            if (error.path === 'username') {
+              return (
+                <p className="fade-in-right text-error" key={index}>
+                  {error.msg}
+                </p>
+              );
+            }
+          })}
+        </div>
+
         <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
           <input
             className="h-full w-full self-center overflow-auto bg-transparent outline-none"
@@ -145,9 +158,21 @@ const ProfileForm = (props) => {
         </div>
       </div>
       <div className="flex flex-col items-start gap-4">
-        <h3 className="fade-in-left text-primary text-xl font-semibold">
-          Pet name
-        </h3>
+        <div className="flex w-full items-end justify-between gap-4">
+          <h3 className="fade-in-left text-primary text-xl font-semibold">
+            Pet name <span className="text-tertiary text-sm">(required)</span>
+          </h3>
+          {errors.map((error, index) => {
+            if (error.path === 'petName') {
+              return (
+                <p className="fade-in-right text-error" key={index}>
+                  {error.msg}
+                </p>
+              );
+            }
+          })}
+        </div>
+
         <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
           <input
             className="h-full w-full self-center overflow-auto bg-transparent outline-none"
