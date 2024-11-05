@@ -13,7 +13,6 @@ const AccountEdit = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const [errors, setErrors] = useState([]);
   const { apiUrl } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const account = useAccountQuery(apiUrl);
 
@@ -60,7 +59,7 @@ const AccountEdit = () => {
     }
 
     if (passwordInput !== confirmPasswordInput) {
-      throw new Error('Password fields must match to edit account info');
+      throw new Error('Password fields must match to change password');
     }
 
     const result = await editAccount.mutateAsync(formData);
@@ -130,11 +129,11 @@ const AccountEdit = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col items-start gap-4">
-          <h3 className="fade-in-left text-primary text-xl font-semibold">
-            New password
+        <div className="fade-in-right bg-secondary mt-4 rounded-2xl border px-4 pb-4">
+          <h3 className="text-primary bg-secondary inline-block -translate-y-4 px-2 text-xl font-semibold">
+            Change password
           </h3>
-          <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
+          <div className="bg-secondary -mt-2 mb-4 flex w-full gap-2 rounded-2xl border p-4">
             <input
               className="h-full w-full self-center overflow-auto bg-transparent outline-none"
               type="password"
@@ -143,12 +142,7 @@ const AccountEdit = () => {
               placeholder="Password"
             />
           </div>
-        </div>
-        <div className="flex flex-col items-start gap-4">
-          <h3 className="fade-in-left text-primary text-xl font-semibold">
-            Confirm new password
-          </h3>
-          <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
+          <div className="bg-secondary flex w-full gap-2 rounded-2xl border p-4">
             <input
               className="h-full w-full self-center overflow-auto bg-transparent outline-none"
               type="password"
@@ -158,6 +152,7 @@ const AccountEdit = () => {
             />
           </div>
         </div>
+
         {errors.length > 0 && (
           <div className="flex flex-col gap-3 self-start">
             <span className="text-primary">Error updating account info</span>

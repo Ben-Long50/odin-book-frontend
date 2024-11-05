@@ -17,8 +17,9 @@ const NavFooter = (props) => {
   const { activeProfile } = useContext(GlobalContext);
 
   const changeActiveItem = (item) => {
-    console.log(props.activeItem);
-
+    if (props.activeItem !== 'search' && props.activeItem !== 'notifications') {
+      props.setPrevActiveItem(props.activeItem);
+    }
     props.setActiveItem(item);
   };
 

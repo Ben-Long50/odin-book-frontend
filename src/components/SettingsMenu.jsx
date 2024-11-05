@@ -56,7 +56,11 @@ const SettingsMenu = (props) => {
           Manage profiles
         </button>
       </Link>
-      <Link className="w-full" to="profile/edit" state={activeProfile}>
+      <Link
+        className="w-full"
+        to={`/profile/${activeProfile.username}/edit`}
+        state={activeProfile}
+      >
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}

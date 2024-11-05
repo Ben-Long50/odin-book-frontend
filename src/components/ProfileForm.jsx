@@ -4,12 +4,14 @@ import Button from './Button';
 import Icon from '@mdi/react';
 import { AuthContext } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { mdiTrashCanOutline } from '@mdi/js';
+import { mdiImageEdit, mdiImageEditOutline, mdiTrashCanOutline } from '@mdi/js';
 import useDeleteProfileMutation from '../hooks/useDeleteProfileMutation';
 import useCreateProfileMutation from '../hooks/useCreateProfileMutation';
+import { LayoutContext } from './LayoutContext';
 
 const ProfileForm = (props) => {
   const [errors, setErrors] = useState([]);
+  const { layoutSize } = useContext(LayoutContext);
   const { apiUrl } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -99,13 +101,24 @@ const ProfileForm = (props) => {
           </div>
         </div>
         <label>
-          <Button
-            className="px-3 py-2 text-sm font-semibold"
-            type="button"
-            onClick={handleButtonClick}
-          >
-            Change photo
-          </Button>
+          {layoutSize === 'xsmall' || layoutSize === 'small' ? (
+            <Button
+              className="ml-4 p-1 text-sm font-semibold"
+              type="button"
+              onClick={handleButtonClick}
+            >
+              <Icon path={mdiImageEditOutline} size={1.25} />
+            </Button>
+          ) : (
+            <Button
+              className="ml-4 px-3 py-2 text-sm font-semibold"
+              type="button"
+              onClick={handleButtonClick}
+            >
+              Change photo
+            </Button>
+          )}
+
           <input
             ref={inputRef}
             id="file"

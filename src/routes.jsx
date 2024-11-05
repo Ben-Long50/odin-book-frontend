@@ -20,6 +20,7 @@ import ProfileEdit from './components/ProfileEdit';
 import ProfileCreate from './components/ProfileCreate';
 import AccountEdit from './components/AccountEdit';
 import LandingPage from './components/LandingPage';
+import ErrorModal from './components/ErrorModal';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,8 +38,16 @@ const router = createBrowserRouter(
         <Route path="manage" element={<ManageProfiles />}></Route>
         <Route path="profile/:username" element={<ForeignProfile />}></Route>
         <Route path="profile/bookmarks" element={<Bookmarks />}></Route>
-        <Route path="profile/edit" element={<ProfileEdit />}></Route>
-        <Route path="account/edit" element={<AccountEdit />}></Route>
+        <Route
+          path="profile/:username/edit"
+          element={<ProfileEdit />}
+          errorElement={<ErrorModal modalOpen={true} />}
+        ></Route>
+        <Route
+          path="account/edit"
+          element={<AccountEdit />}
+          errorElement={<ErrorModal modalOpen={true} />}
+        ></Route>
         <Route path="manage/create" element={<ProfileCreate />}></Route>
       </Route>
       <Route path="error" element={<ErrorPage />} />

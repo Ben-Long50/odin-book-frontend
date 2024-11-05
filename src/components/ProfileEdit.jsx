@@ -1,12 +1,21 @@
 import ProfileForm from './ProfileForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ProfileEdit = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const location = useLocation();
   const { state } = location;
-  const profile = state;
+  const [profile, setProfileId] = useState(
+    state || JSON.parse(localStorage.getItem('profile')),
+  );
+
+  useEffect(() => {
+    if (state) {
+      localStorage.setItem('profile', JSON.stringify(state));
+      setProfileId(state);
+    }
+  }, [state]);
 
   const toggleDeleteMode = () => {
     setDeleteMode(!deleteMode);

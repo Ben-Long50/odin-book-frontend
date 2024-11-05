@@ -50,7 +50,7 @@ const ManageProfiles = () => {
               <div className="flex items-center justify-end gap-4 md:gap-8">
                 <Link
                   className="hover:hover-secondary timing rounded-md p-2"
-                  to="/profile/edit"
+                  to={`/profile/${profile.username}/edit`}
                   state={profile}
                 >
                   <Icon

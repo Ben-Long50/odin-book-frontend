@@ -19,7 +19,7 @@ const PersonalProfile = () => {
       following={activeFollowing}
       followStatus={true}
     >
-      <Link to="edit" state={activeProfile}>
+      <Link to={`${activeProfile.username}/edit`} state={activeProfile}>
         <Button className="px-3 py-1 text-sm font-semibold">
           {layoutSize !== 'xsmall' ? (
             <p>Edit profile</p>
