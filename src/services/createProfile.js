@@ -15,7 +15,6 @@ const createProfile = async (profileData, apiUrl) => {
     console.error(error.message);
     throw error;
   }
-  return data;
 };
 
 export default createProfile;

@@ -4,16 +4,14 @@ import Button from './Button';
 import Icon from '@mdi/react';
 import { AuthContext } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { mdiImageEdit, mdiImageEditOutline, mdiTrashCanOutline } from '@mdi/js';
+import { mdiImageEditOutline, mdiTrashCanOutline } from '@mdi/js';
 import useDeleteProfileMutation from '../hooks/useDeleteProfileMutation';
 import useCreateProfileMutation from '../hooks/useCreateProfileMutation';
 import { LayoutContext } from './LayoutContext';
 
 const ProfileForm = (props) => {
-  const [errors, setErrors] = useState([]);
   const { layoutSize } = useContext(LayoutContext);
   const { apiUrl } = useContext(AuthContext);
-  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   const createProfile = useCreateProfileMutation(apiUrl);
@@ -49,7 +47,6 @@ const ProfileForm = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    setErrors([]);
     e.preventDefault();
     const formData = new FormData();
 
@@ -63,16 +60,7 @@ const ProfileForm = (props) => {
     formData.append('species', speciesInput);
     formData.append('breed', breedInput);
 
-    const result = await createProfile.mutateAsync(formData);
-
-    if (result.errors) {
-      setErrors(result.errors);
-      setUsernameInput(props.profile?.username);
-      setPetNameInput(props.profile?.petName);
-      setBioInput(props.profile?.bio);
-      setSpeciesInput(props.profile?.species);
-      setBreedInput(props.profile?.breed);
-    }
+    await createProfile.mutateAsync(formData);
   };
 
   const handleDelete = () => {
@@ -119,7 +107,6 @@ const ProfileForm = (props) => {
               Change photo
             </Button>
           )}
-
           <input
             ref={inputRef}
             id="file"
@@ -136,17 +123,7 @@ const ProfileForm = (props) => {
           <h3 className="fade-in-left text-primary text-xl font-semibold">
             Username <span className="text-tertiary text-sm">(required)</span>
           </h3>
-          {errors.map((error, index) => {
-            if (error.path === 'username') {
-              return (
-                <p className="fade-in-right text-error" key={index}>
-                  {error.msg}
-                </p>
-              );
-            }
-          })}
         </div>
-
         <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
           <input
             className="h-full w-full self-center overflow-auto bg-transparent outline-none"
@@ -162,17 +139,7 @@ const ProfileForm = (props) => {
           <h3 className="fade-in-left text-primary text-xl font-semibold">
             Pet name <span className="text-tertiary text-sm">(required)</span>
           </h3>
-          {errors.map((error, index) => {
-            if (error.path === 'petName') {
-              return (
-                <p className="fade-in-right text-error" key={index}>
-                  {error.msg}
-                </p>
-              );
-            }
-          })}
         </div>
-
         <div className="fade-in-right bg-secondary flex w-full gap-2 rounded-2xl border p-4">
           <input
             className="h-full w-full self-center overflow-auto bg-transparent outline-none"
@@ -226,16 +193,6 @@ const ProfileForm = (props) => {
           />
         </div>
       </div>
-      {errors.length > 0 && (
-        <div className="flex flex-col gap-3 self-start">
-          <span className="text-primary">Error updating profile info</span>
-          {errors.map((error, index) => (
-            <p key={index} className="text-error">
-              {error.msg}
-            </p>
-          ))}
-        </div>
-      )}
       <div className="flex items-center justify-between">
         <div className="flex gap-4">
           {props.formType === 'edit' && (
