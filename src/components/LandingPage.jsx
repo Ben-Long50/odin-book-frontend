@@ -78,12 +78,12 @@ const LandingPage = () => {
           <h2 className="text-primary mr-4 text-right font-logo text-3xl md:mb-4 md:mr-12 md:text-5xl">
             A pet focused community
           </h2>
-          <div className="md:grid-cols-1/3 md:grid">
+          <div className="md:grid md:grid-cols-1/3">
             <div
               className={`bg-secondary col-start-2 ml-4 flex w-auto items-center gap-6 rounded-l-full p-4 shadow-md shadow-gray-300 md:p-8 dark:shadow-black`}
             >
               <ProfilePic
-                image="src/assets/IMG_2225.JPEG"
+                image="./public/IMG_2225.JPEG"
                 className="w-1/2 shadow-md shadow-gray-300 md:w-1/4 dark:shadow-black"
               />
               <div>
@@ -104,7 +104,7 @@ const LandingPage = () => {
           <h2 className="text-primary ml-4 text-left font-logo text-3xl md:mb-4 md:ml-12 md:text-5xl">
             One account, many pets
           </h2>
-          <div className="md:grid-cols-3/1 md:grid">
+          <div className="md:grid md:grid-cols-3/1">
             <div className="fade-in-left bg-secondary col-start-1 mr-4 flex items-center justify-end gap-6 rounded-r-full p-4 pr-8 shadow-md shadow-gray-300 md:p-8 md:pr-20 dark:shadow-black">
               <p className="text-secondary leading-normal">
                 With one account you can manage multiple profiles each dedicated
@@ -127,7 +127,7 @@ const LandingPage = () => {
           <h2 className="text-primary mr-4 text-right font-logo text-3xl md:mb-4 md:mr-12 md:text-5xl">
             Just stopping by?
           </h2>
-          <div className="md:grid-cols-1/3 md:grid">
+          <div className="md:grid md:grid-cols-1/3">
             <div className="fade-in-right bg-secondary col-start-2 ml-4 flex items-center gap-8 rounded-l-full p-4 shadow-md shadow-gray-300 md:p-8 dark:shadow-black">
               <ProfilePic className="h-full w-1/2 shadow-md shadow-gray-300 md:w-1/4 dark:shadow-black" />
               <div>
