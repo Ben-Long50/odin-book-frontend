@@ -5,7 +5,6 @@ import Button from './Button';
 import { AuthContext } from './AuthContext';
 import AuthOptions from './AuthOptions';
 import AuthFormLayout from '../layouts/AuthFormLayout';
-import { useQueryClient } from '@tanstack/react-query';
 
 const SigninForm = () => {
   const [formData, setFormData] = useState({
@@ -13,9 +12,8 @@ const SigninForm = () => {
     password: '',
   });
   const [errors, setErrors] = useState([]);
-  const { apiUrl, setIsAuthenticated } = useContext(AuthContext);
+  const { apiUrl } = useContext(AuthContext);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -53,10 +51,14 @@ const SigninForm = () => {
         console.log(data.message);
         navigate('/home');
       } else {
-        const errorArray = data.map((error) => {
-          return error.msg;
-        });
-        setErrors(errorArray);
+        if (Array.isArray(data)) {
+          const errorArray = data.map((error) => {
+            return error.msg;
+          });
+          setErrors(errorArray);
+        } else {
+          console.error(data);
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error);
