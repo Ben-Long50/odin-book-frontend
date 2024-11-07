@@ -97,8 +97,8 @@ const Post = (props) => {
                   <Loading size={1.25} />
                 ) : (
                   <LikeButton
-                    likeStatus={props.likeStatus}
-                    onClick={() => props.toggleLikeStatus.mutate()}
+                    likeStatus={likeStatus}
+                    onClick={() => toggleLikeStatus.mutate()}
                   />
                 )}
                 <p className="text-primary">{props.post.likes.length}</p>
