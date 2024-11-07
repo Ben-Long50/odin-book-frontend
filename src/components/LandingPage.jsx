@@ -41,7 +41,7 @@ const LandingPage = () => {
   return (
     <ScrollBar
       onScrollY={handleScroll}
-      className="h-dvh overflow-y-auto overflow-x-hidden"
+      className="h-dvh w-full overflow-y-auto overflow-x-hidden"
     >
       <div className="flex h-svh flex-col items-center justify-center gap-8">
         <p className="fade-in-welcome text-primary text-center text-xl font-semibold opacity-0 md:text-3xl">
@@ -79,7 +79,7 @@ const LandingPage = () => {
           </h2>
           <div className="md:grid md:grid-cols-1/3">
             <div
-              className={`bg-secondary col-start-2 ml-4 flex w-auto items-center gap-6 rounded-l-full p-4 shadow-md shadow-gray-300 md:p-8 dark:shadow-black`}
+              className={`bg-secondary-2 col-start-2 ml-4 flex w-auto items-center gap-6 rounded-l-full p-4 shadow-md shadow-gray-300 md:gap-20 md:p-8 dark:shadow-black`}
             >
               <ProfilePic
                 image="/cat.JPG"
@@ -104,7 +104,7 @@ const LandingPage = () => {
             One account, many pets
           </h2>
           <div className="md:grid md:grid-cols-3/1">
-            <div className="fade-in-left bg-secondary col-start-1 mr-4 flex items-center justify-end gap-6 rounded-r-full p-4 pr-8 shadow-md shadow-gray-300 md:p-8 md:pr-20 dark:shadow-black">
+            <div className="fade-in-left bg-secondary-2 col-start-1 mr-4 flex items-center justify-end gap-6 rounded-r-full p-4 pr-8 shadow-md shadow-gray-300 md:gap-20 md:p-8 md:pr-20 dark:shadow-black">
               <p className="text-secondary leading-normal">
                 With one account you can manage multiple profiles each dedicated
                 to a different pet
@@ -136,7 +136,7 @@ const LandingPage = () => {
             Just stopping by?
           </h2>
           <div className="md:grid md:grid-cols-1/3">
-            <div className="fade-in-right bg-secondary col-start-2 ml-4 flex items-center gap-8 rounded-l-full p-4 shadow-md shadow-gray-300 md:p-8 dark:shadow-black">
+            <div className="fade-in-right bg-secondary-2 col-start-2 ml-4 flex items-center gap-8 rounded-l-full p-4 shadow-md shadow-gray-300 md:gap-20 md:p-8 dark:shadow-black">
               <ProfilePic className="size-48 h-full shadow-md shadow-gray-300 md:size-96 dark:shadow-black" />
               <div>
                 <p className="text-secondary leading-normal">

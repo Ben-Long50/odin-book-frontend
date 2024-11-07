@@ -3,12 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-  .bg-primary {
-    @apply bg-blue-300 dark:bg-blue-950;
-  }
-  .bg-primary-2 {
-    @apply bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-15;
-  }
   .hover-primary {
     @apply hover:bg-emerald-300 hover:dark:text-gray-900;
   }

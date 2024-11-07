@@ -15,7 +15,7 @@ const AuthFormLayout = (props) => {
         </div>
       )}
       <form
-        className="form-load bg-secondary shadow-medium box-border flex w-full max-w-lg flex-col gap-8 rounded-xl px-10 py-6 md:gap-10 md:px-12 md:py-8"
+        className="form-load bg-secondary-2 shadow-medium box-border flex w-full max-w-lg flex-col gap-8 rounded-xl px-10 py-6 md:gap-10 md:px-12 md:py-8"
         onSubmit={props.handleSubmit}
       >
         {(layoutSize === 'xsmall' || layoutSize === 'small') && (

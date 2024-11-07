@@ -23,7 +23,7 @@ const AuthOptions = () => {
       </div>
       <div className="flex items-center gap-8">
         <button
-          className="text-secondary hover:shadow-hover bg-secondary-2 timing shadow-medium flex w-full items-center justify-center rounded-lg p-2 text-lg ring-emerald-300 hover:ring-2"
+          className="text-secondary hover:shadow-hover bg-secondary timing shadow-medium flex w-full items-center justify-center rounded-lg p-2 text-lg ring-emerald-300 hover:ring-2"
           onClick={(e) => {
             e.preventDefault();
             googleSignin();
@@ -33,7 +33,7 @@ const AuthOptions = () => {
           Google
         </button>
         <button
-          className="text-secondary hover:shadow-hover bg-secondary-2 timing shadow-medium flex w-full items-center justify-center rounded-lg p-2 text-lg ring-emerald-300 hover:ring-2"
+          className="text-secondary hover:shadow-hover bg-secondary timing shadow-medium flex w-full items-center justify-center rounded-lg p-2 text-lg ring-emerald-300 hover:ring-2"
           onClick={(e) => {
             e.preventDefault();
             facebookSignin();

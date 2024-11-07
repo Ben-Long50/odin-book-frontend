@@ -5,7 +5,7 @@ const useServerStatusQuery = () => {
   return useQuery({
     queryKey: ['serverStatus'],
     queryFn: () => getServerStatus(import.meta.env.VITE_API_URL),
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     throwOnError: false,
   });
 };

@@ -2,6 +2,7 @@ import { RouterProvider } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import router from './routes';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import './styles/index.css';
 import './styles/custom-scrollbar.css';
 

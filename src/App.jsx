@@ -3,7 +3,6 @@ import queryClient from './queryClient';
 import { Outlet } from 'react-router-dom';
 import AuthProvider from './components/AuthContext';
 import ThemeProvider from './components/ThemeContext';
-import './styles/custom-scrollbar.css';
 import '@fontsource/inter';
 import '@fontsource/pacifico';
 import LayoutProvider from './components/LayoutContext';
