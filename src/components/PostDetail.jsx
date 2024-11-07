@@ -145,7 +145,8 @@ const PostDetail = (props) => {
               <div className="w-full p-3">
                 <div className="flex w-full items-center justify-between md:mb-3">
                   <div className="flex items-center justify-start gap-4">
-                    {props.toggleLikeStatus.isLoading ? (
+                    {props.toggleLikeStatus.isLoading ||
+                    props.toggleLikeStatus.isPending ? (
                       <Loading size={1.25} />
                     ) : (
                       <LikeButton

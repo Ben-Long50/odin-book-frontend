@@ -60,7 +60,9 @@ const Feed = () => {
         </InView>
       )}
       {!feedPosts.hasNextPage && (
-        <h2 className="text-tertiary my-4 text-2xl">End of feed</h2>
+        <h2 className="fade-in-bottom text-tertiary my-4 text-2xl">
+          End of feed
+        </h2>
       )}
     </>
   );

@@ -93,7 +93,7 @@ const Post = (props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
               <div className="flex items-center gap-2">
-                {toggleLikeStatus.isLoading ? (
+                {toggleLikeStatus.isLoading || toggleLikeStatus.isPending ? (
                   <Loading size={1.25} />
                 ) : (
                   <LikeButton

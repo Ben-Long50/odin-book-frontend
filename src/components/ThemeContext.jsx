@@ -59,7 +59,7 @@ const ThemeProvider = ({ children }) => {
           <h1 className="text-primary font-logo text-4xl">Please wait</h1>
           <div>
             <p className="text-secondary text-center text-xl">
-              Connecting to server
+              Connecting to the server
             </p>
             <p className="text-tertiary text-clip text-base">
               (This can take up to a minute)
@@ -74,7 +74,7 @@ const ThemeProvider = ({ children }) => {
               <PawIcon className="size-12 -translate-x-1/2 rotate-[78deg] md:size-16" />
             </div>
           </div>
-          <div className="flex -translate-y-16">
+          <div className="flex -translate-y-10 md:-translate-y-16">
             <div className="pawprint-bottom-1 opacity-0">
               <PawIcon className="size-12 translate-x-1/2 rotate-[78deg] md:size-16" />
             </div>

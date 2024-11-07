@@ -60,7 +60,7 @@ const PostHeader = (props) => {
           <h3 className="text-lg font-semibold">{props.profile.username}</h3>
         </Link>
         {!props.followStatus &&
-          (setFollowStatus.isLoading ? (
+          (setFollowStatus.isLoading || setFollowStatus.isPending ? (
             <>
               <Icon className="shrink-0" path={mdiCircleSmall} size={1} />
               <Loading size={1.25} />

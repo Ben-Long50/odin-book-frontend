@@ -64,7 +64,7 @@ const ForeignProfile = () => {
 
   return (
     <Profile profile={profile.data} followers={followers} following={following}>
-      {setFollowingStatus.isLoading ? (
+      {setFollowingStatus.isLoading || setFollowingStatus.isPending ? (
         <Loading size={1.25} />
       ) : (
         <Button
