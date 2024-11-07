@@ -193,7 +193,7 @@
 }
 
 .spin {
-  animation: spin 0.5s linear infinite;
+  animation: spin 0.75s linear infinite;
 }
 
 .fade-in-scroll {
