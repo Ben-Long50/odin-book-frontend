@@ -70,14 +70,20 @@ const ProfileList = (props) => {
                   className={`${props.shareList && props.shareList.includes(profile.id) && 'ring-2 ring-inset ring-emerald-400'}`}
                   key={profile.id}
                   profile={profile}
-                  shareList={props.shareList}
-                  onClick={(e) => {
-                    props.onClick(e);
-                    props.setShareList((prevShareList) => [
-                      ...prevShareList,
-                      profile.id,
-                    ]);
-                  }}
+                  toggleModal={props.toggleModal}
+                  onClick={
+                    props.shareList
+                      ? (e) => {
+                          props.onClick(e);
+                          props.setShareList((prevShareList) => [
+                            ...prevShareList,
+                            profile.id,
+                          ]);
+                        }
+                      : () => {
+                          props.toggleModal();
+                        }
+                  }
                 />
               );
             })

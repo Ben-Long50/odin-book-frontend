@@ -11,6 +11,7 @@ const createSearchEntry = async (searchedId, activeId, apiUrl) => {
       body: JSON.stringify({ activeId }),
     });
     const data = await handleResponse(response);
+
     return data.search;
   } catch (error) {
     console.error(error.message);
