@@ -237,3 +237,36 @@
 .fade-in-logo {
   animation: fade-in-bottom 1s forwards 1s;
 }
+
+@keyframes server-load {
+  0% {
+    transform: translateX(180%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-180%);
+    opacity: 0;
+  }
+}
+
+.pawprint-top-1 {
+  animation: server-load 2.5s linear infinite;
+}
+
+.pawprint-top-2 {
+  animation: server-load 2.5s linear infinite 1.25s;
+}
+
+.pawprint-bottom-1 {
+  animation: server-load 2.5s linear infinite 0.625s;
+}
+
+.pawprint-bottom-2 {
+  animation: server-load 2.5s linear infinite 1.875s;
+}

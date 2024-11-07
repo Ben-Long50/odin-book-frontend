@@ -4,8 +4,11 @@ import getAuthStatus from '../services/getAuthStatus';
 const useAuthenticationQuery = (apiUrl) => {
   return useQuery({
     queryKey: ['authStatus'],
-    queryFn: () => getAuthStatus(apiUrl),
-    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+      return getAuthStatus(apiUrl);
+    },
+    refetchOnWindowFocus: false,
     staleTime: 60000,
     throwOnError: false,
   });

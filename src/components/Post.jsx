@@ -13,6 +13,7 @@ import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
 import useCommentMutation from '../hooks/useCommentMutation';
 import useLikeStatusMutation from '../hooks/useLikeStatusMutation';
+import Loading from './Loading';
 
 const Post = (props) => {
   const [likeStatus, setLikeStatus] = useState(false);
@@ -92,10 +93,14 @@ const Post = (props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
               <div className="flex items-center gap-2">
-                <LikeButton
-                  likeStatus={likeStatus}
-                  onClick={() => toggleLikeStatus.mutate()}
-                />
+                {toggleLikeStatus.isLoading ? (
+                  <Loading size={1.25} />
+                ) : (
+                  <LikeButton
+                    likeStatus={props.likeStatus}
+                    onClick={() => props.toggleLikeStatus.mutate()}
+                  />
+                )}
                 <p className="text-primary">{props.post.likes.length}</p>
               </div>
               <div className="flex items-center gap-2">

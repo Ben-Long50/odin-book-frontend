@@ -10,7 +10,6 @@ import { LayoutContext } from './LayoutContext';
 import ScrollBar from 'react-perfect-scrollbar';
 
 const LandingPage = () => {
-  const { layoutSize } = useContext(LayoutContext);
   const [showInfoRef1, setShowInfoRef1] = useState(false);
   const [showInfoRef2, setShowInfoRef2] = useState(false);
   const [showInfoRef3, setShowInfoRef3] = useState(false);
@@ -83,8 +82,8 @@ const LandingPage = () => {
               className={`bg-secondary col-start-2 ml-4 flex w-auto items-center gap-6 rounded-l-full p-4 shadow-md shadow-gray-300 md:p-8 dark:shadow-black`}
             >
               <ProfilePic
-                image="./public/IMG_2225.JPEG"
-                className="w-1/2 shadow-md shadow-gray-300 md:w-1/4 dark:shadow-black"
+                image="/cat.JPG"
+                className="w-48 shadow-md shadow-gray-300 md:size-96 dark:shadow-black"
               />
               <div>
                 <p className="text-secondary leading-normal">
@@ -111,11 +110,20 @@ const LandingPage = () => {
                 to a different pet
               </p>
               <div className="flex flex-col items-center justify-center gap-2">
-                <div className="flex justify-between gap-4 md:gap-8">
-                  <ProfilePic className="size-16 shadow-md shadow-gray-300 md:size-36 dark:shadow-black" />
-                  <ProfilePic className="size-16 shadow-md shadow-gray-300 md:size-36 dark:shadow-black" />
+                <div className="flex justify-end gap-4 md:gap-8">
+                  <ProfilePic
+                    image="/turtle.JPG"
+                    className="size-20 shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                  />
+                  <ProfilePic
+                    image="/dog.PNG"
+                    className="size-20 shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                  />
                 </div>
-                <ProfilePic className="size-16 shadow-md shadow-gray-300 md:size-36 dark:shadow-black" />
+                <ProfilePic
+                  image="/cat2.jpg"
+                  className="size-20 shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                />
               </div>
             </div>
           </div>
@@ -129,7 +137,7 @@ const LandingPage = () => {
           </h2>
           <div className="md:grid md:grid-cols-1/3">
             <div className="fade-in-right bg-secondary col-start-2 ml-4 flex items-center gap-8 rounded-l-full p-4 shadow-md shadow-gray-300 md:p-8 dark:shadow-black">
-              <ProfilePic className="h-full w-1/2 shadow-md shadow-gray-300 md:w-1/4 dark:shadow-black" />
+              <ProfilePic className="size-48 h-full shadow-md shadow-gray-300 md:size-96 dark:shadow-black" />
               <div>
                 <p className="text-secondary leading-normal">
                   Sign in using the guest option to experience a fully featured

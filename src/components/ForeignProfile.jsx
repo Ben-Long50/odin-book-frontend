@@ -64,14 +64,18 @@ const ForeignProfile = () => {
 
   return (
     <Profile profile={profile.data} followers={followers} following={following}>
-      <Button
-        className={`${followStatus.data && 'opacity-50'} px-3 py-1 text-sm font-semibold`}
-        onClick={() => {
-          setFollowingStatus.mutate(profileId);
-        }}
-      >
-        {followStatus.data ? 'Unfollow' : 'Follow'}
-      </Button>
+      {setFollowingStatus.isLoading ? (
+        <Loading size={1.25} />
+      ) : (
+        <Button
+          className={`${followStatus.data && 'opacity-50'} px-3 py-1 text-sm font-semibold`}
+          onClick={() => {
+            setFollowingStatus.mutate(profileId);
+          }}
+        >
+          {followStatus.data ? 'Unfollow' : 'Follow'}
+        </Button>
+      )}
     </Profile>
   );
 };

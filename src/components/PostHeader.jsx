@@ -6,6 +6,7 @@ import useFollowStatusMutation from '../hooks/useFollowingStatusMutation';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
+import Loading from './Loading';
 
 const PostHeader = (props) => {
   const { apiUrl } = useContext(AuthContext);
@@ -58,19 +59,25 @@ const PostHeader = (props) => {
         >
           <h3 className="text-lg font-semibold">{props.profile.username}</h3>
         </Link>
-        {!props.followStatus && (
-          <>
-            <Icon path={mdiCircleSmall} size={1} />
-            <button
-              className="text-accent font-semibold"
-              onClick={() => {
-                setFollowStatus.mutate();
-              }}
-            >
-              Follow
-            </button>
-          </>
-        )}
+        {!props.followStatus &&
+          (setFollowStatus.isLoading ? (
+            <>
+              <Icon className="shrink-0" path={mdiCircleSmall} size={1} />
+              <Loading size={1.25} />
+            </>
+          ) : (
+            <>
+              <Icon path={mdiCircleSmall} size={1} />
+              <button
+                className="text-accent font-semibold"
+                onClick={() => {
+                  setFollowStatus.mutate();
+                }}
+              >
+                Follow
+              </button>
+            </>
+          ))}
       </div>
     </div>
   );

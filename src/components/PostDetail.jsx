@@ -145,10 +145,14 @@ const PostDetail = (props) => {
               <div className="w-full p-3">
                 <div className="flex w-full items-center justify-between md:mb-3">
                   <div className="flex items-center justify-start gap-4">
-                    <LikeButton
-                      likeStatus={props.likeStatus}
-                      onClick={() => props.toggleLikeStatus.mutate()}
-                    />
+                    {props.toggleLikeStatus.isLoading ? (
+                      <Loading size={1.25} />
+                    ) : (
+                      <LikeButton
+                        likeStatus={props.likeStatus}
+                        onClick={() => props.toggleLikeStatus.mutate()}
+                      />
+                    )}
                     <CommentButton onClick={() => inputRef.current.focus()} />
                     <ShareButton post={props.post} />
                   </div>

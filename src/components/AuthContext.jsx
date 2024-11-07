@@ -1,15 +1,15 @@
-import { createContext, useEffect, useState } from 'react';
-import getAuthStatus from '../services/getAuthStatus';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuthenticationQuery from '../hooks/useAuthenticationQuery';
-import Loading from './Loading';
+import PawIcon from '../assets/PawIcon';
+import { ThemeContext } from './ThemeContext';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const { theme } = useContext(ThemeContext);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const navigate = useNavigate();
-  // const location = useLocation();
   const isMobile = window.location.href.includes('192.168.4.94');
 
   const apiUrl = isMobile
@@ -43,16 +43,41 @@ const AuthProvider = ({ children }) => {
     }
   }, [isAuthenticated]);
 
-  if (authStatus.isLoading) {
-    return <span></span>;
+  if (authStatus.isLoading || authStatus.isPending) {
+    return (
+      <div className="h-dvh w-dvw">
+        <div
+          className={`${theme} bg-secondary-2 flex h-full w-full flex-col items-center justify-center gap-4 px-4 md:gap-8`}
+        >
+          <h1 className="text-primary font-logo text-4xl">Please wait</h1>
+          <p className="text-tertiary text-xl">
+            The server is booting up after a period of inactivity
+          </p>
+          <div className="flex">
+            <div className="pawprint-top-1">
+              <PawIcon className="size-16 translate-x-1/2 rotate-[78deg]" />
+            </div>
+            <div className="pawprint-top-2 opacity-0">
+              <PawIcon className="size-16 -translate-x-1/2 rotate-[78deg]" />
+            </div>
+          </div>
+          <div className="flex -translate-y-16">
+            <div className="pawprint-bottom-1 opacity-0">
+              <PawIcon className="size-16 translate-x-1/2 rotate-[78deg]" />
+            </div>
+            <div className="pawprint-bottom-2 opacity-0">
+              <PawIcon className="size-16 -translate-x-1/2 rotate-[78deg]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <AuthContext.Provider
       value={{
         apiUrl,
-        // setIsAuthenticated,
-        // authRedirect,
       }}
     >
       {children}
