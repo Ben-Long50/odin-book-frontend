@@ -61,8 +61,8 @@ const ThemeProvider = ({ children }) => {
             <p className="text-secondary text-center text-xl">
               Connecting to the server
             </p>
-            <p className="text-tertiary text-clip text-base">
-              (This can take up to a minute)
+            <p className="text-tertiary text-center text-base">
+              (This can take up to about a minute)
             </p>
           </div>
 
