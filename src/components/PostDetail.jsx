@@ -17,6 +17,7 @@ import useDeletePostMutation from '../hooks/useDeletePostMutation';
 import useDeleteCommentMutation from '../hooks/useDeleteCommentMutation';
 import { LayoutContext } from './LayoutContext';
 import useCommentMutation from '../hooks/useCommentMutation';
+import CloudinaryImage from './CloudinaryImage';
 
 const PostDetail = (props) => {
   const [commentInput, setCommentInput] = useState('');
@@ -106,11 +107,10 @@ const PostDetail = (props) => {
                 ref={imageContainerRef}
                 className={`${imageHeight > imageWidth && 'aspect-square'} flex items-center justify-center overflow-hidden bg-black`}
               >
-                <img
+                <CloudinaryImage
                   ref={imageRef}
                   className="w-full self-center"
-                  src={props.post.mediaUrl}
-                  alt="post image"
+                  url={props.post.mediaUrl}
                 />
               </div>
               <div className="bg-secondary flex grow flex-col border-t">
@@ -197,11 +197,10 @@ const PostDetail = (props) => {
               ref={imageContainerRef}
               className="flex h-full items-center justify-center overflow-hidden rounded-l-xl bg-black md:col-span-2 md:my-auto"
             >
-              <img
+              <CloudinaryImage
                 ref={imageRef}
                 className={`${imageContainerHeight <= imageHeight && 'md:rounded-l-xl'} w-full self-center`}
-                src={props.post.mediaUrl}
-                alt="post image"
+                url={props.post.mediaUrl}
               />
             </div>
             <div className="bg-secondary col-span-1 flex h-full max-h-dvh-95 flex-col items-start justify-start rounded-r-xl">

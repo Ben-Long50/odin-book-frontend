@@ -3,6 +3,7 @@ import PostDetail from './PostDetail';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import useLikeStatusMutation from '../hooks/useLikeStatusMutation';
+import CloudinaryImage from './CloudinaryImage';
 
 const PostCard = (props) => {
   const [likeStatus, setLikeStatus] = useState(false);
@@ -36,7 +37,7 @@ const PostCard = (props) => {
       className={`${props.className} timing flex aspect-square cursor-pointer items-center overflow-hidden bg-black object-cover md:hover:opacity-60`}
       onClick={togglePostOpen}
     >
-      <img src={props.post.mediaUrl} alt="Post" />
+      <CloudinaryImage url={props.post.mediaUrl} />
       <PostDetail
         post={props.post}
         likeStatus={likeStatus}

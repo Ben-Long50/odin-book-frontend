@@ -14,6 +14,7 @@ import { GlobalContext } from './GlobalContext';
 import useCommentMutation from '../hooks/useCommentMutation';
 import useLikeStatusMutation from '../hooks/useLikeStatusMutation';
 import Loading from './Loading';
+import CloudinaryImage from './CloudinaryImage';
 
 const Post = (props) => {
   const [likeStatus, setLikeStatus] = useState(false);
@@ -84,9 +85,9 @@ const Post = (props) => {
             </div>
           </div>
         </div>
-        <img
+        <CloudinaryImage
           className="-mx-4 w-full cursor-pointer self-center"
-          src={props.post.mediaUrl}
+          url={props.post.mediaUrl}
           onClick={togglePostOpen}
         />
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-0">

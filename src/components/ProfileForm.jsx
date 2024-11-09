@@ -82,7 +82,10 @@ const ProfileForm = (props) => {
           {!imagePreview ? (
             <ProfilePic className="size-20 md:size-32" />
           ) : (
-            <ProfilePic image={imagePreview} className="size-20 md:size-32" />
+            <ProfilePic
+              imagePreview={imagePreview}
+              className="size-20 md:size-32"
+            />
           )}
           <div className="flex flex-col items-start justify-center gap-1">
             <p className="font-semibold md:text-2xl">{usernameInput}</p>
