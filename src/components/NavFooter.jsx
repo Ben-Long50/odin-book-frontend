@@ -30,6 +30,7 @@ const NavFooter = (props) => {
     >
       <Link className="w-auto" to="/home">
         <ListMenuItem
+          ariaLabel="home feed"
           activeItem={props.activeItem}
           icon={
             props.activeItem === 'home' ? mdiHomeVariant : mdiHomeVariantOutline
@@ -39,6 +40,7 @@ const NavFooter = (props) => {
       </Link>
       <Link className="w-auto" to="/explore">
         <ListMenuItem
+          ariaLabel="explore feed"
           activeItem={props.activeItem}
           icon={props.activeItem === 'explore' ? mdiCompass : mdiCompassOutline}
           label="Explore"
@@ -46,6 +48,7 @@ const NavFooter = (props) => {
       </Link>
       <div className="w-auto">
         <ListMenuItem
+          ariaLabel="create post"
           activeItem={props.activeItem}
           icon={props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline}
           label="Create"
@@ -57,6 +60,7 @@ const NavFooter = (props) => {
       </div>
       <Link className="w-auto" to="/profile">
         <ListMenuItem
+          ariaLabel="profile"
           activeItem={props.activeItem}
           icon={mdiAccount}
           label="Profile"

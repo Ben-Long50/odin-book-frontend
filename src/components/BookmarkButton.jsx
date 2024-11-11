@@ -32,6 +32,7 @@ const BookmarkButton = (props) => {
 
   return (
     <button
+      aria-label="Bookmark post"
       className="text-primary"
       onClick={() => {
         handleBookmarkStatus();

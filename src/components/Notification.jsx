@@ -93,6 +93,7 @@ const Notification = (props) => {
           />
         )}
         <button
+          aria-label={`Delete notification from ${props.profile.username}`}
           className="py-2 pl-3"
           onClick={(e) => {
             e.preventDefault();

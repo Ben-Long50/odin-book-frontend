@@ -28,14 +28,22 @@ const PostCard = (props) => {
     likeStatus,
   );
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      togglePostOpen();
+    }
+  };
+
   const togglePostOpen = () => {
     setPostOpen(!postOpen);
   };
 
   return (
     <div
+      tabIndex={0}
       className={`${props.className} timing flex aspect-square cursor-pointer items-center overflow-hidden bg-black object-cover md:hover:opacity-60`}
-      onClick={togglePostOpen}
+      onClick={handleKeyDown}
+      onKeyDown={handleKeyDown}
     >
       <CloudinaryImage url={props.post.mediaUrl} />
       <PostDetail

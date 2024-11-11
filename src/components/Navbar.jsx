@@ -129,8 +129,9 @@ const Navbar = (props) => {
         </div>
 
         <div className="flex w-full flex-col items-start justify-start gap-4">
-          <Link className="w-full" to="/home">
+          <Link tabIndex={-1} className="w-full" to="/home">
             <ListMenuItem
+              ariaLabel="home feed"
               activeItem={props.activeItem}
               icon={
                 props.activeItem === 'home'
@@ -142,6 +143,7 @@ const Navbar = (props) => {
             />
           </Link>
           <ListMenuItem
+            ariaLabel="search"
             activeItem={props.activeItem}
             icon={mdiMagnify}
             label="Search"
@@ -151,8 +153,9 @@ const Navbar = (props) => {
             }}
             navbarSize={props.navbarSize}
           />
-          <Link className="w-full" to="/explore">
+          <Link tabIndex={-1} className="w-full" to="/explore">
             <ListMenuItem
+              ariaLabel="explore feed"
               activeItem={props.activeItem}
               icon={
                 props.activeItem === 'explore' ? mdiCompass : mdiCompassOutline
@@ -162,6 +165,7 @@ const Navbar = (props) => {
             />
           </Link>
           <ListMenuItem
+            ariaLabel="notifications"
             activeItem={props.activeItem}
             icon={
               props.activeItem === 'notifications' ? mdiHeart : mdiHeartOutline
@@ -175,6 +179,7 @@ const Navbar = (props) => {
             navbarSize={props.navbarSize}
           />
           <ListMenuItem
+            ariaLabel="create post"
             activeItem={props.activeItem}
             icon={
               props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline
@@ -186,8 +191,9 @@ const Navbar = (props) => {
             }}
             navbarSize={props.navbarSize}
           />
-          <Link className="w-full" to={`/profile`}>
+          <Link tabIndex={-1} className="w-full" to={`/profile`}>
             <ListMenuItem
+              ariaLabel="profile"
               activeItem={props.activeItem}
               icon={mdiAccount}
               label="Profile"
@@ -202,6 +208,7 @@ const Navbar = (props) => {
         </div>
         <div className="relative flex flex-col items-start justify-end">
           <ListMenuItem
+            ariaLabel="settings menu"
             activeItem={props.activeItem}
             icon={mdiMenu}
             label="More"
@@ -209,14 +216,14 @@ const Navbar = (props) => {
             navbarSize={props.navbarSize}
           />
           <SettingsMenu
-            className={`${props.menuVisibility ? 'opacity-100' : '-translate-x-full opacity-0'} absolute bottom-115 left-0`}
+            className={`${props.menuVisibility ? 'visible opacity-100' : 'invisible -translate-x-full opacity-0'} absolute bottom-115 left-0`}
             toggleMenuVisibility={toggleMenuVisibility}
             onClick={() => changeActiveItem('')}
           />
         </div>
       </div>
       <Searchbar
-        className={`${props.searchVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing fixed left-0 top-0 z-10`}
+        className={`${props.searchVisibility ? 'visible opacity-100' : 'invisible -translate-x-full opacity-50'} timing fixed left-0 top-0 z-10`}
         style={{
           transform:
             props.searchVisibility &&
@@ -225,7 +232,7 @@ const Navbar = (props) => {
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
-        className={`${props.notificationVisibility ? 'opacity-100' : '-translate-x-full opacity-50'} timing fixed left-0 top-0 z-10`}
+        className={`${props.notificationVisibility ? 'visible opacity-100' : 'invisible -translate-x-full opacity-50'} timing fixed left-0 top-0 z-10`}
         style={{
           transform:
             props.notificationVisibility &&

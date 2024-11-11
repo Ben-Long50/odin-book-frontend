@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
-const CloudinaryImage = (props) => {
+const CloudinaryImage = forwardRef((props, ref) => {
+  const [dimensions, setDimensions] = useState({ width: null, height: null });
   const [responsiveUrl, setResponsiveUrl] = useState(() => {
     const properties = 'upload/w_auto,c_scale/';
     const splitUrl = props.url.split('upload/');
@@ -17,14 +18,27 @@ const CloudinaryImage = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => {
+      setDimensions({ width: img.width, height: img.height });
+    };
+    img.src = responsiveUrl;
+  }, [responsiveUrl]);
+
   return (
     <img
+      ref={ref}
+      width={dimensions.width}
+      height={dimensions.height}
       className={`${props.className} cld-responsive`}
       data-src={responsiveUrl}
-      alt="Responsive image"
+      alt="Post picture"
       onClick={props.onClick}
     />
   );
-};
+});
+
+CloudinaryImage.displayName = 'CloudinaryImage';
 
 export default CloudinaryImage;

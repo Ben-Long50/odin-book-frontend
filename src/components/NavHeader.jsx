@@ -86,6 +86,7 @@ const NavHeader = (props) => {
         )}
         <div className="z-10 ml-auto flex items-center gap-3">
           <ListMenuItem
+            ariaLabel="search"
             activeItem={props.activeItem}
             icon={mdiMagnify}
             label="Search"
@@ -94,6 +95,7 @@ const NavHeader = (props) => {
             }}
           />
           <ListMenuItem
+            ariaLabel="notifications"
             className="w-auto"
             activeItem={props.activeItem}
             icon={
@@ -106,6 +108,7 @@ const NavHeader = (props) => {
             }}
           />
           <ListMenuItem
+            ariaLabel="settings menu"
             className={`${props.activeItem === 'menu' && '-rotate-90'}`}
             activeItem={props.activeItem}
             icon={mdiMenu}
@@ -115,18 +118,18 @@ const NavHeader = (props) => {
         </div>
       </nav>
       <Searchbar
-        className={`${props.searchVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing } absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
+        className={`${props.searchVisibility ? 'visible translate-y-full opacity-100' : 'invisible shadow-none'} timing } absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
         layoutSize={layoutSize}
         toggleSearchbar={toggleSearchbar}
       />
       <Notificationbar
-        className={`${props.notificationVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
+        className={`${props.notificationVisibility ? 'visible translate-y-full opacity-100' : 'invisible shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full opacity-0`}
         layoutSize={layoutSize}
         toggleNotificationbar={toggleNotificationbar}
         notifications={notifications.data}
       />
       <SettingsMenu
-        className={`${props.menuVisibility ? 'translate-y-full opacity-100' : 'shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
+        className={`${props.menuVisibility ? 'visible translate-y-full opacity-100' : 'invisible shadow-none'} timing absolute bottom-0 left-0 z-10 h-auto w-full rounded-none opacity-0`}
         toggleMenuVisibility={toggleMenuVisibility}
       />
     </div>

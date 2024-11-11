@@ -38,7 +38,11 @@ const ShareButton = (props) => {
 
   return (
     <>
-      <button className="text-primary" onClick={toggleFollowingOpen}>
+      <button
+        aria-label="Share post"
+        className="text-primary"
+        onClick={toggleFollowingOpen}
+      >
         <Icon path={mdiShareOutline} size={1.4} />
       </button>
       <ProfileList

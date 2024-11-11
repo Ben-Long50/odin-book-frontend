@@ -160,7 +160,7 @@ const Profile = (props) => {
                   <div className="flex items-center justify-start gap-2">
                     <h2 className="text-2xl">{props.profile.username}</h2>
                   </div>
-                  <div className="flex flex-wrap items-start gap-2">
+                  <div className="flex flex-wrap items-start gap-4">
                     {props.children}
                   </div>
                   <div className="flex w-full items-center justify-start">

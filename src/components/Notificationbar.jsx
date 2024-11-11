@@ -21,8 +21,14 @@ const Notificationbar = (props) => {
     >
       <div className="flex flex-col gap-4 p-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-primary text-xl font-semibold">Recent</h3>
-          <p
+          <h3
+            aria-label="Recent notifications"
+            className="text-primary text-xl font-semibold"
+          >
+            Recent
+          </h3>
+          <button
+            aria-label="Clear all notifications"
             className="md:hover:text-primary cursor-pointer text-lg text-blue-500"
             onClick={() => {
               deleteAllNotifications.mutate();
@@ -30,7 +36,7 @@ const Notificationbar = (props) => {
             }}
           >
             Clear all
-          </p>
+          </button>
         </div>
         {props.notifications.length > 0 &&
           props.notifications.map((notification) => {
@@ -57,7 +63,7 @@ const Notificationbar = (props) => {
       <div className="flex flex-col gap-4 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-primary text-xl font-semibold">Recent</h3>
-          <p
+          <button
             className="md:hover:text-primary cursor-pointer text-lg text-blue-500"
             onClick={() => {
               deleteAllNotifications.mutate();
@@ -65,7 +71,7 @@ const Notificationbar = (props) => {
             }}
           >
             Clear all
-          </p>
+          </button>
         </div>
         {props.notifications.length > 0 &&
           props.notifications.map((notification) => {

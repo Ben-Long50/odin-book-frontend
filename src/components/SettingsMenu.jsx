@@ -47,7 +47,7 @@ const SettingsMenu = (props) => {
       className={`${props.className} timing bg-secondary text-secondary flex min-w-72 flex-col items-start justify-center p-2 text-lg shadow-md md:rounded-xl dark:shadow-gray-950`}
       onClick={props.onClick}
     >
-      <Link className="w-full" to="manage">
+      <Link tabIndex={-1} className="w-full" to="manage">
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}
@@ -57,6 +57,7 @@ const SettingsMenu = (props) => {
         </button>
       </Link>
       <Link
+        tabIndex={-1}
         className="w-full"
         to={`/profile/${activeProfile.username}/edit`}
         state={activeProfile}
@@ -69,7 +70,12 @@ const SettingsMenu = (props) => {
           Profile settings
         </button>
       </Link>
-      <Link className="w-full" to="account/edit" state={activeProfile}>
+      <Link
+        tabIndex={-1}
+        className="w-full"
+        to="account/edit"
+        state={activeProfile}
+      >
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}
@@ -78,7 +84,7 @@ const SettingsMenu = (props) => {
           Account settings
         </button>
       </Link>
-      <Link className="w-full" to="profile/bookmarks">
+      <Link tabIndex={-1} className="w-full" to="profile/bookmarks">
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={props.toggleMenuVisibility}
@@ -100,7 +106,7 @@ const SettingsMenu = (props) => {
         />
         Change theme
       </button>
-      <Link className="w-full" to="signin">
+      <Link tabIndex={-1} className="w-full" to="signin">
         <button
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={() => {

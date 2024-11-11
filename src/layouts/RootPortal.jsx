@@ -33,6 +33,7 @@ const RootPortal = (props) => {
       {props.children}
       {!props.create && (
         <button
+          aria-label="Close window"
           className="text-primary absolute right-0 top-0 z-30 p-2"
           onClick={props.onClick}
         >

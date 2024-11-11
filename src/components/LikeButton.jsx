@@ -4,6 +4,7 @@ import { mdiHeart, mdiHeartOutline } from '@mdi/js';
 const LikeButton = (props) => {
   return (
     <button
+      aria-label="Like post"
       className={`${props.className} text-primary flex items-center justify-center`}
       onClick={props.onClick}
     >

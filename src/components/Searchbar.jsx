@@ -68,6 +68,7 @@ const Searchbar = (props) => {
             value={searchString}
           />
           <button
+            aria-label="Clear search input"
             className="text-tertiary cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
@@ -83,13 +84,19 @@ const Searchbar = (props) => {
         {results.length < 1 ? (
           <>
             <div className="flex items-center justify-between p-2">
-              <h3 className="text-primary text-xl font-semibold">Recent</h3>
-              <p
+              <h3
+                aria-label="Recent search history"
+                className="text-primary text-xl font-semibold"
+              >
+                Recent
+              </h3>
+              <button
+                aria-label="Clear search history"
                 className="timing md:hover:text-primary cursor-pointer text-lg text-blue-500"
                 onClick={() => deleteSearchHistory.mutate()}
               >
                 Clear all
-              </p>
+              </button>
             </div>
             {searchHistory.isLoading ? (
               <Loading />
@@ -106,6 +113,7 @@ const Searchbar = (props) => {
                     }}
                   >
                     <button
+                      aria-label={`Delete profile ${profile.username} from search history`}
                       className="ml-auto p-2"
                       onClick={(e) => {
                         e.preventDefault();
@@ -178,12 +186,12 @@ const Searchbar = (props) => {
           <>
             <div className="flex items-center justify-between p-2">
               <h3 className="text-primary text-xl font-semibold">Recent</h3>
-              <p
+              <button
                 className="timing md:hover:text-primary cursor-pointer text-lg text-blue-500"
                 onClick={() => deleteSearchHistory.mutate()}
               >
                 Clear all
-              </p>
+              </button>
             </div>
             {searchHistory.isLoading ? (
               <Loading />

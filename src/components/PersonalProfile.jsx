@@ -19,21 +19,31 @@ const PersonalProfile = () => {
       following={activeFollowing}
       followStatus={true}
     >
-      <Link to={`${activeProfile.username}/edit`} state={activeProfile}>
-        <Button className="px-3 py-1 text-sm font-semibold">
+      <Link
+        tabIndex={-1}
+        to={`${activeProfile.username}/edit`}
+        state={activeProfile}
+      >
+        <Button
+          ariaLabel="Edit profile information"
+          className="px-3 py-1 text-sm font-semibold"
+        >
           {layoutSize !== 'xsmall' ? (
             <p>Edit profile</p>
           ) : (
-            <Icon path={mdiSquareEditOutline} size={1} />
+            <Icon path={mdiSquareEditOutline} size={1.25} />
           )}
         </Button>
       </Link>
-      <Link to="bookmarks">
-        <Button className="px-3 py-1 text-sm font-semibold">
+      <Link tabIndex={-1} to="bookmarks">
+        <Button
+          ariaLabel="bookmarks"
+          className="px-3 py-1 text-sm font-semibold"
+        >
           {layoutSize !== 'xsmall' ? (
             <p>View Bookmarks</p>
           ) : (
-            <Icon path={mdiBookmarkOutline} size={1} />
+            <Icon path={mdiBookmarkOutline} size={1.25} />
           )}
         </Button>
       </Link>
