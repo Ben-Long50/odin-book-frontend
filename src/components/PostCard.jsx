@@ -42,7 +42,7 @@ const PostCard = (props) => {
     <div
       tabIndex={0}
       className={`${props.className} timing flex aspect-square cursor-pointer items-center overflow-hidden bg-black object-cover md:hover:opacity-60`}
-      onClick={handleKeyDown}
+      onClick={togglePostOpen}
       onKeyDown={handleKeyDown}
     >
       <CloudinaryImage url={props.post.mediaUrl} />
