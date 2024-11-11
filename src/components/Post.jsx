@@ -20,7 +20,6 @@ const Post = (props) => {
   const [likeStatus, setLikeStatus] = useState(false);
   const [commentInput, setCommentInput] = useState('');
   const [postOpen, setPostOpen] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: null, height: null });
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
 
@@ -33,14 +32,6 @@ const Post = (props) => {
     });
     setLikeStatus(status);
   }, [props.post]);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = props.post.mediaUrl;
-    img.onload = () => {
-      setDimensions({ width: img.width, height: img.height });
-    };
-  }, [props.post.mediaUrl]);
 
   const toggleLikeStatus = useLikeStatusMutation(
     props.post.id,
@@ -96,8 +87,6 @@ const Post = (props) => {
         </div>
         <CloudinaryImage
           className="-mx-4 w-full cursor-pointer self-center"
-          width={dimensions.width}
-          height={dimensions.height}
           url={props.post.mediaUrl}
           onClick={togglePostOpen}
         />

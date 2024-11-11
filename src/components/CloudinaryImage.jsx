@@ -1,13 +1,15 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { useImage } from 'react-img-placeholder';
 
 const CloudinaryImage = forwardRef((props, ref) => {
-  const [responsiveUrl, setResponsiveUrl] = useState(() => {
-    const properties = 'upload/w_auto,c_scale/';
-    const splitUrl = props.url.split('upload/');
-    return splitUrl[0].concat(properties).concat(splitUrl[1]);
-  });
-  const { isLoading } = useImage({ src: props.url });
+  const [aspectRatio, setAspectRatio] = useState(null);
+
+  const splitUrl = props.url.split('upload/');
+
+  const responsiveUrl = splitUrl[0]
+    .concat('upload/w_auto,c_scale/')
+    .concat(splitUrl[1]);
+
+  const infoUrl = splitUrl[0].concat('upload/fl_getinfo/').concat(splitUrl[1]);
 
   useEffect(() => {
     if (window.cloudinary) {
@@ -19,16 +21,64 @@ const CloudinaryImage = forwardRef((props, ref) => {
     }
   }, []);
 
+  useEffect(() => {
+    const getAspecRatio = async () => {
+      try {
+        const response = await fetch(`${infoUrl}`, {
+          headers: { Accept: 'application/json' },
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch aspect ratio. Status: ${response.status}`,
+          );
+        }
+
+        const data = await response.json();
+
+        if (
+          !data.input ||
+          typeof data.input.width !== 'number' ||
+          typeof data.input.height !== 'number'
+        ) {
+          throw new Error('Unexpected response format from Cloudinary');
+        }
+
+        const imageWidth = data.input.width;
+        const imageHeight = data.input.height;
+
+        if (imageHeight === 0) {
+          throw new Error('Image height is 0, cannot compute aspect ratio');
+        }
+
+        const aspectRatio = (
+          Math.round((imageWidth / imageHeight) * 100) / 100
+        ).toFixed(3);
+
+        setAspectRatio(aspectRatio);
+      } catch (error) {
+        console.error(`Error getting aspect ratio: ${error.message}`);
+        setAspectRatio(1);
+      }
+    };
+
+    getAspecRatio();
+  }, [infoUrl]);
+
   return (
-    <img
-      ref={ref}
-      className={`${props.className} cld-responsive ${isLoading && 'bg-black opacity-5 dark:bg-white'}`}
-      width={props.width}
-      height={props.height}
-      data-src={responsiveUrl}
-      alt="Post picture"
-      onClick={props.onClick}
-    />
+    <div
+      className={`flex w-full justify-center object-cover aspect-[${aspectRatio}]`}
+    >
+      <img
+        ref={ref}
+        className={`${props.className} cld-responsive w-full`}
+        width={props.width}
+        height={props.height}
+        data-src={responsiveUrl}
+        alt="Post picture"
+        onClick={props.onClick}
+      />
+    </div>
   );
 });
 
