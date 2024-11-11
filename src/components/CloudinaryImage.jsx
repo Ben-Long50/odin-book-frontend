@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 
 const CloudinaryImage = forwardRef((props, ref) => {
-  const [aspectRatio, setAspectRatio] = useState(null);
+  const [aspectRatio, setAspectRatio] = useState({ width: 1, height: 1 });
 
   const splitUrl = props.url.split('upload/');
 
@@ -51,11 +51,10 @@ const CloudinaryImage = forwardRef((props, ref) => {
           throw new Error('Image height is 0, cannot compute aspect ratio');
         }
 
-        const aspectRatio = (
-          Math.round((imageWidth / imageHeight) * 100) / 100
-        ).toFixed(3);
-
-        setAspectRatio(aspectRatio);
+        setAspectRatio({
+          width: imageWidth.toString(),
+          height: imageHeight.toString(),
+        });
       } catch (error) {
         console.error(`Error getting aspect ratio: ${error.message}`);
         setAspectRatio(1);
@@ -67,11 +66,15 @@ const CloudinaryImage = forwardRef((props, ref) => {
 
   return (
     <div
-      className={`flex w-full justify-center object-cover aspect-[${aspectRatio}]`}
+      className={`timing flex w-full justify-center object-cover transition-all`}
+      style={{
+        aspectRatio: aspectRatio.width / aspectRatio.height,
+        transition: 'aspect-ratio 0.3s ease-out',
+      }}
     >
       <img
         ref={ref}
-        className={`${props.className} cld-responsive w-full`}
+        className={`${props.className} cld-responsive`}
         width={props.width}
         height={props.height}
         data-src={responsiveUrl}
