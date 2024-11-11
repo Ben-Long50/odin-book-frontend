@@ -78,6 +78,7 @@ const CloudinaryImage = forwardRef((props, ref) => {
         width={props.width}
         height={props.height}
         data-src={responsiveUrl}
+        loading="lazy"
         alt="Post picture"
         onClick={props.onClick}
       />
