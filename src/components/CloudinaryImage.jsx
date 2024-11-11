@@ -2,21 +2,12 @@ import { forwardRef, useEffect, useState } from 'react';
 import { useImage } from 'react-img-placeholder';
 
 const CloudinaryImage = forwardRef((props, ref) => {
-  const [dimensions, setDimensions] = useState({ width: null, height: null });
   const [responsiveUrl, setResponsiveUrl] = useState(() => {
     const properties = 'upload/w_auto,c_scale/';
     const splitUrl = props.url.split('upload/');
     return splitUrl[0].concat(properties).concat(splitUrl[1]);
   });
   const { isLoading } = useImage({ src: props.url });
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = props.url;
-    img.onload = () => {
-      setDimensions({ width: img.width, height: img.height });
-    };
-  }, [props.url]);
 
   useEffect(() => {
     if (window.cloudinary) {
@@ -26,28 +17,14 @@ const CloudinaryImage = forwardRef((props, ref) => {
 
       cl.responsive();
     }
-  }, [dimensions]);
-
-  if (isLoading) {
-    return (
-      <div
-        className="bg-black opacity-5 dark:bg-white"
-        style={{
-          width: '100%',
-          height: 'auto',
-          aspectRatio:
-            dimensions.width && dimensions.height
-              ? `${dimensions.width} / ${dimensions.height}`
-              : '3/4',
-        }}
-      />
-    );
-  }
+  }, []);
 
   return (
     <img
       ref={ref}
-      className={`${props.className} cld-responsive`}
+      className={`${props.className} cld-responsive ${isLoading && 'bg-black opacity-5 dark:bg-white'}`}
+      width={props.width}
+      height={props.height}
       data-src={responsiveUrl}
       alt="Post picture"
       onClick={props.onClick}
