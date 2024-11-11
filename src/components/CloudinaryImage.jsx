@@ -16,7 +16,6 @@ const CloudinaryImage = forwardRef((props, ref) => {
     img.onload = () => {
       setDimensions({ width: img.width, height: img.height });
     };
-    console.log(img.width, img.height);
   }, [props.url]);
 
   useEffect(() => {
@@ -51,7 +50,6 @@ const CloudinaryImage = forwardRef((props, ref) => {
       className={`${props.className} cld-responsive`}
       data-src={responsiveUrl}
       alt="Post picture"
-      loading="lazy"
       onClick={props.onClick}
     />
   );
