@@ -51,6 +51,7 @@ const CloudinaryImage = forwardRef((props, ref) => {
       className={`${props.className} cld-responsive`}
       data-src={responsiveUrl}
       alt="Post picture"
+      loading="lazy"
       onClick={props.onClick}
     />
   );
