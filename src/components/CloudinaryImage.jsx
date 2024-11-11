@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
+import { useImage } from 'react-img-placeholder';
 
 const CloudinaryImage = forwardRef((props, ref) => {
   const [dimensions, setDimensions] = useState({ width: null, height: null });
@@ -7,6 +8,7 @@ const CloudinaryImage = forwardRef((props, ref) => {
     const splitUrl = props.url.split('upload/');
     return splitUrl[0].concat(properties).concat(splitUrl[1]);
   });
+  const { isLoading } = useImage({ src: responsiveUrl });
 
   useEffect(() => {
     if (window.cloudinary) {
@@ -16,21 +18,32 @@ const CloudinaryImage = forwardRef((props, ref) => {
 
       cl.responsive();
     }
-  }, []);
+  }, [dimensions]);
 
   useEffect(() => {
     const img = new Image();
+    img.src = responsiveUrl;
     img.onload = () => {
       setDimensions({ width: img.width, height: img.height });
     };
-    img.src = responsiveUrl;
+    console.log(img.width, img.height);
   }, [responsiveUrl]);
+
+  if (isLoading) {
+    return (
+      <div
+        className="bg-black opacity-5 dark:bg-white"
+        style={{
+          width: dimensions.width,
+          height: dimensions.height,
+        }}
+      />
+    );
+  }
 
   return (
     <img
       ref={ref}
-      width={dimensions.width}
-      height={dimensions.height}
       className={`${props.className} cld-responsive`}
       data-src={responsiveUrl}
       alt="Post picture"
