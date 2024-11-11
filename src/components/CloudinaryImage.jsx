@@ -8,7 +8,16 @@ const CloudinaryImage = forwardRef((props, ref) => {
     const splitUrl = props.url.split('upload/');
     return splitUrl[0].concat(properties).concat(splitUrl[1]);
   });
-  const { isLoading } = useImage({ src: responsiveUrl });
+  const { isLoading } = useImage({ src: props.url });
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = props.url;
+    img.onload = () => {
+      setDimensions({ width: img.width, height: img.height });
+    };
+    console.log(img.width, img.height);
+  }, [props.url]);
 
   useEffect(() => {
     if (window.cloudinary) {
@@ -20,22 +29,17 @@ const CloudinaryImage = forwardRef((props, ref) => {
     }
   }, [dimensions]);
 
-  useEffect(() => {
-    const img = new Image();
-    img.src = responsiveUrl;
-    img.onload = () => {
-      setDimensions({ width: img.width, height: img.height });
-    };
-    console.log(img.width, img.height);
-  }, [responsiveUrl]);
-
   if (isLoading) {
     return (
       <div
         className="bg-black opacity-5 dark:bg-white"
         style={{
-          width: dimensions.width,
-          height: dimensions.height,
+          width: '100%',
+          height: 'auto',
+          aspectRatio:
+            dimensions.width && dimensions.height
+              ? `${dimensions.width} / ${dimensions.height}`
+              : '3/4',
         }}
       />
     );
