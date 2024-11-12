@@ -101,7 +101,7 @@ const PostDetail = (props) => {
             >
               <div
                 ref={imageContainerRef}
-                className={`${imageHeight > imageWidth && 'aspect-square'} flex items-center justify-center overflow-hidden bg-black`}
+                className="flex items-center justify-center overflow-hidden bg-black"
               >
                 <CloudinaryImage
                   ref={imageRef}

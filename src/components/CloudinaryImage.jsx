@@ -66,15 +66,14 @@ const CloudinaryImage = forwardRef((props, ref) => {
 
   return (
     <div
-      className={`timing flex w-full justify-center object-cover transition-all`}
+      className={`flex w-full justify-center overflow-hidden transition-all`}
       style={{
         aspectRatio: aspectRatio.width / aspectRatio.height,
-        transition: 'aspect-ratio 0.3s ease-out',
       }}
     >
       <img
         ref={ref}
-        className={`${props.className} cld-responsive`}
+        className={`${props.className} cld-responsive object-cover`}
         width={props.width}
         height={props.height}
         data-src={responsiveUrl}
