@@ -121,6 +121,9 @@ const Post = (props) => {
               value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
             />
+            {(createComment.isPending || createComment.isLoading) && (
+              <Loading className="flex-1" size={1.25} />
+            )}
             {commentInput.length > 0 && (
               <button
                 type="submit"
