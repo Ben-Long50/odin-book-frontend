@@ -8,6 +8,7 @@ import Icon from '@mdi/react';
 import { useContext, useRef, useState } from 'react';
 import { LayoutContext } from './LayoutContext';
 import ScrollBar from 'react-perfect-scrollbar';
+import LandingPageImage from './LandingPageImage';
 
 const LandingPage = () => {
   const [showInfoRef1, setShowInfoRef1] = useState(false);
@@ -81,10 +82,7 @@ const LandingPage = () => {
             <div
               className={`bg-secondary-2 col-start-2 ml-4 flex w-auto items-center gap-6 rounded-l-full p-4 shadow-md shadow-gray-300 md:gap-20 md:p-8 dark:shadow-black`}
             >
-              <img
-                src="/cat.JPG"
-                className="w-48 rounded-full shadow-md shadow-gray-300 md:size-96 dark:shadow-black"
-              />
+              <LandingPageImage image="/cat.JPG" className="w-48 md:size-96" />
               <div>
                 <p className="text-secondary leading-normal">
                   Join the social media community where your pets are the star!
@@ -111,18 +109,18 @@ const LandingPage = () => {
               </p>
               <div className="flex flex-col items-center justify-center gap-2">
                 <div className="flex justify-end gap-4 md:gap-8">
-                  <img
-                    src="/turtle.JPG"
-                    className="size-20 rounded-full shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                  <LandingPageImage
+                    image="/turtle.JPG"
+                    className="size-20 md:size-48"
                   />
-                  <img
-                    src="/dog.PNG"
-                    className="size-20 rounded-full shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                  <LandingPageImage
+                    image="/dog.PNG"
+                    className="size-20 md:size-48"
                   />
                 </div>
-                <img
-                  src="/cat2.jpg"
-                  className="size-20 rounded-full shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                <LandingPageImage
+                  image="/cat2.jpg"
+                  className="size-20 md:size-48"
                 />
               </div>
             </div>
