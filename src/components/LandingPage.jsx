@@ -81,9 +81,9 @@ const LandingPage = () => {
             <div
               className={`bg-secondary-2 col-start-2 ml-4 flex w-auto items-center gap-6 rounded-l-full p-4 shadow-md shadow-gray-300 md:gap-20 md:p-8 dark:shadow-black`}
             >
-              <ProfilePic
-                image="/cat.JPG"
-                className="w-48 shadow-md shadow-gray-300 md:size-96 dark:shadow-black"
+              <img
+                src="/cat.JPG"
+                className="w-48 rounded-full shadow-md shadow-gray-300 md:size-96 dark:shadow-black"
               />
               <div>
                 <p className="text-secondary leading-normal">
@@ -111,18 +111,18 @@ const LandingPage = () => {
               </p>
               <div className="flex flex-col items-center justify-center gap-2">
                 <div className="flex justify-end gap-4 md:gap-8">
-                  <ProfilePic
-                    image="/turtle.JPG"
-                    className="size-20 shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                  <img
+                    src="/turtle.JPG"
+                    className="size-20 rounded-full shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
                   />
-                  <ProfilePic
-                    image="/dog.PNG"
-                    className="size-20 shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                  <img
+                    src="/dog.PNG"
+                    className="size-20 rounded-full shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
                   />
                 </div>
-                <ProfilePic
-                  image="/cat2.jpg"
-                  className="size-20 shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
+                <img
+                  src="/cat2.jpg"
+                  className="size-20 rounded-full shadow-md shadow-gray-300 md:size-48 dark:shadow-black"
                 />
               </div>
             </div>
