@@ -73,6 +73,13 @@ const MainLayout = () => {
     setMenuVisibility(false);
     setSearchVisibility(false);
     setNotificationVisibility(false);
+    if (
+      activeItem === 'search' ||
+      activeItem === 'notifications' ||
+      activeItem === 'menu'
+    ) {
+      setActiveItem(prevActiveItem);
+    }
     if (layoutSize !== 'xsmall' && layoutSize !== 'small') {
       setNavbarSize('large');
     }
