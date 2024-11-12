@@ -29,6 +29,9 @@ const NavFooter = (props) => {
             props.activeItem === 'home' ? mdiHomeVariant : mdiHomeVariantOutline
           }
           label="Home"
+          onClick={() => {
+            props.changeActiveItem('home');
+          }}
         />
       </Link>
       <Link className="w-auto" to="/explore">
@@ -37,6 +40,9 @@ const NavFooter = (props) => {
           activeItem={props.activeItem}
           icon={props.activeItem === 'explore' ? mdiCompass : mdiCompassOutline}
           label="Explore"
+          onClick={() => {
+            props.changeActiveItem('explore');
+          }}
         />
       </Link>
       <div className="w-auto">
@@ -57,9 +63,12 @@ const NavFooter = (props) => {
           activeItem={props.activeItem}
           icon={mdiAccount}
           label="Profile"
+          onClick={() => {
+            props.changeActiveItem('profile');
+          }}
         >
           <ProfilePic
-            className="size-10"
+            className={`${props.activeItem === 'profile' && 'ring-2 ring-gray-900 dark:ring-gray-50'} size-10`}
             image={activeProfile?.profilePicUrl}
           />
         </ListMenuItem>

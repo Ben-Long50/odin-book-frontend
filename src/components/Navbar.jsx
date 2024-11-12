@@ -128,6 +128,9 @@ const Navbar = (props) => {
               }
               label="Home"
               navbarSize={props.navbarSize}
+              onClick={() => {
+                props.changeActiveItem('home');
+              }}
             />
           </Link>
           <ListMenuItem
@@ -150,6 +153,9 @@ const Navbar = (props) => {
               }
               label="Explore"
               navbarSize={props.navbarSize}
+              onClick={() => {
+                props.changeActiveItem('explore');
+              }}
             />
           </Link>
           <ListMenuItem
@@ -186,9 +192,12 @@ const Navbar = (props) => {
               icon={mdiAccount}
               label="Profile"
               navbarSize={props.navbarSize}
+              onClick={() => {
+                props.changeActiveItem('profile');
+              }}
             >
               <ProfilePic
-                className="size-10"
+                className={`${props.activeItem === 'profile' && 'ring-2 ring-gray-900 dark:ring-gray-50'} size-10`}
                 image={activeProfile?.profilePicUrl}
               />
             </ListMenuItem>

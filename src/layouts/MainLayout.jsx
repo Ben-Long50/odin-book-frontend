@@ -61,7 +61,8 @@ const MainLayout = () => {
     if (
       activeItem !== 'search' &&
       activeItem !== 'notifications' &&
-      activeItem !== 'menu'
+      activeItem !== 'menu' &&
+      activeItem !== 'create'
     ) {
       setPrevActiveItem(activeItem);
     }
