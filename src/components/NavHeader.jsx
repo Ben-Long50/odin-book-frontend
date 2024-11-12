@@ -109,7 +109,7 @@ const NavHeader = (props) => {
           />
           <ListMenuItem
             ariaLabel="settings menu"
-            className={`${props.activeItem === 'menu' && '-rotate-90'}`}
+            className={`${props.menuVisibility && '-rotate-90'}`}
             activeItem={props.activeItem}
             icon={mdiMenu}
             label="More"

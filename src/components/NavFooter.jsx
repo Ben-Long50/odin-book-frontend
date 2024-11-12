@@ -16,13 +16,6 @@ import { GlobalContext } from './GlobalContext';
 const NavFooter = (props) => {
   const { activeProfile } = useContext(GlobalContext);
 
-  const changeActiveItem = (item) => {
-    if (props.activeItem !== 'search' && props.activeItem !== 'notifications') {
-      props.setPrevActiveItem(props.activeItem);
-    }
-    props.setActiveItem(item);
-  };
-
   return (
     <nav
       className="bg-secondary sticky bottom-0 row-span-1 flex w-full items-center justify-evenly gap-4 border-t"
@@ -53,7 +46,7 @@ const NavFooter = (props) => {
           icon={props.activeItem === 'create' ? mdiPlusBox : mdiPlusBoxOutline}
           label="Create"
           onClick={() => {
-            changeActiveItem('create');
+            props.changeActiveItem('create');
             props.setCreateOpen(true);
           }}
         />

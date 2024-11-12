@@ -52,18 +52,6 @@ const Navbar = (props) => {
     };
   }, []);
 
-  const changeActiveItem = (item) => {
-    props.setNotificationVisibility(false);
-    props.setSearchVisibility(false);
-    if (props.layoutSize === 'large') {
-      props.setNavbarSize('large');
-    }
-    if (props.activeItem !== 'search' && props.activeItem !== 'notifications') {
-      props.setPrevActiveItem(props.activeItem);
-    }
-    props.setActiveItem(item);
-  };
-
   const toggleMenuVisibility = () => {
     props.setMenuVisibility(!props.menuVisibility);
   };
@@ -148,7 +136,7 @@ const Navbar = (props) => {
             icon={mdiMagnify}
             label="Search"
             onClick={() => {
-              changeActiveItem('search');
+              props.changeActiveItem('search');
               toggleSearchbar();
             }}
             navbarSize={props.navbarSize}
@@ -173,7 +161,7 @@ const Navbar = (props) => {
             label="Notifications"
             notifications={notifications.data.length}
             onClick={() => {
-              changeActiveItem('notifications');
+              props.changeActiveItem('notifications');
               toggleNotificationbar();
             }}
             navbarSize={props.navbarSize}
@@ -186,7 +174,7 @@ const Navbar = (props) => {
             }
             label="Create"
             onClick={() => {
-              changeActiveItem('create');
+              props.changeActiveItem('create');
               props.setCreateOpen(true);
             }}
             navbarSize={props.navbarSize}
@@ -218,7 +206,7 @@ const Navbar = (props) => {
           <SettingsMenu
             className={`${props.menuVisibility ? 'visible opacity-100' : 'invisible -translate-x-full opacity-0'} absolute bottom-115 left-0`}
             toggleMenuVisibility={toggleMenuVisibility}
-            onClick={() => changeActiveItem('')}
+            onClick={() => props.changeActiveItem('')}
           />
         </div>
       </div>

@@ -37,25 +37,41 @@ const MainLayout = () => {
   useEffect(() => {
     switch (location.pathname) {
       case '/home':
-        setActiveItem('home');
+        changeActiveItem('home');
         break;
       case '/explore':
-        setActiveItem('explore');
+        changeActiveItem('explore');
         break;
       case '/profile':
-        setActiveItem('profile');
+        changeActiveItem('profile');
         break;
       default:
-        setActiveItem('');
+        changeActiveItem('');
         break;
     }
   }, [location.pathname]);
+
+  const changeActiveItem = (item) => {
+    setNotificationVisibility(false);
+    setSearchVisibility(false);
+    setMenuVisibility(false);
+    if (layoutSize === 'large') {
+      setNavbarSize('large');
+    }
+    if (
+      activeItem !== 'search' &&
+      activeItem !== 'notifications' &&
+      activeItem !== 'menu'
+    ) {
+      setPrevActiveItem(activeItem);
+    }
+    setActiveItem(item);
+  };
 
   const closeNavbar = () => {
     setMenuVisibility(false);
     setSearchVisibility(false);
     setNotificationVisibility(false);
-    setActiveItem(prevActiveItem);
     if (layoutSize !== 'xsmall' && layoutSize !== 'small') {
       setNavbarSize('large');
     }
@@ -88,7 +104,7 @@ const MainLayout = () => {
             setNotificationVisibility={setNotificationVisibility}
           />
           <div
-            className="text-primary row-span-1 flex w-full flex-col items-center overflow-y-scroll md:p-6 lg:p-8"
+            className="text-primary row-span-1 flex w-full flex-col items-center overflow-x-hidden overflow-y-scroll md:p-6 lg:p-8"
             onClick={closeNavbar}
           >
             <Outlet context={[layoutSize, setActiveItem]} />
@@ -98,6 +114,7 @@ const MainLayout = () => {
             setActiveItem={setActiveItem}
             prevActiveItem={prevActiveItem}
             setPrevActiveItem={setPrevActiveItem}
+            changeActiveItem={changeActiveItem}
             setCreateOpen={setCreateOpen}
             onClick={() => {
               if (
@@ -122,6 +139,7 @@ const MainLayout = () => {
             setActiveItem={setActiveItem}
             prevActiveItem={prevActiveItem}
             setPrevActiveItem={setPrevActiveItem}
+            changeActiveItem={changeActiveItem}
             layoutSize={layoutSize}
             navbarSize={navbarSize}
             setNavbarSize={setNavbarSize}
@@ -135,7 +153,7 @@ const MainLayout = () => {
           />
           <ScrollBar
             id="scrollContainer"
-            className="text-primary row-span-1 flex h-full w-full flex-col items-center overflow-y-auto md:p-6 lg:p-8"
+            className="text-primary row-span-1 flex h-full w-full flex-col items-center overflow-y-auto overflow-x-hidden md:p-6 lg:p-8"
             onClick={closeNavbar}
           >
             <Outlet context={[layoutSize, setActiveItem]} />
