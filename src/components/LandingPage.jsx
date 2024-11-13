@@ -5,8 +5,7 @@ import Logo from './Logo';
 import ProfilePic from './ProfilePic';
 import { mdiChevronDoubleDown } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useContext, useRef, useState } from 'react';
-import { LayoutContext } from './LayoutContext';
+import { useRef, useState } from 'react';
 import ScrollBar from 'react-perfect-scrollbar';
 import LandingPageImage from './LandingPageImage';
 

@@ -29,8 +29,10 @@ const PostCard = (props) => {
   );
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      togglePostOpen();
+    if (event.key === 'Enter') {
+      if (!postOpen) {
+        togglePostOpen();
+      }
     }
   };
 
