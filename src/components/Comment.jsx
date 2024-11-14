@@ -8,6 +8,7 @@ import LikeButton from './LikeButton';
 import Icon from '@mdi/react';
 import { mdiTrashCanOutline } from '@mdi/js';
 import useCommentLikeMutation from '../hooks/useCommentLikeMutation.js';
+import Loading from './Loading.jsx';
 
 const Comment = (props) => {
   const [likeStatus, setLikeStatus] = useState(false);
@@ -104,16 +105,20 @@ const Comment = (props) => {
             {props.likes?.length > 0 && (
               <p className="text-tertiary text-sm">{props.likes.length}</p>
             )}
-            <LikeButton
-              className="size-10"
-              size={0.8}
-              likeStatus={likeStatus}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleLikeStatus.mutate();
-              }}
-            />
+            {toggleLikeStatus.isLoading || toggleLikeStatus.isPending ? (
+              <Loading className="mr-3 bg-transparent" size={1} />
+            ) : (
+              <LikeButton
+                className="mx-3"
+                size={0.8}
+                likeStatus={likeStatus}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleLikeStatus.mutate();
+                }}
+              />
+            )}
           </div>
         )}
       </div>
