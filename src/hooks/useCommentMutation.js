@@ -9,7 +9,7 @@ const useCommentMutation = (postId, profileId, activeId, apiUrl) => {
       return createComment(postId, profileId, activeId, comment, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
+      return queryClient.invalidateQueries(['posts']);
     },
   });
 };

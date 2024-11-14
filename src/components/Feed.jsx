@@ -1,5 +1,5 @@
 import Post from './Post';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/custom-scrollbar.css';
 import { GlobalContext } from './GlobalContext';

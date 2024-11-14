@@ -9,7 +9,7 @@ const useDeleteCommentMutation = (apiUrl) => {
       return deleteComment(commentId, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['comments']);
+      return queryClient.invalidateQueries(['comments']);
     },
   });
 };

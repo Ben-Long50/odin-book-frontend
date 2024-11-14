@@ -14,7 +14,7 @@ const useLikeStatusMutation = (postId, activeId, apiUrl, likeStatus) => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
+      return queryClient.invalidateQueries(['posts', 'feedPosts']);
     },
   });
 };

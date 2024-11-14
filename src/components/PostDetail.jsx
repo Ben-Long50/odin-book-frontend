@@ -120,7 +120,7 @@ const PostDetail = (props) => {
                   togglePostOpen={props.togglePostOpen}
                   toggleNotificationbar={props.toggleNotificationbar}
                 />
-                {comments.isPending || comments.isLoading ? (
+                {comments.isLoading || comments.isPending ? (
                   <Loading />
                 ) : (
                   comments?.data.map((comment) => (
@@ -143,8 +143,7 @@ const PostDetail = (props) => {
               <div className="w-full p-3">
                 <div className="flex w-full items-center justify-between md:mb-3">
                   <div className="flex items-center justify-start gap-4">
-                    {props.toggleLikeStatus.isLoading ||
-                    props.toggleLikeStatus.isPending ? (
+                    {props.toggleLikeStatus.isPending ? (
                       <Loading size={1.25} />
                     ) : (
                       <LikeButton
@@ -174,13 +173,16 @@ const PostDetail = (props) => {
                   onChange={(e) => setCommentInput(e.target.value)}
                   value={commentInput}
                 />
+                {createComment.isPending && (
+                  <Loading className="flex-1" size={1.25} />
+                )}
                 {commentInput.length > 0 && (
                   <button
                     className="text-accent font-semibold hover:underline"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleCreateComment(commentInput);
                       setCommentInput('');
+                      handleCreateComment(commentInput);
                     }}
                   >
                     Post
@@ -222,7 +224,7 @@ const PostDetail = (props) => {
                     togglePostOpen={props.togglePostOpen}
                     toggleNotificationbar={props.toggleNotificationbar}
                   />
-                  {comments.isPending || comments.isLoading ? (
+                  {comments.isLoading || comments.isPending ? (
                     <Loading />
                   ) : (
                     comments?.data.map((comment) => (
@@ -245,8 +247,7 @@ const PostDetail = (props) => {
                 <div className="w-full p-3">
                   <div className="flex w-full items-center justify-between md:mb-3">
                     <div className="flex items-center justify-start gap-4">
-                      {props.toggleLikeStatus.isLoading ||
-                      props.toggleLikeStatus.isPending ? (
+                      {props.toggleLikeStatus.isPending ? (
                         <Loading size={1.25} />
                       ) : (
                         <LikeButton
@@ -278,7 +279,7 @@ const PostDetail = (props) => {
                     onChange={(e) => setCommentInput(e.target.value)}
                     value={commentInput}
                   />
-                  {(createComment.isPending || createComment.isLoading) && (
+                  {createComment.isPending && (
                     <Loading className="flex-1" size={1.25} />
                   )}
                   {commentInput.length > 0 && (
@@ -286,8 +287,8 @@ const PostDetail = (props) => {
                       className="text-accent font-semibold hover:underline"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleCreateComment(commentInput);
                         setCommentInput('');
+                        handleCreateComment(commentInput);
                       }}
                     >
                       Post

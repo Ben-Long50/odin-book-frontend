@@ -94,7 +94,7 @@ const Post = (props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
               <div className="flex items-center gap-2">
-                {toggleLikeStatus.isLoading || toggleLikeStatus.isPending ? (
+                {toggleLikeStatus.isPending ? (
                   <Loading size={1.25} />
                 ) : (
                   <LikeButton
@@ -121,7 +121,7 @@ const Post = (props) => {
               value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
             />
-            {(createComment.isPending || createComment.isLoading) && (
+            {createComment.isPending && (
               <Loading className="flex-1" size={1.25} />
             )}
             {commentInput.length > 0 && (

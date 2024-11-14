@@ -103,10 +103,10 @@ const Comment = (props) => {
         {props.likes && (
           <div className="ml-auto flex items-center self-center">
             {props.likes?.length > 0 && (
-              <p className="text-tertiary text-sm">{props.likes.length}</p>
+              <p className="text-tertiary ml-3 text-sm">{props.likes.length}</p>
             )}
-            {toggleLikeStatus.isLoading || toggleLikeStatus.isPending ? (
-              <Loading className="mr-3 bg-transparent" size={1} />
+            {toggleLikeStatus.isPending ? (
+              <Loading className="mx-3 bg-transparent" size={0.8} />
             ) : (
               <LikeButton
                 className="mx-3"

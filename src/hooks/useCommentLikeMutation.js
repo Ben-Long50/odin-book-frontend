@@ -14,7 +14,7 @@ const useCommentLikeMutation = (commentId, activeId, apiUrl, likeStatus) => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['comments']);
+      return queryClient.invalidateQueries(['comments']);
     },
   });
 };
