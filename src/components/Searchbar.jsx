@@ -53,7 +53,7 @@ const Searchbar = (props) => {
 
   return props.layoutSize === 'xsmall' || props.layoutSize === 'small' ? (
     <div
-      className={`${props.className} bg-secondary flex max-h-dvh-65 flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex max-h-dvh-65 min-w-96 flex-col overflow-y-auto shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       <search className="bg-secondary border-b p-6">
@@ -154,7 +154,7 @@ const Searchbar = (props) => {
     </div>
   ) : (
     <ScrollBar
-      className={`${props.className} bg-secondary flex max-h-dvh-65 flex-col shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
+      className={`${props.className} bg-secondary flex max-h-dvh-65 min-w-96 flex-col overflow-y-auto shadow-md md:h-dvh md:max-h-full md:min-w-96 md:shadow-md-right dark:shadow-gray-950`}
       style={props.style}
     >
       <search className="bg-secondary flex flex-col items-start gap-6 border-b p-6">
