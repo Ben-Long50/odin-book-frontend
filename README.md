@@ -68,33 +68,35 @@
 
 ## About The Project
 
-<div style="background-color: darkslategray; padding: 1rem; display: flex; flex-direction: column; gap: 1rem">
-  <a href="https://pawprint-social.com">
-    <img style="border-radius: 1rem" src="public/profile-screenshot.png" alt="Profile Screen Shot" >
-  </a>
-<div style="display: flex; justify-content: space-between; align-items: center; gap:1.5rem;">
-  <a href="https://pawprint-social.com">
-    <img style="border-radius: .5rem" src="public/home-screenshot.png" alt="Home Screen Shot" >
-  </a>
-  <a href="https://pawprint-social.com">
-    <img style="border-radius: .5rem" src="public/manage-screenshot.png" alt="Manage Screen Shot" >
-  </a>
-  <a href="https://pawprint-social.com">
-    <img style="border-radius: .5rem" src="public/explore-screenshot.png" alt="Explore Screen Shot" >
-  </a>
-</div>
-</div>
+<a href="https://pawprint-social.com">
+  <img style="border-radius: 1rem" src="public/pawprint-screenshots.png" alt="Profile Screen Shot" >
+</a>
+
 <p style="margin-top: 1rem" align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
-- <a style="vertical-align: middle; margin:0 1rem 1rem 0;"  href="https://reactjs.org/"><img src="public/react-icon.svg" alt="React" width="30" height="30"></a> <a style="color: inherit; " href="https://reactjs.org/">React</a>
-- <a style="vertical-align: middle; margin-right:1rem" href="https://vite.dev/"><img src="public/vite-icon.svg" alt="Vite" width="30" height="30"></a> <a style="color: inherit; " href="https://vite.dev/">Vite</a>
-- <a style="vertical-align: middle; margin-right:1rem"  href="https://tanstack.com/query/latest"><img src="public/react-query-icon.svg" alt="Tanstack Query" width="30" height="30"></a> <a style="color: inherit; " href="https://tanstack.com/query/latest">Tanstack Query</a>
-- <a style="vertical-align: middle; margin-right:1rem" href="https://reactrouter.com/"><img src="public/react-router-icon.svg" alt="React Router" width="30" height="30"></a> <a style="color: inherit; " href="https://reactrouter.com/">React Router</a>
-- <a style="vertical-align: middle; margin-right:1rem" href="https://tailwindcss.com/"><img src="public/tailwindcss-icon.svg" alt="Tailwind" width="30" height="30"></a> <a style="color: inherit; " href="https://tailwindcss.com/">Tailwind</a>
+<a href="https://reactjs.org">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" height="40" alt="React">
+</a>
 
-<p style="margin-top: 1rem" align="right">(<a href="#readme-top">back to top</a>)</p>
+<a href="https://vitejs.dev">
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="40" alt="Vite" />
+</a>
+
+<a href="https://react-query.tanstack.com">
+  <img src="https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white" height="40" alt="React Query" />
+</a>
+
+<a href="https://reactrouter.com">
+  <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" height="40" alt="React Router" />
+</a>
+
+<a href="https://tailwindcss.com">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" height="40" alt="Tailwind CSS" />
+</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FEATURES -->
 
@@ -108,7 +110,8 @@
 - Explore page, showcasing posts from profiles which are not currently being followed
 - Like, comment on and share posts with friends. A robust notification system ensures your app activity won't go unnoticed
 - Fully responsive design which looks great on any screensize, mobile and desktop
-<p style="margin-top: 1rem" align="right">(<a href="#readme-top">back to top</a>)</p>
+- Light and dark theme support
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
@@ -116,7 +119,39 @@
 
 To access the live version of this project and explore all of it's features, use the official website link below:
 
-- <a style="vertical-align: middle; margin:0 1rem 1rem 0;"  href="https://pawprint-social.com/"><img src="public/paw.svg" alt="React" width="30" height="30"></a> <a style="color: inherit; " href="https://pawprint-social.com/">Pawprint</a>
+<a href="https://pawprint-social.com">
+  <img src="https://img.shields.io/badge/Pawprint-gray?style=for-the-badge&logo=data:image/svg+xml;base64,ICAgIDxzdmcKICAgIAogICAgICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAg
+ICAgIHZlcnNpb249IjEuMSIKICAgICAgdmlld0JveD0iMCAwIDUxMiA1MTIiCiAgICAgIHByZXNl
+cnZlQXNwZWN0UmF0aW89Im5vbmUiCiAgICAgIHdpZHRoPSIxMDAlIgogICAgICBoZWlnaHQ9IjEw
+MCUiCiAgICAgIGZpbGw9J3JnYig4MiwgMjMxLCAxODkpJwogICAgPgogICAgPGcgdHJhbnNmb3Jt
+PSJzY2FsZSg1LjEyKSI+CiAgICAgIDxwYXRoIGQ9Im00Mi4wNTkgNDAuMzU5YzkuMTA5NC0yLjQy
+MTkgOS43MTg4LTE3LjQ2OSA5Ljk2ODgtMjMuNzYyIDAuMzA4NTktNy42MjExLTcuODI4MS04LjQ0
+OTItMTguNDQxIDEuNjQ4NC02LjczMDUgNi40MTAyLTQuMzM5OCAxMy40NDEtMS42OTE0IDE3Ljcx
+OSAyLjE0MDYgMy40NjA5IDYuMjMwNSA1LjQ0MTQgMTAuMTYgNC4zOTA2eiIgLz4KICAgICAgPHBh
+dGggZD0ibTE1LjY0MSAzMC4yODljLTIuOTgwNSAyLjg5ODQtNS45NDkyIDcuNDg4My01LjYyMTEg
+MTQuMTIxIDAuMjg5MDYgNS45NDE0IDMuMjEwOSA4LjgyMDMgNi4yODEyIDEwLjE5MSA0Ljc2OTUg
+Mi4xMjg5IDEwLjIzOC0wLjE3OTY5IDExLjk0OS00Ljk2ODggMS4zOTg0LTMuOTQxNCAxLjUxMTct
+OS44NzExLTMuMzA4Ni0xOC4wNTktMS45MjE5LTMuMjY5NS02LjU1ODYtMy45NDkyLTkuMzAwOC0x
+LjI4MTJ6IiAvPgogICAgICA8cGF0aCBkPSJtNjIuMTYgMTguNDY5Yy01LjIxODggNy40NjA5LTEy
+LjAxMiAyMC42MDktMC43NSAyNi45OCAxMi45MSA3LjMwMDggMjAuNDYxLTE1IDExLjY5OS0yNy4w
+NTEtMi43MTA5LTMuNzMwNS04LjMwODYtMy42OTkyLTEwLjk0OSAwLjA3ODEyNHoiIC8+CiAgICAg
+IDxwYXRoIGQ9Im02OS45OCA2NC4wMzFjMS40MjE5IDMuOTYwOSA1LjY0ODQgNi4xMDE2IDkuNjI4
+OSA0Ljc2MTcgMS4wNzgxLTAuMzU5MzggMi4yODkxLTAuOTEwMTYgMy42MjExLTEuNzEwOSA3Ljk4
+MDUtNC43ODkxIDExLjY0MS0zMi41NTktNC43MzgzLTIyLjkyMi0xMS4xMjEgNi41MzkxLTEwLjIz
+IDE1LjA3LTguNTExNyAxOS44NzF6IiAvPgogICAgICA8cGF0aCBkPSJtMTYuODUyIDY5LjEyOWMt
+MC4xNzE4NyAzLjIzODMgMS4yODkxIDYuNjAxNiAzLjI2MTcgOS4xMDE2IDEuNjYwMiAyLjEwOTQg
+My45MjE5IDMuNzY5NSA2LjQ4MDUgNC42MDE2IDMuMjgxMiAxLjA1ODYgNi44NzExIDAuODUxNTYg
+MTAuMjUgMS4zNTE2IDMuNjcxOSAwLjUzOTA2IDcuMTc5NyAxLjc4OTEgMTAuNzExIDIuODk4NCA1
+LjQyMTkgMS43MTA5IDEyLjE5OSAzLjY0MDYgMTcuNDEgMC4zNzg5MSAyLjEyODktMS4zMjgxIDMu
+NzEwOS0zLjQyMTkgNC43MTg4LTUuNzE4OCAxLjE5OTItMi43NjE3IDIuMTIxMS02LjAxMTcgMS4z
+MjgxLTkuMDExNy0wLjQ2ODc1LTEuNzY5NS0xLjY5MTQtMy4xNDA2LTMuMDg5OC00LjI2MTctMi4x
+NDA2LTEuNzE4OC00LjEyMTEtMy41MzEyLTUuMDE5NS02LjE5MTQtMS4xNzk3LTMuNDgwNS0xLjA4
+OTgtNy41NTg2LTMuMDg5OC0xMC43MzgtMi4wNzgxLTMuMzIwMy01LjU3MDMtNS42Mjg5LTkuNDYw
+OS02LjE0MDYtMy44MjgxLTAuNS03LjgwMDgtMC41MTk1My0xMS4wNyAxLjgzOTgtMi4yODEyIDEu
+NjYwMi0zLjczMDUgNC4xMDk0LTUuNjc5NyA2LjA4OTgtMi44Mzk4IDIuODU5NC02LjM3ODkgNC43
+MzgzLTkuODkwNiA2LjYyODktMy41MzkxIDEuODk4NC02LjYyODkgNC45NDkyLTYuODUxNiA5LjE2
+MDJ6IiAvPgogICAgPC9nPgogICAgPC9zdmc+" height="40" alt="Tailwind CSS" />
+</a>
 
 If you would like to instead run the project locally, follow the instructions listed in the remainder of this section.
 
@@ -170,7 +205,7 @@ If you would like to instead run the project locally, follow the instructions li
    npm run dev
    ```
 
-<p style="margin-top: 1rem" align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 
@@ -182,20 +217,7 @@ Email - benjlong50@gmail.com
 
 Project Link: [https://github.com/Ben-Long50/pawprint-frontend](https://github.com/Ben-Long50/pawprint-frontend)
 
-<p style="margin-top: 1rem" align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/ben-long-4ba566129/
