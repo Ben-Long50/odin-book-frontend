@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import likePost from '../services/likePost';
 import unlikePost from '../services/unlikePost';
 
-const useLikeStatusMutation = (postId, activeId, apiUrl, likeStatus) => {
+const useLikeStatusMutation = (postId, activeId, apiUrl, likeStatus, type) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -14,7 +14,16 @@ const useLikeStatusMutation = (postId, activeId, apiUrl, likeStatus) => {
       }
     },
     onSuccess: () => {
-      return queryClient.invalidateQueries(['posts', 'feedPosts']);
+      if (type === 'feed') {
+        return queryClient.invalidateQueries({ queryKey: ['feedPosts'] });
+      } else if (type === 'post') {
+        return queryClient.invalidateQueries({ queryKey: ['posts'] });
+      } else if (type === 'bookmark') {
+        return queryClient.invalidateQueries({
+          queryKey: ['bookmarks'],
+          exact: false,
+        });
+      }
     },
   });
 };

@@ -7,10 +7,10 @@ const Loading = (props) => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={`${props.className} ${theme} bg-secondary flex h-full w-full flex-col items-center justify-center md:gap-8`}
+      className={`${theme} flex h-full flex-col items-center justify-center bg-transparent md:gap-8`}
     >
       <Icon
-        className="text-primary spin"
+        className={`text-primary spin ${props.className}`}
         path={mdiLoading}
         size={props.size || 5}
       />

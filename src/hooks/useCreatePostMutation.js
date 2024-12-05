@@ -9,7 +9,7 @@ const useCreatePostMutation = (activeId, apiUrl) => {
       return createPost(formData, activeId, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
   });
 };

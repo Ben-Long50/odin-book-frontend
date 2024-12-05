@@ -247,6 +247,7 @@ const Profile = (props) => {
                 layoutSize={layoutSize}
                 profile={props.profile}
                 postFetching={posts.isFetching}
+                type="post"
               />
             ))}
           </div>

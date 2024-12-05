@@ -4,11 +4,14 @@ import deleteSearchEntry from '../services/deleteSearchEntry';
 const useDeleteSearchMutation = (activeId, apiUrl) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (searchedId) => {
-      deleteSearchEntry(searchedId, activeId, apiUrl);
+    mutationFn: async (searchedId) => {
+      return await deleteSearchEntry(searchedId, activeId, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['searchHistory']);
+      queryClient.invalidateQueries({
+        queryKey: ['searchHistory'],
+        exact: false,
+      });
     },
   });
 };

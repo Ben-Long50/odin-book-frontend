@@ -9,7 +9,8 @@ const useDeleteCommentMutation = (apiUrl) => {
       return deleteComment(commentId, apiUrl);
     },
     onSuccess: () => {
-      return queryClient.invalidateQueries(['comments']);
+      queryClient.invalidateQueries({ queryKey: ['feedPosts'] });
+      return queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
 };

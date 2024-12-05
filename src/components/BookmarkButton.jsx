@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from './GlobalContext';
 import { AuthContext } from './AuthContext';
 import useBookmarkMutation from '../hooks/useBookmarkMutation';
+import Loading from './Loading';
 
 const BookmarkButton = (props) => {
   const [bookmarkedStatus, setBookmarkedStatus] = useState(false);
@@ -30,7 +31,9 @@ const BookmarkButton = (props) => {
     setBookmarkedStatus(status);
   }, [props.post, activeProfile]);
 
-  return (
+  return toggleBookmarkStatus.isPending ? (
+    <Loading className={props.className} size={1.25} />
+  ) : (
     <button
       aria-label="Bookmark post"
       className="text-primary"

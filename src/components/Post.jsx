@@ -38,6 +38,7 @@ const Post = (props) => {
     activeProfile.id,
     apiUrl,
     likeStatus,
+    'feed',
   );
 
   const createComment = useCommentMutation(
@@ -110,7 +111,7 @@ const Post = (props) => {
               </div>
               <ShareButton post={props.post} />
             </div>
-            <BookmarkButton post={props.post} />
+            <BookmarkButton className="ml-auto" post={props.post} />
           </div>
           <p>{props.post.body}</p>
           <form className="flex items-center justify-between">

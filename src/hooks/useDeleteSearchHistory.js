@@ -5,11 +5,12 @@ const useDeleteSearchHistory = (activeId, apiUrl) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => {
-      deleteSearchHistory(activeId, apiUrl);
-    },
+    mutationFn: () => deleteSearchHistory(activeId, apiUrl),
     onSuccess: () => {
-      queryClient.invalidateQueries(['searchHistory']);
+      queryClient.invalidateQueries({
+        queryKey: ['searchHistory'],
+        exact: false,
+      });
     },
   });
 };

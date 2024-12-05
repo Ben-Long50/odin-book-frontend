@@ -6,7 +6,11 @@ const useDeleteAllNotificationsMutation = (activeId, apiUrl) => {
 
   return useMutation({
     mutationFn: () => deleteAllNotifications(activeId, apiUrl),
-    onSuccess: () => queryClient.invalidateQueries(['notifications']),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['notifications'],
+        exact: false,
+      }),
   });
 };
 

@@ -6,6 +6,7 @@ import ThemeProvider from './components/ThemeContext';
 import '@fontsource/inter';
 import '@fontsource/pacifico';
 import LayoutProvider from './components/LayoutContext';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           </LayoutProvider>
         </AuthProvider>
       </ThemeProvider>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };

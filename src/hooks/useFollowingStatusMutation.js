@@ -14,11 +14,15 @@ const useFollowStatusMutation = (activeId, profileId, followStatus, apiUrl) => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        'activeProfile',
-        'foreignProfile',
-        'followStatus',
-      ]);
+      queryClient.invalidateQueries({
+        queryKey: ['activeProfile'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['foreignProfile'],
+      });
+      return queryClient.invalidateQueries({
+        queryKey: ['followStatus'],
+      });
     },
   });
 };

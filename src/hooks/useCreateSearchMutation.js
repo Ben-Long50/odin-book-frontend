@@ -8,7 +8,10 @@ const useCreateSearchMutation = (activeId, apiUrl) => {
       return await createSearchEntry(searchedId, activeId, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['searchHistory']);
+      queryClient.invalidateQueries({
+        queryKey: ['searchHistory'],
+        exact: false,
+      });
     },
   });
 };

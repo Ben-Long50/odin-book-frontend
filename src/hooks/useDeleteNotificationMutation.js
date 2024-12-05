@@ -6,7 +6,13 @@ const useDeleteNotificationsMutation = (notificationId, apiUrl) => {
 
   return useMutation({
     mutationFn: async () => await deleteNotification(notificationId, apiUrl),
-    onSuccess: () => queryClient.invalidateQueries(['activeProfile']),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['activeProfile'] });
+      queryClient.invalidateQueries({
+        queryKey: ['notifications'],
+        exact: false,
+      });
+    },
   });
 };
 export default useDeleteNotificationsMutation;

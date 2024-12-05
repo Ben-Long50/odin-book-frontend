@@ -37,6 +37,7 @@ const Bookmarks = () => {
                 key={index}
                 post={bookmark.post}
                 profile={bookmark.post.profile}
+                type="bookmark"
               />
             ))}
           </div>

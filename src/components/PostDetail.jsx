@@ -167,14 +167,14 @@ const PostDetail = (props) => {
               <form className="text-primary bg-secondary flex w-full items-center justify-between border-t p-3 md:rounded-br-xl">
                 <input
                   ref={inputRef}
-                  className="w-full bg-transparent py-1 outline-none"
+                  className="w-full grow bg-transparent py-1 outline-none"
                   type="text"
                   placeholder="Add a comment..."
                   onChange={(e) => setCommentInput(e.target.value)}
                   value={commentInput}
                 />
                 {createComment.isPending && (
-                  <Loading className="flex-1" size={1.25} />
+                  <Loading className="ml-auto" size={1.25} />
                 )}
                 {commentInput.length > 0 && (
                   <button

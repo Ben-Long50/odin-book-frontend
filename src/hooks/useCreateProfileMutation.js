@@ -11,7 +11,7 @@ const useCreateProfileMutation = (apiUrl) => {
       return createProfile(formData, apiUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['profiles']);
+      queryClient.invalidateQueries({ queryKey: ['profiles'] });
       navigate('/manage');
     },
   });

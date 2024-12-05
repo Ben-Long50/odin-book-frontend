@@ -4,10 +4,7 @@ import getBookmarks from '../services/getBookmarks';
 const useBookmarkQuery = (activeId, apiUrl) => {
   return useQuery({
     queryKey: ['bookmarks', activeId],
-    queryFn: async () => {
-      const bookmarks = await getBookmarks(activeId, apiUrl);
-      return bookmarks ? bookmarks : [];
-    },
+    queryFn: () => getBookmarks(activeId, apiUrl),
   });
 };
 

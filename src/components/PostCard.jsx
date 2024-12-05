@@ -26,6 +26,7 @@ const PostCard = (props) => {
     activeProfile.id,
     apiUrl,
     likeStatus,
+    props.type,
   );
 
   const handleKeyDown = (event) => {

@@ -13,8 +13,9 @@ const useBookmarkMutation = (activeId, postId, apiUrl) => {
         await deleteBookmark(activeId, postId, apiUrl);
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['bookmarks']);
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmarks', activeId] });
+      return queryClient.invalidateQueries({ queryKey: ['activeProfile'] });
     },
   });
 };
