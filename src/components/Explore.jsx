@@ -44,6 +44,7 @@ const Explore = () => {
                     layoutSize={layoutSize}
                     profile={post.profile}
                     followStatus={false}
+                    type="explore"
                   />
                 )),
               )}

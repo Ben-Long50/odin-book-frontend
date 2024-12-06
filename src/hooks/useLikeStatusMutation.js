@@ -23,6 +23,11 @@ const useLikeStatusMutation = (postId, activeId, apiUrl, likeStatus, type) => {
           queryKey: ['bookmarks'],
           exact: false,
         });
+      } else if (type === 'explore') {
+        return queryClient.invalidateQueries({
+          queryKey: ['explorePosts'],
+          exact: false,
+        });
       }
     },
   });
