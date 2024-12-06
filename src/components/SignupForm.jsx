@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import InputField from './InputField';
 import Button from './Button';
 import { AuthContext } from './AuthContext';
 import AuthFormLayout from '../layouts/AuthFormLayout';
+import useSignupMutation from '../hooks/useSignupMutation';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -14,8 +15,9 @@ const SignupForm = () => {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState([]);
-  const navigate = useNavigate();
   const { apiUrl } = useContext(AuthContext);
+
+  const signupMutation = useSignupMutation(apiUrl, setErrors);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,30 +27,10 @@ const SignupForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    try {
-      const response = await fetch(`${apiUrl}/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-      console.log(result);
-      if (response.ok) {
-        navigate('/signin');
-      } else {
-        const errorArray = result.map((error) => {
-          return error.msg;
-        });
-        setErrors(errorArray);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+    signupMutation.mutate(formData);
   };
 
   return (

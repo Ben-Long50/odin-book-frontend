@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 import {
   mdiAccountCog,
@@ -13,34 +13,14 @@ import { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
 import { AuthContext } from './AuthContext';
 import { GlobalContext } from './GlobalContext';
-import { useQueryClient } from '@tanstack/react-query';
+import useSignoutMutation from '../hooks/useSignoutMutation';
 
 const SettingsMenu = (props) => {
-  const { apiUrl, setIsAuthenticated } = useContext(AuthContext);
+  const { apiUrl } = useContext(AuthContext);
   const { theme, changeTheme } = useContext(ThemeContext);
   const { activeProfile } = useContext(GlobalContext);
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
-  const logout = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/signout`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      const result = await response.json();
-      if (response.ok) {
-        queryClient.invalidateQueries(['authStatus']);
-        queryClient.clear();
-
-        console.log(result.message);
-      } else {
-        console.error(result.message);
-      }
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  const signoutMutation = useSignoutMutation(apiUrl);
 
   return (
     <div
@@ -111,11 +91,11 @@ const SettingsMenu = (props) => {
           className="hover:bg-secondary-2 flex w-full items-center justify-start gap-3 rounded-lg p-3 text-left"
           onClick={() => {
             props.toggleMenuVisibility();
-            logout();
+            signoutMutation.mutate();
           }}
         >
           <Icon path={mdiLogout} size={1.2} />
-          Log out
+          Signout
         </button>
       </Link>
     </div>

@@ -1,10 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import InputField from './InputField';
 import Button from './Button';
 import { AuthContext } from './AuthContext';
 import AuthOptions from './AuthOptions';
 import AuthFormLayout from '../layouts/AuthFormLayout';
+import useSigninMutation from '../hooks/useSigninMutation';
+import useGuestSigninMutation from '../hooks/useGuestSigninMutation';
 
 const SigninForm = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +15,9 @@ const SigninForm = () => {
   });
   const [errors, setErrors] = useState([]);
   const { apiUrl } = useContext(AuthContext);
-  const navigate = useNavigate();
+
+  const signinMutation = useSigninMutation(apiUrl, setErrors);
+  const guestSigninMutation = useGuestSigninMutation(apiUrl, setErrors);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -33,58 +37,15 @@ const SigninForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     setErrors([]);
-    try {
-      const response = await fetch(`${apiUrl}/signin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data.message);
-        navigate('/home');
-      } else {
-        if (Array.isArray(data)) {
-          const errorArray = data.map((error) => {
-            return error.msg;
-          });
-          setErrors(errorArray);
-        } else {
-          console.error(data);
-        }
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+    signinMutation.mutate(formData);
   };
 
-  const handleGuest = async () => {
+  const handleGuest = () => {
     setErrors([]);
-    try {
-      const response = await fetch(`${apiUrl}/signin/guest`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data.message);
-        navigate('/home');
-      } else {
-        const errorArray = data.map((error) => {
-          return error.msg;
-        });
-        setErrors(errorArray);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+    guestSigninMutation.mutate();
   };
 
   return (

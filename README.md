@@ -112,23 +112,23 @@ To access the live version of this project and explore all of it's features, use
 
 ### Installation
 
-1. **Clone the Repository**  
+1. **Clone the repository**  
    Run the following command to clone the repository:
    ```sh
    git clone https://github.com/Ben-Long50/pawprint-frontend.git
    ```
-2. **Navigate to the Project Directory and Install Dependencies**  
+2. **Navigate to the project directory and install dependencies**  
    Move into the project directory and install the required npm packages:
    ```sh
    cd pawprint-frontend
    npm install
    ```
-3. **Set Up Environment Variables**  
+3. **Set up environment variables**  
    Create a .env file in the project’s base directory and add the following environment variable:
    ```js
    VITE_API_URL = 'http://localhost:3000';
    ```
-4. **Avoid Accidental Pushes to the Original Repository**  
+4. **Avoid accidental pushes to the original repository**  
    If you plan to make changes, update the Git remote to point to your own fork to prevent accidental pushes to the base repository:
 
    ```sh
@@ -148,7 +148,7 @@ To access the live version of this project and explore all of it's features, use
    origin  https://github.com/<your_github_username>/pawprint-frontend.git (push)
    ```
 
-5. **Start the Development Server**  
+5. **Start the development server**  
    Run the following command to start the app:
    ```sh
    npm run dev
