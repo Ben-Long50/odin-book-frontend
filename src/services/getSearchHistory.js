@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const getSearchHistory = async (activeId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/searches/${activeId}`, {
+    const response = await fetch(`${apiUrl}/profiles/${activeId}/searches`, {
       method: 'GET',
       credentials: 'include',
     });

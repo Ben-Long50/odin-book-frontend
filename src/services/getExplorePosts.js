@@ -3,7 +3,7 @@ import handleResponse from './handleResponse';
 const getExplorePosts = async (activeId, apiUrl, pageParam) => {
   try {
     const response = await fetch(
-      `${apiUrl}/explore/posts?activeId=${activeId}&page=${pageParam}`,
+      `${apiUrl}/posts/explore?activeId=${activeId}&page=${pageParam}`,
       {
         method: 'GET',
         credentials: 'include',

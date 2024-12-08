@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const createComment = async (postId, profileId, activeId, comment, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/comment`, {
+    const response = await fetch(`${apiUrl}/posts/${postId}/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

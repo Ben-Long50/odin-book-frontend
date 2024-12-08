@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const likePost = async (postId, activeId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/like`, {
+    const response = await fetch(`${apiUrl}/posts/${postId}/likes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

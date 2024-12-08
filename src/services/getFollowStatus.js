@@ -6,7 +6,7 @@ const getFollowStatus = async (activeId, profileId, apiUrl) => {
       return true;
     } else {
       const response = await fetch(
-        `${apiUrl}/profile/${activeId}/follows/${profileId}`,
+        `${apiUrl}/profiles/${activeId}/follows/${profileId}`,
         {
           method: 'GET',
           credentials: 'include',

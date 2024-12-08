@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const signout = async (apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/signout`, {
+    const response = await fetch(`${apiUrl}/auth/signout`, {
       method: 'POST',
       credentials: 'include',
     });

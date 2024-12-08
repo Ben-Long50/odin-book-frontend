@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const getComments = async (postId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/post/${postId}/comments`, {
+    const response = await fetch(`${apiUrl}/posts/${postId}/comments`, {
       method: 'GET',
       credentials: 'include',
     });

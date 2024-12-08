@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const followProfile = async (activeId, profileId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/profile/${profileId}/follow`, {
+    const response = await fetch(`${apiUrl}/profiles/${profileId}/follows`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

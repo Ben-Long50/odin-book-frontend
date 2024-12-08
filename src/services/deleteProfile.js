@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const deleteProfile = async (profileId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/profile/${profileId}`, {
+    const response = await fetch(`${apiUrl}/profiles/${profileId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

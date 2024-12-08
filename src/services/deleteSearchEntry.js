@@ -3,7 +3,7 @@ import handleResponse from './handleResponse';
 const deleteSearchEntry = async (searchedId, activeId, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/search/${searchedId}`, {
-      method: 'PUT',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },

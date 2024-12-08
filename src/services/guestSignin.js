@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const guestSignin = async (apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/signin/guest`, {
+    const response = await fetch(`${apiUrl}/auth/signin/guest`, {
       method: 'POST',
       credentials: 'include',
     });

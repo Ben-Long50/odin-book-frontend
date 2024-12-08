@@ -14,7 +14,7 @@ const Create = (props) => {
   const { apiUrl } = useContext(AuthContext);
   const { activeProfile } = useContext(GlobalContext);
 
-  const post = useCreatePostMutation(activeProfile.id, apiUrl);
+  const post = useCreatePostMutation(apiUrl);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]; // Get the selected file
@@ -36,6 +36,7 @@ const Create = (props) => {
       formData.append('image', file);
     }
     formData.append('caption', captionInput);
+    formData.append('author', activeProfile.id);
     post.mutate(formData);
     setFile(null);
     setImagePreview(null);

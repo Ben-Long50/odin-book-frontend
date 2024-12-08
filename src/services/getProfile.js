@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const getProfile = async (profileId, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/profile/${profileId}`, {
+    const response = await fetch(`${apiUrl}/profiles/${profileId}`, {
       method: 'GET',
       credentials: 'include',
     });

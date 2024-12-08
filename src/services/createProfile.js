@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const createProfile = async (profileData, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/profile`, {
+    const response = await fetch(`${apiUrl}/profiles`, {
       method: 'POST',
       credentials: 'include',
       body: profileData,

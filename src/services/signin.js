@@ -2,7 +2,7 @@ import handleResponse from './handleResponse';
 
 const signin = async (formData, apiUrl) => {
   try {
-    const response = await fetch(`${apiUrl}/signin`, {
+    const response = await fetch(`${apiUrl}/auth/signin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
