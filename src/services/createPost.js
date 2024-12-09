@@ -1,6 +1,6 @@
 import handleResponse from './handleResponse';
 
-const createPost = async (postData, activeId, apiUrl) => {
+const createPost = async (postData, apiUrl) => {
   try {
     const response = await fetch(`${apiUrl}/posts`, {
       method: 'POST',

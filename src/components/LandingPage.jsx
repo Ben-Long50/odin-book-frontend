@@ -47,11 +47,11 @@ const LandingPage = () => {
         <p className="fade-in-welcome text-primary text-center text-xl font-semibold opacity-0 md:text-3xl">
           Welcome to
         </p>
-        <div className="fade-in-logo flex grow-0 items-center justify-center gap-4 opacity-0 md:gap-8">
+        <div className="fade-in-welcome flex grow-0 items-center justify-center gap-4 opacity-0 md:gap-8">
           <Logo textSize="text-6xl md:text-8xl " />
           <PawIcon className="size-20 md:size-32" />
         </div>
-        <div className="fade-in-button flex w-full flex-col items-center opacity-0 md:mt-4">
+        <div className="fade-in-welcome flex w-full flex-col items-center opacity-0 md:mt-4">
           <Link className="mt-4 w-1/2 max-w-80 md:w-1/3" to="/signin">
             <Button className="w-full px-3 py-2 text-xl">Sign in</Button>
           </Link>
@@ -59,7 +59,7 @@ const LandingPage = () => {
             <Button className="w-full px-3 py-2 text-xl">Sign up</Button>
           </Link>
         </div>
-        <div className="fade-in-button absolute bottom-0 mb-4 flex flex-col items-center opacity-0 md:mb-8">
+        <div className="fade-in-logo absolute bottom-0 mb-4 flex flex-col items-center opacity-0 md:mb-8">
           <p className="text-tertiary text-sm">Scroll to</p>
           <p className="text-tertiary text-sm">learn more</p>
           <Icon
