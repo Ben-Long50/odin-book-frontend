@@ -92,6 +92,7 @@
 - Like, comment on and share posts with friends. A robust notification system ensures your app activity won't go unnoticed
 - Fully responsive design which looks great on any screensize, mobile and desktop
 - Light and dark theme support
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -112,23 +113,33 @@ To access the live version of this project and explore all of it's features, use
 
 ### Installation
 
-1. **Clone the repository**  
+1. **Clone the repository**
+
    Run the following command to clone the repository:
+
    ```sh
    git clone https://github.com/Ben-Long50/pawprint-frontend.git
    ```
-2. **Navigate to the project directory and install dependencies**  
+
+2. **Navigate to the project directory and install dependencies**
+
    Move into the project directory and install the required npm packages:
+
    ```sh
    cd pawprint-frontend
    npm install
    ```
-3. **Set up environment variables**  
+
+3. **Set up environment variables**
+
    Create a .env file in the project’s base directory and add the following environment variable:
+
    ```js
    VITE_API_URL = 'http://localhost:3000';
    ```
-4. **Avoid accidental pushes to the original repository**  
+
+4. **Avoid accidental pushes to the original repository**
+
    If you plan to make changes, update the Git remote to point to your own fork to prevent accidental pushes to the base repository:
 
    ```sh
@@ -148,8 +159,10 @@ To access the live version of this project and explore all of it's features, use
    origin  https://github.com/<your_github_username>/pawprint-frontend.git (push)
    ```
 
-5. **Start the development server**  
+5. **Start the development server**
+
    Run the following command to start the app:
+
    ```sh
    npm run dev
    ```
